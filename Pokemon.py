@@ -27,7 +27,7 @@ t7 = {d: [transform.smoothscale(image.load(i), (18, 21)) for i in glob("sprites\
 
 # print(walk)
 # print(run)
-print("bit tity")
+
 count = 0
 anime = 0
 di = "up"
