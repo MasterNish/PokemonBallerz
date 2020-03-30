@@ -1,6 +1,7 @@
 from pygame import *
 from random import *
 from glob import *
+import Camera;
 
 width, height = 800, 600
 screen = display.set_mode((width, height))
@@ -10,6 +11,7 @@ running = True
 clock = time.Clock()
 
 mp = image.load("maps/map.png")
+mp1 = image.load("maps/map1.png")
 map = transform.smoothscale(mp, (800, 600))
 
 
@@ -28,9 +30,10 @@ t7 = {d: [transform.smoothscale(image.load(i), (18, 21)) for i in glob("sprites\
 # print(walk)
 # print(run)
 
+mapgrid = [[]]
 count = 0
 anime = 0
-di = "up"
+di = "down"
 posx, posy = 200, 200
 rs = 0.75
 ws = 0.45
@@ -38,7 +41,6 @@ action = "walk"
 actions = {"walk": walk,"run": run}
 
 while running:
-
 
     g = key.get_pressed()
     for e in event.get():
@@ -57,7 +59,7 @@ while running:
     else:
         action = "walk"
 
-    speed=ws
+    speed = ws
     if action == "run":
         speed = rs
 
