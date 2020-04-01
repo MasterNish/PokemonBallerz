@@ -1,6 +1,7 @@
 from pygame import *
 from random import *
 from glob import *
+from Camera import *
 
 class Character(sprite.Sprite):
 

@@ -1,12 +1,13 @@
 # This file holds the settings for all the files in this game
 
 from pygame import *
+from math import *
 
 vec = math.Vector2
 
 # basic game settings
-WIDTH = 1024
-HEIGHT = 768
+WIDTH = 800
+HEIGHT = 600
 TITLE = 'PokeGame'
 FPS = 60
 TILE_SIZE = 64
