@@ -1,7 +1,7 @@
 from pygame import *
 from random import *
 from glob import *
-from Camera import *
+# from Camera import *
 
 class Character(sprite.Sprite):
 
@@ -50,9 +50,9 @@ mp1 = image.load("maps/map1.png")
 map = transform.smoothscale(mp, (800, 600))
 
 direction = ["left", "right", "down", "up"]
-walk = {d: [transform.smoothscale(image.load(i), (18, 21)) for i in glob("sprites\\walking\\" + d + "\\*.png")] for d in
+walk = {d: [transform.smoothscale(image.load(i), (18, 21)) for i in glob("sprites\\Player\\walking\\" + d + "\\*.png")] for d in
         direction}
-run = {d: [transform.smoothscale(image.load(i), (18, 21)) for i in glob("sprites\\running\\" + d + "\\*.png")] for d in
+run = {d: [transform.smoothscale(image.load(i), (18, 21)) for i in glob("sprites\\Player\\running\\" + d + "\\*.png")] for d in
        direction}  # accesses all the pics from each direction folder and changes its size
 
 t1 = {d: [transform.smoothscale(image.load(i), (18, 21)) for i in glob("sprites\\t1\\" + d + "\\*.png")] for d in
@@ -97,14 +97,15 @@ while running:
     if anime % 10 == 0:  # speed of transition between pics
         count += 1
 
+    speed = ws
     if g[K_LSHIFT] or g[K_RSHIFT]:
         action = "run"
+        speed = rs
     else:
         action = "walk"
 
-    speed = ws
-    if action == "run":
-        speed = rs
+    # if action == "run":
+    #     speed = rs
 
     if g[K_UP] or g[K_w]:
         di = "up"
@@ -125,6 +126,9 @@ while running:
     mb = mouse.get_pressed()
 
     screen.blit(map, (0, 0))
+
+
+    print(actions[action])
 
     screen.blit((actions[action][di][count % 3]), (posx, posy))
 
