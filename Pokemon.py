@@ -41,6 +41,17 @@ class Character(sprite.Sprite):
 
 width, height = 800, 600
 screen = display.set_mode((width, height))
+RED=(255,0,0)
+GREY=(127,127,127)
+BLACK=(0,0,0)
+BLUE=(0,0,255)
+GREEN=(0,255,0)
+YELLOW=(255,255,0)
+WHITE=(255,255,255)
+AQUA=(3, 252, 182)
+
+FirstMap=Rect(380,15,50,10)
+
 running = True
 
 clock = time.Clock()
@@ -48,7 +59,7 @@ clock = time.Clock()
 mp = image.load("maps/map.png")
 mp1 = image.load("maps/map1.png")
 map = transform.smoothscale(mp, (800, 600))
-
+map1 = transform.smoothscale(mp1, (800, 600))
 direction = ["left", "right", "down", "up"]
 walk = {d: [transform.smoothscale(image.load(i), (18, 21)) for i in glob("sprites\\Player\\walking\\" + d + "\\*.png")] for d in
         direction}
@@ -75,6 +86,8 @@ t7 = {d: [transform.smoothscale(image.load(i), (18, 21)) for i in glob("sprites\
 
 mapgrid = [[]]
 count = 0
+background=0
+map2origin=0
 anime = 0
 di = "down"
 posx, posy = 200, 200
@@ -82,6 +95,9 @@ rs = 0.75
 ws = 0.45
 action = "walk"
 actions = {"walk": walk, "run": run}
+
+font.init()
+comicFont=font.SysFont("Comic Sans MS",11)
 
 while running:
 
@@ -91,6 +107,7 @@ while running:
             running = False
 
     screen.fill(0)
+    col=GREEN
     clock.tick(60)
 
     anime += 1
@@ -124,14 +141,29 @@ while running:
 
     mx, my = mouse.get_pos()
     mb = mouse.get_pressed()
+    playerRect=Rect(posx,posy,16,22)
+    
 
     screen.blit(map, (0, 0))
+    draw.rect(screen,AQUA,FirstMap)
 
 
     print(actions[action])
 
-    screen.blit((actions[action][di][count % 3]), (posx, posy))
+    #screen.blit((actions[action][di][count % 3]), (posx, posy))
+    draw.rect(screen,col,playerRect,1)
 
+    if playerRect.colliderect(FirstMap):
+        col=BLACK
+        background=1
+    if background==1:
+        screen.blit(map1, (0, 0))
+        map2origin=1
+    if map2origin==1:
+        posx, posy == 10,10
+        
+    draw.rect(screen,col,playerRect,1)
+    screen.blit((actions[action][di][count % 3]), (posx, posy))
     display.flip()
 
 quit()
