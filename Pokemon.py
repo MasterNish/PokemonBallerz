@@ -49,17 +49,57 @@ GREEN=(0,255,0)
 YELLOW=(255,255,0)
 WHITE=(255,255,255)
 AQUA=(3, 252, 182)
+BEIGE=(250, 245, 112)
 
-FirstMap=Rect(380,15,50,10)
+wallsMap1=[Rect(0,0,358,75),Rect(0,75,50,600),Rect(0,450,340,175),Rect(315,480,600,600),Rect(750,0,90,601),Rect(450,0,1000,75),Rect(460,280,200,150)]
+wallsMap2=[Rect(400,0,500,121),Rect(680,0,300,384),Rect(0,550,1000,1000),Rect(0,0,65,1000),Rect(0,410,650,66),Rect(146,338,400,28),Rect(0,0,250,100)]
 
+ledge2=[Rect(150,250,50,20)]
+#wallsMap3=[Rect(50,50,50,50),Rect(150,50,50,50)]
+
+def drawScene(screen,player,walls):
+    #screen.fill(0)  
+    #draw.rect(screen,GREEN,player)
+
+
+    
+    for w in walls:
+        draw.rect(screen,RED,w) 
+    display.flip()
+
+def movePlayer(player,mywalls,myledge):
+    keys = key.get_pressed()
+    if keys[K_DOWN] and hitwalls(pos[X],pos[Y]+5,mywalls)==-1:
+        pos[Y] += 5                                          
+    elif keys[K_UP] and hitwalls(pos[X],pos[Y]-5,mywalls)==-1 and hitwalls(pos[X],pos[Y]-5,myledge)==-1:                                                             
+        pos[Y] -= 5
+    if keys[K_LEFT] and hitwalls(pos[X]-5,pos[Y],mywalls)==-1:                                                            
+        pos[X] -= 5
+    elif keys[K_RIGHT] and hitwalls(pos[X]+5,pos[Y],mywalls)==-1:                                                               
+        pos[X] += 5
+
+
+    
+
+def hitwalls(x,y,mywalls):
+    playerRect = Rect(x,y,25,25)  
+    print(playerRect.collidelist(mywalls)) 
+    return playerRect.collidelist(mywalls)
+
+FirstMap=Rect(360,15,90,0)
+SecondMap=Rect(280,75,90,0)
 running = True
 
 clock = time.Clock()
-
+level=1
 mp = image.load("maps/map.png")
 mp1 = image.load("maps/map1.png")
+mp2 = image.load("maps/map6.png")
+#mask1=image.load("maps/mapmask.png")
 map = transform.smoothscale(mp, (800, 600))
 map1 = transform.smoothscale(mp1, (800, 600))
+map2 = transform.smoothscale(mp2, (800, 600))
+#mapmask = transform.smoothscale(mapmask, (800, 600))
 direction = ["left", "right", "down", "up"]
 walk = {d: [transform.smoothscale(image.load(i), (18, 21)) for i in glob("sprites\\Player\\walking\\" + d + "\\*.png")] for d in
         direction}
@@ -81,8 +121,7 @@ t6 = {d: [transform.smoothscale(image.load(i), (18, 21)) for i in glob("sprites\
 t7 = {d: [transform.smoothscale(image.load(i), (18, 21)) for i in glob("sprites\\t7\\" + d + "\\*.png")] for d in
       direction}
 
-# print(walk)
-# print(run)
+
 
 mapgrid = [[]]
 count = 0
@@ -90,7 +129,9 @@ background=0
 map2origin=0
 anime = 0
 di = "down"
-posx, posy = 200, 200
+X=0
+Y=1
+pos=[200,200]
 rs = 0.75
 ws = 0.45
 action = "walk"
@@ -123,32 +164,42 @@ while running:
 
     # if action == "run":
     #     speed = rs
+    if level==1:
+        movePlayer(walk,wallsMap1,[])
+        
+    elif level==2:
+        movePlayer(walk,wallsMap2,ledge2)
 
+        
     if g[K_UP] or g[K_w]:
         di = "up"
-        posy -= speed
+        #pos[Y] -= speed
     elif g[K_LEFT] or g[K_a]:
         di = "left"
-        posx -= speed
+        #pos[X] -= speed
     elif g[K_DOWN] or g[K_s]:
         di = "down"
-        posy += speed
+        #pos[Y] += speed
     elif g[K_RIGHT] or g[K_d]:
         di = "right"
-        posx += speed
+        #pos[X] += speed
     else:
         count = 0
 
     mx, my = mouse.get_pos()
     mb = mouse.get_pressed()
     playerRect=Rect(posx,posy,16,22)
-    
+    playerRect=Rect(pos[X],pos[Y],18,21)
+
 
     screen.blit(map, (0, 0))
+    for wm in wallsMap1:
+        draw.rect(screen,RED,wm,2)
     draw.rect(screen,AQUA,FirstMap)
 
-
     print(actions[action])
+
+    #print(actions[action])
 
     #screen.blit((actions[action][di][count % 3]), (posx, posy))
     draw.rect(screen,col,playerRect,1)
@@ -156,14 +207,41 @@ while running:
     if playerRect.colliderect(FirstMap):
         col=BLACK
         background=1
+        level=2
+        print("aaaaa")
+        pos[X]=250
+        pos[Y]=500
+        
     if background==1:
         screen.blit(map1, (0, 0))
+
         map2origin=1
     if map2origin==1:
-        posx, posy == 10,10
+        posx, posy == 10, 10
+        for wm in wallsMap2:
+            draw.rect(screen,RED,wm,2)
+        for ledge in ledge2:
+            draw.rect(screen,BLUE,ledge,2)
+
+        
+        draw.rect(screen,BEIGE,SecondMap)
+
+    if playerRect.colliderect(SecondMap) and background==1:
+        col=BLACK
+        background=2
+        print("aaaaa")
+        pos[X]=93
+        pos[Y]=223
+        
+    if background==2:
+        screen.blit(map2, (0, 0))
+        #playerRect=Rect(pos[X],pos[Y],16,22)
+
         
     draw.rect(screen,col,playerRect,1)
-    screen.blit((actions[action][di][count % 3]), (posx, posy))
+    screen.blit((actions[action][di][count % 3]), (pos[X], pos[Y]))
+    print (pos[X],"x value",pos[Y],"y value")
+    
     display.flip()
 
 quit()
