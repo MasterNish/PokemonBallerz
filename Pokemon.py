@@ -56,10 +56,12 @@ AQUA=(3, 252, 182)
 BEIGE=(250, 245, 112)
 
 wallsMap1=[Rect(0,0,358,75),Rect(0,75,50,600),Rect(0,450,340,175),Rect(315,480,600,600),Rect(750,0,90,601),Rect(450,0,1000,75),Rect(460,280,200,150)]
-wallsMap2=[Rect(400,0,500,121),Rect(680,0,300,384),Rect(0,550,1000,1000),Rect(0,0,65,1000),Rect(0,410,650,66),Rect(146,338,400,28),Rect(0,0,250,100),Rect(270,270,200,50)]
+wallsMap2=[Rect(400,0,500,121),Rect(680,0,300,384),Rect(0,550,1000,1000),Rect(0,0,65,1000),Rect(0,410,650,66),Rect(146,338,400,28),
+           Rect(0,0,250,100),Rect(230,260,210,30),Rect(730,300,1000,300),Rect(200,110,72,80),Rect(232,190,111,43),Rect(232,190,350,20)]
+wallsMap3=[Rect(0,0,400,200),Rect(0,0,90,1000),Rect(0,0,430,100),Rect(0,550,1000,100),Rect(0,0,1000,80),Rect(710,0,1000,1000),Rect(340,200,75,80),Rect(400,0,60,250)]
 
 ledge2=[Rect(150,250,50,20)]
-#wallsMap3=[Rect(50,50,50,50),Rect(150,50,50,50)]
+
 
 def drawScene(screen,player,walls):
     #screen.fill(0)  
@@ -135,7 +137,7 @@ anime = 0
 di = "down"
 X=0
 Y=1
-pos=[200,200]
+pos=[370,50]
 rs = 0.75
 ws = 0.45
 action = "walk"
@@ -174,6 +176,9 @@ while running:
     elif level==2:
         movePlayer(walk,wallsMap2,ledge2)
 
+    elif level==3:
+        movePlayer(walk,wallsMap3,[])
+
         
     if g[K_UP] or g[K_w]:
         di = "up"
@@ -211,8 +216,8 @@ while running:
         background=1
         level=2
         print("aaaaa")
-        pos[X]=250
-        pos[Y]=500
+        pos[X]=300
+        pos[Y]=100
         
     if background==1:
         screen.blit(map1, (0, 0))
@@ -226,6 +231,7 @@ while running:
 
     if playerRect.colliderect(SecondMap) and background==1:
         col=BLACK
+        level=3
         background=2
         print("aaaaa")
         pos[X]=93
@@ -233,6 +239,8 @@ while running:
         
     if background==2:
         screen.blit(map2, (0, 0))
+        for wm in wallsMap3:
+            draw.rect(screen,RED,wm,3)
         #playerRect=Rect(pos[X],pos[Y],16,22)
      
         
