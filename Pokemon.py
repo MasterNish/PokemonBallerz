@@ -90,9 +90,6 @@ def movePlayer(player,mywalls,myledge):
     elif keys[K_RIGHT] and hitwalls(pos[X]+5,pos[Y],mywalls)==-1:                                                               
         pos[X] += 5
 
-
-    
-
 def hitwalls(x,y,mywalls):
     playerRect = Rect(x,y,25,25)  
     print(playerRect.collidelist(mywalls)) 
@@ -247,11 +244,18 @@ while running:
 
     mx, my = mouse.get_pos()
     mb = mouse.get_pressed()
+
     print(mx, "x value",my,"yvalue")
     
     playerRect=Rect(pos[X],pos[Y],18,21)
                                                            
 #__________________________________________________________________________________________________________________________________________________________________________________________________
+
+    playerRect = Rect(pos[X],pos[Y],16,22)
+    playerRect = Rect(pos[X],pos[Y],18,21)
+
+
+
     screen.blit(map, (0, 0))
     for wm in wallsMap1:
         draw.rect(screen,RED,wm,2)
@@ -295,7 +299,7 @@ while running:
         
         draw.rect(screen,BEIGE,SecondMap)
 
-    if playerRect.colliderect(SecondMap) and background==1:
+    if playerRect.colliderect(SecondMap) and background == 1:
         col=BLACK
         level=3
         background=2
