@@ -55,6 +55,7 @@ WHITE=(255,255,255)
 AQUA=(3, 252, 182)
 BEIGE=(250, 245, 112)
 
+startWall=[Rect(188,162,417,0),Rect(188,489,417,0),Rect(188,162,1,327),Rect(605,152,1,327)]
 wallsMap1=[Rect(0,0,358,75),Rect(0,75,50,600),Rect(0,450,340,175),Rect(315,480,600,600),Rect(750,0,90,601),Rect(450,0,1000,75),Rect(460,280,200,150)]
 wallsMap2=[Rect(400,0,500,121),Rect(680,0,300,384),Rect(0,550,1000,1000),Rect(0,0,65,1000),Rect(0,410,650,66),Rect(146,338,400,28),
            Rect(0,0,250,100),Rect(230,260,210,30),Rect(730,300,1000,300),Rect(200,110,72,80),Rect(232,190,111,43),Rect(232,190,350,20)]
@@ -62,7 +63,11 @@ wallsMap3=[Rect(0,0,400,200),Rect(0,0,90,1000),Rect(0,0,430,100),Rect(0,550,1000
 nWall=[Rect(203,156,412,1),Rect(203,156,1,306),Rect(203,462,412,1),Rect(615,156,1,412)]
 martWall=[Rect(129,129,545,1),Rect(129,450,545,1),Rect(129,129,1,321),Rect(674,129,1,321)]
 downWall=[Rect(213,144,377,1),Rect(213,392,377,1),Rect(213,144,1,248),Rect(591,144,1,248)]
-wallsMapboss1=[Rect(500,100,100,100)]
+wallsMapboss1=[Rect(0,166,800,0),Rect(0,442,800,0),Rect(92,140,25,129),Rect(0,272,800,45),Rect(333,246,27,30),Rect(334,150,30,61),Rect(438,149,30,120),Rect(544,151,30,300),Rect(620,150,30,93),
+               Rect(620,207,102,36),Rect(757,207,100,38),Rect(378,321,25,60),Rect(351,347,57,30),Rect(184,321,60,31),Rect(213,347,98,33)]
+wallsMapboss2=[Rect(145,138,510,319)]
+battleWall=[Rect(191,164,414,320)]
+test101=[Rect(1,1,1,1)]
 
 ledge2=[Rect(150,250,50,20)]
 
@@ -99,6 +104,7 @@ FirstMap=Rect(360,15,90,0)
 SecondMap=Rect(280,75,90,0)
 neighbour=Rect(500,220,60,0)
 martbox=Rect(140,340,40,0)
+mapzero=Rect(500,278,1,6)
 
 downbox=Rect(215,450,40,0)
 downbox2=Rect(290,450,40,0)
@@ -107,19 +113,30 @@ boss1=Rect(500,100,100,0)
 tele1=Rect(57,187,1,8)    #short form for teleport
 tele2=Rect(279,323,1,5)
 tele3=Rect(396,186,1,6)
+tele4=Rect(768,184,1,4)
+
+battleRect=Rect(0,400,800,0)
+attack1=Rect(0,475,250,200)
+attack2=Rect(200,475,250,200)
+attack3=Rect(400,475,250,200)
+attack4=Rect(600,475,250,200)
+
 
 
 running = True
 
 clock = time.Clock()
-level=1
-mp = image.load("maps/map.png")
-mp1 = image.load("maps/map1.png")
-mp2 = image.load("maps/map6.png")
-neig = image.load("maps/neighbourWithBlack.png")
-pokemart = image.load("maps/pokecenterwithblack.png")
-housedownstairs = image.load("maps/downstairswithblack.png")
-bossmap1withblack = image.load("maps/bosswithblack1.png")
+level=0
+mp = image.load("maps/map.png").convert()
+mp1 = image.load("maps/map1.png").convert()
+mp2 = image.load("maps/map6.png").convert()
+neig = image.load("maps/neighbourWithBlack.png").convert()
+pokemart = image.load("maps/pokecenterwithblack.png").convert()
+housedownstairs = image.load("maps/downstairswithblack.png").convert()
+bossmap1withblack = image.load("maps/bosswithblack1.png").convert()
+bossmapwithblack = image.load("maps/bosswithblackfinal.png").convert()
+battle1= image.load("maps/battle.png").convert()
+bedroom1= image.load("maps/bedroom.png").convert()
 
 map = transform.smoothscale(mp, (800, 600))
 map1 = transform.smoothscale(mp1, (800, 600))
@@ -128,6 +145,9 @@ neigbourInside = transform.smoothscale(neig, (800, 600))
 mart = transform.smoothscale(pokemart, (800, 600))
 down = transform.smoothscale(housedownstairs, (800, 600))
 boss1map = transform.smoothscale(bossmap1withblack, (800, 600))
+boss2map = transform.smoothscale(bossmapwithblack, (800, 600))
+battle = transform.smoothscale(battle1, (800, 600))
+bedroom = transform.smoothscale(bedroom1, (800, 600))
 
 direction = ["left", "right", "down", "up"]
 walk = {d: [transform.smoothscale(image.load(i), (18, 21)) for i in glob("sprites\\Player\\walking\\" + d + "\\*.png")] for d in
@@ -158,10 +178,13 @@ background=0
 build=0
 map2origin=0
 anime = 0
+health=500
+opphealth=500
+attack=0
 di = "down"
 X=0
 Y=1
-pos=[370,50]
+pos=[360,400]
 rs = 0.75
 ws = 0.45
 action = "walk"
@@ -171,12 +194,14 @@ font.init()
 comicFont=font.SysFont("Comic Sans MS",11)
 
 while running:
-
+    click=False
     g = key.get_pressed()
-    for e in event.get():
-        if e.type == QUIT:
+    for evt in event.get():
+        if evt.type == QUIT:
             running = False
-
+        if evt.type==MOUSEBUTTONDOWN:
+            if evt.button==1:
+                click=True
     screen.fill(0)
     col=GREEN
     clock.tick(60)
@@ -192,20 +217,24 @@ while running:
     else:
         action = "walk"
 
+    mx, my = mouse.get_pos()
+    mb = mouse.get_pressed()
+
     # if action == "run":
     #     speed = rs
 
 #____________________________________________________________________________________________________________________________________________________________________________________________________________
+    if level==6 and inside==False:
+        movePlayer(walk,startWall,[])
+
     if build==1:
         movePlayer(walk,nWall,[])
         
 
     if level==1 and inside==False:
         movePlayer(walk,wallsMap1,[])
-        #print("moving")
-    
         
-    elif level==2:
+    elif level==2 and inside==False:
         movePlayer(walk,wallsMap2,ledge2)
 
     elif level==3 and inside==False:
@@ -214,7 +243,6 @@ while running:
     elif build==2:
         movePlayer(walk,martWall,[])
         
-
     elif build==3:
         movePlayer(walk,downWall,[])
 
@@ -223,6 +251,53 @@ while running:
 
     elif level==4 and inside==False:
         movePlayer(walk,wallsMapboss1,[])
+
+    elif level==5 and inside==False:
+        movePlayer(walk,wallsMapboss2,[])
+
+    elif build==5:
+        movePlayer(walk,battleWall,[])
+
+
+#____________________________________________________________________________________________________________________________
+
+    if mb[0]==1 and attack1.collidepoint(mx,my):
+        attack="1"
+    if mb[0]==1 and attack2.collidepoint(mx,my):
+        attack="2"
+    if mb[0]==1 and attack3.collidepoint(mx,my):
+        attack="3"
+    if mb[0]==1 and attack4.collidepoint(mx,my):
+        attack="4"
+
+
+#_______________________________________________________________________________
+
+    if attack=="1" and click==True:    #standard attack
+        opphealth-=10
+        print(opphealth)
+        click=False
+
+    if attack=="2" and click==True:     #risky range attack
+        a2=randint(0,22)
+        opphealth=opphealth-a2
+        print(opphealth)
+        click=False
+        
+
+    if attack=="3" and click==True:   #extreme risk attack
+        a3=randint(1,2)
+        if a3==1:
+            opphealth+=10
+        elif a3==2:
+            opphealth-=30
+        print(opphealth)
+
+    if attack=="4" and click==True:      #heal
+        health+=15
+        print(health)
+        click=False
+   
         
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -242,31 +317,55 @@ while running:
     else:
         count = 0
 
-    mx, my = mouse.get_pos()
-    mb = mouse.get_pressed()
 
-    print(mx, "x value",my,"yvalue")
+
+   #### print(mx, "x value",my,"y value")
     
     playerRect=Rect(pos[X],pos[Y],18,21)
-                                                           
+    draw.rect(screen,col,playerRect,1)                              
 #__________________________________________________________________________________________________________________________________________________________________________________________________
-
     playerRect = Rect(pos[X],pos[Y],16,22)
-    playerRect = Rect(pos[X],pos[Y],18,21)
 
 
 
-    screen.blit(map, (0, 0))
-    for wm in wallsMap1:
-        draw.rect(screen,RED,wm,2)
-    draw.rect(screen,AQUA,FirstMap)
-    draw.rect(screen,AQUA,neighbour)
+    
+    if background==0:
+        level=6
+        screen.blit(bedroom, (0, 0))
+        #for wm in startWall:
+          #  draw.rect(screen,RED,wm,1)
+        draw.rect(screen,AQUA,mapzero)
+        
+
+
+    
+    
+    
+
+
+    if playerRect.colliderect(mapzero):
+        print(level)
+        background=5
+        level=1
+        #pos[X]=235
+        #pos[Y]=275
+        pos[X]=100
+        pos[Y]=100  
+    if background==5:
+        for wm in wallsMap1:
+            draw.rect(screen,RED,wm,1)
+        draw.rect(screen,AQUA,FirstMap)
+        draw.rect(screen,AQUA,neighbour)
+        
+
+        screen.blit(map, (0, 0))
+
 
 
     #print(actions[action])
 
     #screen.blit((actions[action][di][count % 3]), (posx, posy))
-    draw.rect(screen,col,playerRect,1)
+   
 
     if playerRect.colliderect(neighbour) and background==0 and build==0:
         build=1
@@ -283,10 +382,11 @@ while running:
         
 
     if playerRect.colliderect(FirstMap):
-        col=BLACK
         background=1
         level=2
         print("level 22222")
+        pos[X]=603
+        pos[Y]=377
         
         
     if background==1:
@@ -298,6 +398,7 @@ while running:
 
         
         draw.rect(screen,BEIGE,SecondMap)
+        draw.rect(screen,GREEN,battleRect)
 
     if playerRect.colliderect(SecondMap) and background == 1:
         col=BLACK
@@ -308,9 +409,10 @@ while running:
         pos[Y]=223
         
     if background==2:
-        screen.blit(map2, (0, 0))
+        
         for wm in wallsMap3:
             draw.rect(screen,RED,wm,3)
+        screen.blit(map2, (0, 0))
         #playerRect=Rect(pos[X],pos[Y],16,22)
 
         draw.rect(screen,BEIGE,martbox)
@@ -366,16 +468,64 @@ while running:
         for wm in wallsMapboss1:
             draw.rect(screen,RED,wm,3)
 
+        draw.rect(screen,BEIGE,tele1)
+        draw.rect(screen,BEIGE,tele2)
+        draw.rect(screen,BEIGE,tele3)
+        draw.rect(screen,BEIGE,tele4)
+
     if playerRect.colliderect(boss1) and background==2:
         level=4
         background=3
         
-        
-        pos[X]=93
-        pos[Y]=223
+        pos[X]=34
+        pos[Y]=232
 
-    
+    if playerRect.colliderect(tele4) and background==3:
+        level=5
+        background=4
         
+        pos[X]=401
+        pos[Y]=450
+
+    if background==4:
+        
+        screen.blit(boss2map, (0, 0))
+        for wm in wallsMapboss2:
+            draw.rect(screen,RED,wm,3)
+
+
+
+
+#_______________________________________________________________________________________
+
+    if playerRect.colliderect(tele1) and background==3:
+        pos[X]=151
+        pos[Y]=395
+
+    if playerRect.colliderect(tele2) and background==3:
+        pos[X]=150
+        pos[Y]=206
+
+    if playerRect.colliderect(tele3) and background==3:
+        pos[X]=590
+        pos[Y]=244
+#_________________________________________________________________________________________
+
+    if playerRect.colliderect(battleRect) and background==1:
+        pos[X]=590
+        pos[Y]=244
+
+        build=5
+
+    if build==5 and background==1:
+        #print("52")
+        screen.blit(battle, (0, 0))
+        for wm in battleWall:
+            draw.rect(screen,RED,wm,3)
+        draw.rect(screen,RED,attack1)
+        draw.rect(screen,BLUE,attack2)
+        draw.rect(screen,GREEN,attack3)
+        draw.rect(screen,YELLOW,attack4)
      
         
 #_________________________________________________________________________________________________________________________________________________________________________________________        
