@@ -69,7 +69,7 @@ wallsMapboss2=[Rect(145,138,510,319)]
 battleWall=[Rect(191,164,414,320)]
 test101=[Rect(1,1,1,1)]
 
-ledge2=[Rect(150,250,50,20)]
+ledge2=[Rect(80,270,140,20)]
 
 inside=False
 
@@ -121,6 +121,15 @@ attack2=Rect(200,475,250,200)
 attack3=Rect(400,475,250,200)
 attack4=Rect(600,475,250,200)
 
+t1Rect = Rect(593, 343, 35, 35)
+t2Rect = Rect(393, 198, 35, 85)
+t3Rect = Rect(58, 293, 35, 35)
+t4Rect = Rect(293, 415, 35, 35)
+t5Rect = Rect(233, 264, 35, 35)
+t7Rect = Rect(383, 393, 35, 35)
+
+
+
 
 
 running = True
@@ -155,24 +164,24 @@ walk = {d: [transform.smoothscale(image.load(i), (18, 21)) for i in glob("sprite
 run = {d: [transform.smoothscale(image.load(i), (18, 21)) for i in glob("sprites\\Player\\running\\" + d + "\\*.png")] for d in
        direction}  # accesses all the pics from each direction folder and changes its size
 
-t1 = {d: [transform.smoothscale(image.load(i), (18, 21)) for i in glob("sprites\\t1\\" + d + "\\*.png")] for d in
-      direction}
-t2 = {d: [transform.smoothscale(image.load(i), (18, 21)) for i in glob("sprites\\t2\\" + d + "\\*.png")] for d in
-      direction}
-t3 = {d: [transform.smoothscale(image.load(i), (18, 21)) for i in glob("sprites\\t3\\" + d + "\\*.png")] for d in
-      direction}
-t4 = {d: [transform.smoothscale(image.load(i), (18, 21)) for i in glob("sprites\\t4\\" + d + "\\*.png")] for d in
-      direction}
-t5 = {d: [transform.smoothscale(image.load(i), (18, 21)) for i in glob("sprites\\t5\\" + d + "\\*.png")] for d in
-      direction}
-t6 = {d: [transform.smoothscale(image.load(i), (18, 21)) for i in glob("sprites\\t6\\" + d + "\\*.png")] for d in
-      direction}
-t7 = {d: [transform.smoothscale(image.load(i), (18, 21)) for i in glob("sprites\\t7\\" + d + "\\*.png")] for d in
-      direction}
+t1 = transform.smoothscale(image.load("sprites/t1/down/1down1.png"), (19, 22))
+t2 = transform.smoothscale(image.load("sprites/t2/down/2down1.png"), (22, 26))
+t3 = transform.smoothscale(image.load("sprites/t3/right/3right1.png"), (19, 22))
+t4 = transform.smoothscale(image.load("sprites/t4/up/4up1.png"), (19, 22))
+t5 = transform.smoothscale(image.load("sprites/t5/down/5down1.png"), (23, 27))
+t6 = transform.smoothscale(image.load("sprites/t6/left/6left1.png"), (19, 22))
+t7 = transform.smoothscale(image.load("sprites/t7/down/7down1.png"), (19, 22))
 
+t5text = transform.smoothscale(image.load("sprites/dialog/t5/t51.png"), (300, 100))
+t51text = transform.smoothscale(image.load("sprites/dialog/t5/t52.png"), (300, 100))
+t2text = transform.smoothscale(image.load("sprites/dialog/t2/t21.png"), (300, 100))
+t7text = transform.smoothscale(image.load("sprites/dialog/t7/t71.png"), (300, 100))
+t4text = transform.smoothscale(image.load("sprites/dialog/t4/t41.png"), (300, 100))
+t1text = transform.smoothscale(image.load("sprites/dialog/t1/t11.png"), (300, 100))
+t3text = transform.smoothscale(image.load("sprites/dialog/t3/t31.png"), (300, 100))
 
-
-mapgrid = [[]]
+pokemon = ["CHARMANDER"]
+bag = []
 count = 0
 background=0
 build=0
@@ -189,6 +198,7 @@ rs = 0.75
 ws = 0.45
 action = "walk"
 actions = {"walk": walk, "run": run}
+blitted = False
 
 font.init()
 comicFont=font.SysFont("Comic Sans MS",11)
@@ -338,11 +348,6 @@ while running:
         
 
 
-    
-    
-    
-
-
     if playerRect.colliderect(mapzero):
         print(level)
         background=5
@@ -377,24 +382,46 @@ while running:
     if background==0 and build==1:
         screen.blit(neigbourInside, (0, 0))
         for wm in nWall:
-            draw.rect(screen,RED,wm,2)
+            draw.rect(screen, RED, wm, 2)
+        #print("bye")
+        screen.blit(t5, (240, 270))
+        draw.rect(screen, BEIGE, t5Rect, 1)
+        blitted = False
+        if playerRect.colliderect(t5Rect):
+            screen.blit(t5text, (250, 450))
+            blitted = True
+            bag.append("CHARMANDER")
+        if blitted == False and "CHARMANDER" in bag:
+            screen.blit(t51text, (250, 450))
+
+    print(bag)
+
         
         
 
     if playerRect.colliderect(FirstMap):
         background=1
         level=2
-        print("level 22222")
+        #print("level 22222")
         pos[X]=603
         pos[Y]=377
         
         
     if background==1:
         screen.blit(map1, (0, 0))
+        screen.blit(t1, (600, 350))
+        draw.rect(screen, BEIGE, t1Rect, 1)
+        if playerRect.colliderect(t1Rect):
+            screen.blit(t1text, (250, 450))
+        screen.blit(t3, (65, 300))
+        draw.rect(screen, BEIGE, t3Rect, 1)
+        if playerRect.colliderect(t3Rect):
+            screen.blit(t3text, (250, 450))
         for wm in wallsMap2:
             draw.rect(screen,RED,wm,2)
         for ledge in ledge2:
             draw.rect(screen,BLUE,ledge,2)
+        #print("hi")
 
         
         draw.rect(screen,BEIGE,SecondMap)
@@ -404,7 +431,7 @@ while running:
         col=BLACK
         level=3
         background=2
-        print("aaaaa")
+        #print("aaaaa")
         pos[X]=93
         pos[Y]=223
         
@@ -431,8 +458,12 @@ while running:
         inside=True
 
     if build==2 and background==2:
-        #print(22)
+        # print(22)
         screen.blit(mart, (0, 0))
+        screen.blit(t2, (400, 205))
+        draw.rect(screen, BEIGE, t2Rect, 1)
+        if playerRect.colliderect(t2Rect):
+            screen.blit(t2text, (250, 450))
         for wm in martWall:
             draw.rect(screen,RED,wm,3)
 
@@ -444,7 +475,7 @@ while running:
 
     if playerRect.colliderect(downbox) and background==2 and build==0:
         build=3
-        
+
         
         pos[X]=93
         pos[Y]=223
@@ -465,6 +496,10 @@ while running:
     if background==3:
         #print("52")
         screen.blit(boss1map, (0, 0))
+        screen.blit(t4, (300, 422))
+        draw.rect(screen, BEIGE, t4Rect, 1)
+        if playerRect.colliderect(t4Rect):
+            screen.blit(t4text, (250, 450))
         for wm in wallsMapboss1:
             draw.rect(screen,RED,wm,3)
 
@@ -490,9 +525,12 @@ while running:
     if background==4:
         
         screen.blit(boss2map, (0, 0))
+        screen.blit(t7, (390, 400))
+        draw.rect(screen, BEIGE, t7Rect, 1)
+        if playerRect.colliderect(t7Rect):
+            screen.blit(t71text, (250, 450))
         for wm in wallsMapboss2:
             draw.rect(screen,RED,wm,3)
-
 
 
 
