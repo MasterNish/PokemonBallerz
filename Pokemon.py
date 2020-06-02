@@ -57,10 +57,10 @@ AQUA=(3, 252, 182)
 BEIGE=(250, 245, 112)
 
 startWall=[Rect(188,162,417,0),Rect(188,489,417,0),Rect(188,162,1,327),Rect(605,152,1,327)]
-wallsMap1=[Rect(0,0,358,75),Rect(0,75,50,600),Rect(0,450,340,175),Rect(315,480,600,600),Rect(750,0,90,601),Rect(450,0,1000,75),Rect(460,280,200,150)]
+wallsMap1=[Rect(0,0,358,75),Rect(0,75,50,600),Rect(0,450,340,175),Rect(315,480,600,600),Rect(750,0,90,601),Rect(450,0,1000,75),Rect(460,280,200,150),Rect(0,0,800,1)]
 wallsMap2=[Rect(400,0,500,121),Rect(680,0,300,384),Rect(0,550,1000,1000),Rect(0,0,65,1000),Rect(0,410,650,66),Rect(146,338,400,28),
            Rect(0,0,250,100),Rect(230,265,210,30),Rect(730,300,1000,300),Rect(200,110,72,80),Rect(232,190,111,38),Rect(232,190,350,20),
-           Rect(64,302,12,14),Rect(602,349,11,17)]
+           Rect(64,302,12,14),Rect(602,349,11,17),Rect(0,396,800,0),Rect(0,157,800,0)]
 wallsMap3=[Rect(0,0,400,200),Rect(0,0,90,1000),Rect(0,0,430,100),Rect(0,550,1000,100),Rect(0,0,1000,80),Rect(710,0,1000,1000),Rect(340,200,75,80),Rect(400,0,60,250)]
 nWall=[Rect(203,156,412,1),Rect(203,156,1,306),Rect(203,462,412,1),Rect(615,156,1,412)]
 martWall=[Rect(129,129,545,1),Rect(129,450,545,1),Rect(129,129,1,321),Rect(674,129,1,321)]
@@ -96,6 +96,14 @@ def movePlayer(player,mywalls,myledge):
         pos[X] -= 5
     elif keys[K_RIGHT] and hitwalls(pos[X]+5,pos[Y],mywalls)==-1:                                                               
         pos[X] += 5
+    if keys[K_DOWN] and g[K_LSHIFT]  and  hitwalls(pos[X],pos[Y]+5,mywalls)==-1:
+        pos[Y] += 5                                          
+    elif keys[K_UP] and g[K_LSHIFT]  and hitwalls(pos[X],pos[Y]-5,mywalls)==-1 and hitwalls(pos[X],pos[Y]-5,myledge)==-1:                                                             
+        pos[Y] -= 5
+    if keys[K_LEFT] and g[K_LSHIFT]  and hitwalls(pos[X]-5,pos[Y],mywalls)==-1:                                                            
+        pos[X] -= 5
+    elif keys[K_RIGHT] and g[K_LSHIFT] and hitwalls(pos[X]+5,pos[Y],mywalls)==-1:                                                               
+        pos[X] += 5
 
 def hitwalls(x,y,mywalls):
     playerRect = Rect(x,y,25,25)  
@@ -108,6 +116,7 @@ SecondMap=Rect(280,75,90,0)
 neighbour=Rect(500,220,60,0)
 neighbourexit=Rect(345,417,55,1)
 martbox=Rect(544,344,40,0)
+martboxexit=Rect(373,437,55,1)
 downtoout=Rect(373,384,59,1)
 mapzero=Rect(493,270,1,44)
 
@@ -125,6 +134,7 @@ tele3=Rect(396,186,1,6)
 tele4=Rect(768,184,1,4)
 
 battleRect=Rect(0,400,800,0)
+battleRect2=Rect(0,171,800,0)
 attack1=Rect(0,475,250,200)
 attack2=Rect(200,475,250,200)
 attack3=Rect(400,475,250,200)
@@ -217,6 +227,8 @@ background=0
 build=0
 map2origin=0
 anime = 0
+charbag=0
+battlenum=0
 
 
 attack=0
@@ -319,44 +331,93 @@ while running:
 
 #_______________________________________________________________________________
         
-    while health>=0 or opphealth>=0:
-        while turn==1:
+    if health>=0 or opphealth>=0:
+        if turn==1:
+            time.wait(10)
+            
             if attack=="1" and click==True:    #standard attack
+
                 opphealth-=10
-                print(opphealth)
+                print(opphealth,"............opp health...........")
                 click=False
-                turn=2
+                if health<=0 or opphealth<=0:
+                    turn=3
+                else:
+                    turn=2
+
+                draw.rect(screen,YELLOW,healthRect)
+                draw.rect(screen,YELLOW,opphealthRect)
    
             elif attack=="2" and click==True:     #risky range attack
+
                 a2=randint(0,22)
                 opphealth=opphealth-a2
-                print(opphealth)
+                print(opphealth,"............opp health...........")
                 click=False
-                turn=2
-        
+                if health<=0 or opphealth<=0:
+                    turn=3
+                else:
+                    turn=2
+                
+
+                draw.rect(screen,YELLOW,healthRect)
+                draw.rect(screen,YELLOW,opphealthRect)        
 
             elif attack=="3" and click==True:   #extreme risk attack
+
                 a3=randint(1,2)
                 if a3==1:
                     opphealth+=10
                 elif a3==2:
                    opphealth-=30
-                print(opphealth)
+                print(opphealth,"............opp health...........")
                 click=False
-                turn=2
+                if health<=0 or opphealth<=0:
+                    turn=3
+                else:
+                    turn=2
 
+                draw.rect(screen,YELLOW,healthRect)
+                draw.rect(screen,YELLOW,opphealthRect)
             elif attack=="4" and click==True:      #heal
+
                 health+=15
-                print(health)
+                print(health, "............player health...........")
                 click=False
-                turn=2
-                 
-        while turn==2: 
-            oppattack=randint(0,22)
+
+                draw.rect(screen,YELLOW,healthRect)
+                draw.rect(screen,YELLOW,opphealthRect)                 
+        elif turn==2:
+            time.wait(100)
+            time.wait(3)
+            oppattack=randint(0,10)
             health=health-oppattack
-            print(health)
-            turn=1
+            if health<=0 or opphealth<=0:
+                turn=3
+            else:
+                turn=1
+            print(health, "............player health...........")
+ 
+            draw.rect(screen,YELLOW,healthRect)
+            draw.rect(screen,YELLOW,opphealthRect)
+
+        if turn==3:
+            time.wait(10)
             
+            if health<=0:
+                print('l')
+            elif opphealth<=0:
+                
+                level=2
+                background=1
+                build=0
+                opphealth=400
+                if battlenum==1:
+                    pos[X]=651
+                    pos[Y]=357
+                if battlenum==2:
+                    pos[X]=612
+                    pos[Y]=128
    
         
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -376,7 +437,6 @@ while running:
         #pos[X] += speed
     else:
         count = 0
-
 
 
     print(mx, "x value",my,"y value")
@@ -462,6 +522,7 @@ while running:
             screen.blit(t5text, (250, 450))
             blitted = True
             bag.append("CHARMANDER")
+            charbag=1
         if blitted == False and "CHARMANDER" in bag:
             screen.blit(t51text, (250, 450))
 
@@ -477,12 +538,14 @@ while running:
         
         
 
-    if playerRect.colliderect(FirstMap):
+    if playerRect.colliderect(FirstMap) and charbag==1:
         background=1
         level=2
         #print("level 22222")
-        pos[X]=587
-        pos[Y]=287
+        #pos[X]=378
+        #pos[Y]=522
+        pos[X]=324
+        pos[Y]=106
         
         
     if background==1:
@@ -501,20 +564,22 @@ while running:
             draw.rect(screen,BLUE,ledge,2)
         #print("hi")
 
-        
+        #print(background, " issss background",build, "isssss build",level,"isss level")
         draw.rect(screen,BEIGE,SecondMap)
         draw.rect(screen,GREEN,battleRect)
+        draw.rect(screen,GREEN,battleRect2)
 
     if playerRect.colliderect(SecondMap) and background == 1:
+
         col=BLACK
         level=3
         background=2
         #print("aaaaa")
-        pos[X]=93
-        pos[Y]=223
+        pos[X]=543
+        pos[Y]=530
         
-    if background==2:
-        
+    if background==2 and build==0:
+        #print(background, " issss background",build, "isssss build",level,"isss level")
         for wm in wallsMap3:
             draw.rect(screen,RED,wm,3)
         screen.blit(map2, (0, 0))
@@ -531,9 +596,15 @@ while running:
         
         
         
-        pos[X]=93
-        pos[Y]=223
+        pos[X]=394
+        pos[Y]=406
         inside=True
+    if playerRect.colliderect(martboxexit) and background==2 and build==2:
+        background==2
+        build=0
+        pos[X]=560
+        pos[Y]=353
+        inside=False
 
     if build==2 and background==2:
         # print(22)
@@ -547,30 +618,50 @@ while running:
 
     if build==3 and background==2:
         #print("32")
+        level=7
         screen.blit(down, (0, 0))
         for wm in downWall:
             draw.rect(screen,RED,wm,3)
+        draw.rect(screen,BEIGE,downtoout)
 
     if playerRect.colliderect(downbox) and background==2 and build==0:
         build=3
 
         
-        pos[X]=93
-        pos[Y]=223
+        pos[X]=353
+        pos[Y]=338
+
+    if playerRect.colliderect(downtoout) and background==2 and build==3:
+        print(level)
+        background=2
+        build=0
+        level=3
+        inside=False
+        pos[X]=229
+        pos[Y]=458
 
     if build==4 and background==2:
         #print("42")
+        level=7
         screen.blit(down, (0, 0))
         for wm in downWall:
             draw.rect(screen,RED,wm,3)
+        draw.rect(screen,BEIGE,downtoout)
 
 
     if playerRect.colliderect(downbox2) and background==2 and build==0:
         build=4
-        
-        
-        pos[X]=93
-        pos[Y]=223
+        pos[X]=353
+        pos[Y]=338
+
+    if playerRect.colliderect(downtoout) and background==2 and build==4:
+        print(level)
+        background=2
+        build=0
+        level=3
+        inside=False
+        pos[X]=306
+        pos[Y]=455
 
     if background==3:
         #print("52")
@@ -607,7 +698,7 @@ while running:
         screen.blit(t7, (390, 400))
         draw.rect(screen, BEIGE, t7Rect, 1)
         if playerRect.colliderect(t7Rect):
-            screen.blit(t71text, (250, 450))
+            screen.blit(t7text, (250, 450))
         for wm in wallsMapboss2:
             draw.rect(screen,RED,wm,3)
 
@@ -633,6 +724,16 @@ while running:
         pos[Y]=244
 
         build=5
+        battlenum=1
+    if playerRect.colliderect(battleRect2) and background==1:
+        pos[X]=590
+        pos[Y]=244
+        health=600
+        opphealth=600
+
+        build=5
+        turn=1
+        battlenum=2
 
     if build==5 and background==1:
         #print("52")
@@ -643,8 +744,7 @@ while running:
         draw.rect(screen,BLUE,attack2)
         draw.rect(screen,GREEN,attack3)
         draw.rect(screen,YELLOW,attack4)
-        draw.rect(screen,YELLOW,healthRect)
-        draw.rect(screen,YELLOW,opphealthRect)
+
         screen.blit(atk1,(60,525))
         screen.blit(atk2,(260,525))
         screen.blit(atk3,(454,525))
