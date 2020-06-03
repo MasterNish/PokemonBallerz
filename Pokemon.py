@@ -43,7 +43,7 @@ class Character(sprite.Sprite):
 
 
 
-
+init()
 width, height = 800, 600
 screen = display.set_mode((width, height))
 RED=(255,0,0)
@@ -219,6 +219,9 @@ t4text = transform.smoothscale(image.load("sprites/dialog/t4/t41.png"), (300, 10
 t1text = transform.smoothscale(image.load("sprites/dialog/t1/t11.png"), (300, 100))
 t3text = transform.smoothscale(image.load("sprites/dialog/t3/t31.png"), (300, 100))
 
+grass1 = image.load("start/instructions1.png")
+grass2 = image.load("start/instructions.png")
+
 pokemon = ["CHARMANDER"]
 #_________________________________--
 bag = []
@@ -243,10 +246,31 @@ ws = 0.45
 action = "walk"
 actions = {"walk": walk, "run": run}
 blitted = False
+# -----------------------------
+a=0
+b=1
+c=2
+y=500
+scrollspeed = 3
 
 font.init()
-comicFont=font.SysFont("Comic Sans MS",11)
+mytext = font.SysFont("Arial", 30)
+mytext1 = mytext.render("HEY", True, BLACK)
+mytext2 = mytext.render("Rishi", True, BLACK)
 
+def drawScene():
+    screen.blit(grass1, (g1[a],g1[b]))
+    screen.blit(grass2, (g2[a],g2[b]))
+    # background scrolling
+    g1[b] = g1[b] + scrollspeed
+    if g1[b] + speed > g1[c]:
+        g1[b] = -g2[c]
+    g2[b] = g2[b] + scrollspeed
+    if g2[b] + scrollspeed > g2[c]:
+        g2[b] = -g1[c]
+    print("first y=",g1[b],"second y=",g2[b])
+
+myClock=time.Clock()
 while running:
     click=False
     g = key.get_pressed()
@@ -544,8 +568,8 @@ while running:
         #print("level 22222")
         #pos[X]=378
         #pos[Y]=522
-        pos[X]=324
-        pos[Y]=106
+        pos[X]=400
+        pos[Y]=300
         
         
     if background==1:
@@ -760,5 +784,6 @@ while running:
     #print (pos[X],"x value",pos[Y],"y value")
     
     display.flip()
+    myClock.tick(60)
 
 quit()

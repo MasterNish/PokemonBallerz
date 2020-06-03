@@ -1,32 +1,51 @@
 #Infinite scrolling effect
 from pygame import *
+
 init()
 size = 800,600
 screen=display.set_mode(size)
-X=0
-Y=1
-H=2
-galaxy1 = image.load("instructions1.png")
-galaxy2 = image.load("instructions.png")
+RED = (255, 0, 0)
+GREY = (127, 127, 127)
+BLACK = (0, 0, 0)
+BLUE = (0, 0, 255)
+GREEN = (0, 255, 0)
+YELLOW = (255, 255, 0)
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
 
-      #X Y  H
+a=0
+b=1
+c=2
+
+grass1 = image.load("instructions1.png")
+grass2 = image.load("instructions.png")
+
+font.init()
+
+mytext = font.SysFont("Arial", 30)
+mytext1 = mytext.render("HEY", True, BLACK)
+mytext2 = mytext.render("Rishi", True, BLACK)
+
+y = 500
+
+      #a b  c
 g1 = [0,0,600]
 g2=[0,-600,600]
 
 speed = 3
 
 def drawScene():
-    screen.blit(galaxy1, (g1[X],g1[Y]))
-    screen.blit(galaxy2, (g2[X],g2[Y]))
+    screen.blit(grass1, (g1[a],g1[b]))
+    screen.blit(grass2, (g2[a],g2[b]))
     # background scrolling
-    g1[Y] = g1[Y] + speed
-    if g1[Y] + speed > g1[H]: 
-        g1[Y] = -g2[H]
-    g2[Y] = g2[Y] + speed
-    if g2[Y] + speed > g2[H]:
-        g2[Y] = -g1[H]
-    print("first y=",g1[Y],"second y=",g2[Y])
-    display.flip()                   
+    g1[b] = g1[b] + speed
+    if g1[b] + speed > g1[c]:
+        g1[b] = -g2[c]
+    g2[b] = g2[b] + speed
+    if g2[b] + speed > g2[c]:
+        g2[b] = -g1[c]
+    print("first y=",g1[b],"second y=",g2[b])
+    # display.flip()
 
 myClock=time.Clock()   
 running = True
@@ -37,6 +56,12 @@ while running:
             running = False
 
     drawScene()
+
+    screen.blit(mytext1, (200, y))
+    screen.blit(mytext2, (200, y + 50))
+    y -= 1
+
+    display.flip()
     myClock.tick(60)
 
 quit()

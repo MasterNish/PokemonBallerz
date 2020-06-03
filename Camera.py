@@ -74,4 +74,5 @@ while running:
     drawScene(screen, p)
     check(p)
     myClock.tick(60)
+
 quit()
