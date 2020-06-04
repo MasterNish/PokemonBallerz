@@ -161,7 +161,7 @@ t9Rect = Rect(318, 268, 35, 35)
 running = True
 
 clock = time.Clock()
-level=0
+level=6
 mp = image.load("maps/map.png").convert()
 mp1 = image.load("maps/map1.png").convert()
 mp2 = image.load("maps/map6.png").convert()
@@ -180,7 +180,11 @@ attack3image= image.load("sprites/Attacks/chanbutton.png").convert()
 attack4image= image.load("sprites/Attacks/healbutton.png").convert()
 
 abraimage=image.load("sprites/ABRA/ABRA0.png").convert()
-charimage= image.load("sprites/CHARMANDER/CHARMANDER00.png").convert()
+charimage= image.load("sprites/CHARMANDER/CHARMANDER2.png").convert()
+
+finalbattletitle_og= image.load("maps/pokefinal.png").convert()
+
+loss_original= image.load("maps/endofgame.png").convert()
 
 map = transform.smoothscale(mp, (800, 600))
 map1 = transform.smoothscale(mp1, (800, 600))
@@ -194,6 +198,8 @@ battle = transform.smoothscale(battle1, (800, 600))
 bedroom = transform.smoothscale(bedroom1, (800, 600))
 abra = transform.smoothscale(abraimage, (120, 100))
 char = transform.smoothscale(charimage, (170, 140))
+finalbattletitle=transform.smoothscale(finalbattletitle_og, (800, 600))
+lossoriginal=transform.smoothscale(finalbattletitle_og, (800, 600))
 
 atk1 = transform.smoothscale(attack1image, (150, 75))
 atk2 = transform.smoothscale(attack2image, (150, 75))
@@ -240,7 +246,7 @@ pokemon = ["CHARMANDER"]
 #_________________________________--
 bag = []
 count = 0
-background = 7
+background = 0
 build=0
 map2origin=0
 anime = 0
@@ -265,6 +271,7 @@ di = "down"
 X=0
 Y=1
 pos=[360,400]
+
 rs = 1
 ws = 0.55
 action = "walk"
@@ -281,6 +288,8 @@ g1 = [0,0,600]
 g2=[0,-600,600]
 
 runtime = 0
+bosstimer_1=0
+bosstimer_2=0
 scrollspeed = 3
 
 font.init()
@@ -403,7 +412,7 @@ while running:
         count = 0
 
 
-    #print(mx, "x value",my,"y value")
+    print(mx, "x value",my,"y value")
     
     playerRect=Rect(pos[X],pos[Y],18,21)
     draw.rect(screen,col,playerRect,1)                              
@@ -710,10 +719,29 @@ while running:
         screen.blit(boss2map, (0, 0))
         screen.blit(t7, (390, 400))
         draw.rect(screen, BEIGE, t7Rect, 1)
-        if playerRect.colliderect(t7Rect):
-            screen.blit(t7text, (250, 450))
         for wm in wallsMapboss2:
             draw.rect(screen,RED,wm,3)
+        if playerRect.colliderect(t7Rect):
+            screen.blit(t7text, (250, 450))
+            if bosstimer_1<125:
+                bosstimer_1+=1
+                print(bosstimer_1)
+             
+            else:
+                screen.blit(finalbattletitle, (0, 0))
+                #pos[X]=800
+                #pos[Y]=600
+                if bosstimer_2<125:
+                    bosstimer_2+=1
+                else:
+                    build=5
+                    background=1
+                    battlenum=3
+
+                
+                
+            
+
 
 
 
