@@ -2,7 +2,7 @@
 from pygame import *
 
 init()
-size = 800,600
+size = 800, 600
 screen=display.set_mode(size)
 RED = (255, 0, 0)
 GREY = (127, 127, 127)
@@ -65,6 +65,7 @@ while running:
         y -= 1
         display.flip()
         myClock.tick(60)
+
         print(runtime)
     else:
         quit()

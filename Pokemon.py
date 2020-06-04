@@ -109,7 +109,7 @@ def movePlayer(player,mywalls,myledge):
         pos[X] += rs
 
 def hitwalls(x,y,mywalls):
-    playerRect = Rect(x,y,25,25)  
+    playerRect = Rect(x,y,25,25)
     print(playerRect.collidelist(mywalls)) 
     return playerRect.collidelist(mywalls)
 
@@ -193,7 +193,7 @@ boss1map = transform.smoothscale(bossmap1withblack, (800, 600))
 boss2map = transform.smoothscale(bossmapwithblack, (800, 600))
 battle = transform.smoothscale(battle1, (800, 600))
 bedroom = transform.smoothscale(bedroom1, (800, 600))
-abra = transform.smoothscale(abraimage, (80, 60))
+abra = transform.smoothscale(abraimage, (120, 100))
 char = transform.smoothscale(charimage, (170, 140))
 
 atk1 = transform.smoothscale(attack1image, (150, 75))
@@ -241,7 +241,7 @@ pokemon = ["CHARMANDER"]
 #_________________________________--
 bag = []
 count = 0
-background=0
+background = 7
 build=0
 map2origin=0
 anime = 0
@@ -264,11 +264,17 @@ ws = 0.55
 action = "walk"
 actions = {"walk": walk, "run": run}
 blitted = False
+
 # -----------------------------
 a=0
 b=1
 c=2
 y=500
+      #a b  c
+g1 = [0,0,600]
+g2=[0,-600,600]
+
+runtime = 0
 scrollspeed = 3
 
 font.init()
@@ -488,9 +494,22 @@ while running:
     playerRect=Rect(pos[X],pos[Y],18,21)
     draw.rect(screen,col,playerRect,1)                              
 #__________________________________________________________________________________________________________________________________________________________________________________________________
-    playerRect = Rect(pos[X],pos[Y],16,22)
+    playerRect = Rect(pos[X],pos[Y],21,26)
 
+    if background == 7:
+        if runtime <= 500:
+            runtime += 1
 
+            drawScene()
+
+            screen.blit(mytext1, (200, y))
+            screen.blit(mytext2, (200, y + 50))
+            y -= 1
+            display.flip()
+            myClock.tick(60)
+            print(runtime)
+        else:
+            background = 0
 
   
     if background==0:
@@ -817,6 +836,7 @@ while running:
 
     build = 5
     background = 1
+
     if build==5 and background==1:
         if not tw:
             throwani = 0
@@ -833,15 +853,15 @@ while running:
         draw.rect(screen,GREEN,attack3)
         draw.rect(screen,YELLOW,attack4)
 
-        screen.blit(atk1,(25,525))
-        screen.blit(atk2,(225,525))
-        screen.blit(atk3,(424,525))
-        screen.blit(atk4,(629,525))
-        screen.blit(abra,(503,283))
+        screen.blit(atk1,(25,500))
+        screen.blit(atk2,(225,500))
+        screen.blit(atk3,(424,500))
+        screen.blit(atk4,(629,500))
+        screen.blit(abra,(485,263))
         screen.blit(char,(220,325))
 
         if throwani != -1:
-            print(True)
+            # print(True)
             screen.blit(throw[throwani], (150, 330))
             ani += 1
             if ani % 15 == 0:
