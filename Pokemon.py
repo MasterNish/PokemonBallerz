@@ -748,8 +748,8 @@ while running:
         turn=1
         battlenum=2
 
-    build = 5
-    background = 1
+    # build = 5
+    # background = 1
 
     if build==5 and background==1:
         if not tw:
