@@ -2,6 +2,8 @@ from pygame import *
 from random import *
 from glob import *
 
+# from Camera import *
+
 class Character(sprite.Sprite):
 
     def __init__(self, animations, x, y):
@@ -38,16 +40,10 @@ class Character(sprite.Sprite):
             self.rect.x -= self.speeds[self.action]
 
 
-musics = ["Music/Music.mp3"]
-mInd = 0
-inc = 0.7
+
+
 
 init()
-
-mixer.music.load(musics[mInd])  # music plays infintely as the program runs
-mixer.music.play(-1)
-
-mixer.music.set_volume(inc)
 
 width, height = 800, 600
 screen = display.set_mode((width, height))
@@ -254,17 +250,12 @@ battlenum=0
 throwani = -1
 ani = 0
 tw = False
-#___________________________________
-fireani = -1
-anim = 0
-fe = False
 #____________________________________
 attack=0
 turn=1
 #__________________________________
 di = "down"
 X=0
-
 Y=1
 pos=[360,400]
 rs = 1
@@ -302,17 +293,16 @@ def drawScene():
         g2[b] = -g1[c]
     print("first y=",g1[b],"second y=",g2[b])
 
-click = False
-
 myClock=time.Clock()
 while running:
+    click=False
     g = key.get_pressed()
     for evt in event.get():
         if evt.type == QUIT:
             running = False
-        if evt.type == MOUSEBUTTONDOWN:
-            if evt.button == 1:
-                click = True
+        if evt.type==MOUSEBUTTONDOWN:
+            if evt.button==1:
+                click=True
 
     screen.fill(0)
     col=GREEN
@@ -394,23 +384,11 @@ while running:
         if turn==1:
             time.wait(10)
             
-            if attack == "1" and click == True:    #standard attack
-                if not fe:
-                    fireani = 0
-                fe = True
+            if attack=="1" and click==True:    #standard attack
+
                 opphealth-=10
                 #print(opphealth,"............opp health...........")
-                if fireani != -1:
-                    # print(True)
-                    screen.blit(fire[fireani], (450, 263))
-                    anim += 1
-                    if anim % 10 == 0:
-                        fireani += 1
-                    if fireani == 4:
-                        fireani = -1
-                    print(fireani)
-
-                click = False
+                click=False
                 if health<=0 or opphealth<=0:
                     turn=3
                 else:
@@ -885,11 +863,11 @@ while running:
             # print(True)
             screen.blit(throw[throwani], (150, 330))
             ani += 1
-            if ani % 10 == 0:
+            if ani % 15 == 0:
                 throwani += 1
             if throwani == 5:
                 throwani = -1
-            # print(throwani)
+            print(throwani)
 
 #_________________________________________________________________________________________________________________________________________________________________________________________        
     draw.rect(screen,col,playerRect,1)
