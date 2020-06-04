@@ -395,11 +395,14 @@ while running:
             time.wait(10)
             
             if attack == "1" and click == True:    #standard attack
+
+                opphealth-=10
+                #print(opphealth,"............opp health...........")
+
                 if not fe:
                     fireani = 0
                 fe = True
-                opphealth-=10
-                #print(opphealth,"............opp health...........")
+
                 if fireani != -1:
                     # print(True)
                     screen.blit(fire[fireani], (450, 263))
@@ -411,6 +414,7 @@ while running:
                     print(fireani)
 
                 click = False
+                
                 if health<=0 or opphealth<=0:
                     turn=3
                 else:
