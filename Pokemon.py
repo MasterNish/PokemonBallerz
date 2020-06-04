@@ -181,7 +181,7 @@ attack3image= image.load("sprites/Attacks/chanbutton.png").convert()
 attack4image= image.load("sprites/Attacks/healbutton.png").convert()
 
 abraimage=image.load("sprites/ABRA/ABRA0.png").convert()
-charimage= image.load("sprites/CHARMANDER/CHARMANDER0.png").convert()
+charimage= image.load("sprites/CHARMANDER/CHARMANDER00.png").convert()
 
 map = transform.smoothscale(mp, (800, 600))
 map1 = transform.smoothscale(mp1, (800, 600))
@@ -194,7 +194,7 @@ boss2map = transform.smoothscale(bossmapwithblack, (800, 600))
 battle = transform.smoothscale(battle1, (800, 600))
 bedroom = transform.smoothscale(bedroom1, (800, 600))
 abra = transform.smoothscale(abraimage, (80, 60))
-char = transform.smoothscale(charimage, (120, 90))
+char = transform.smoothscale(charimage, (170, 140))
 
 atk1 = transform.smoothscale(attack1image, (150, 75))
 atk2 = transform.smoothscale(attack2image, (150, 75))
@@ -208,7 +208,9 @@ walk = {d: [transform.smoothscale(image.load(i), (20, 24)) for i in glob("sprite
         direction}
 run = {d: [transform.smoothscale(image.load(i), (20, 24)) for i in glob("sprites\\Player\\running\\" + d + "\\*.png")] for d in
        direction}  # accesses all the pics from each direction folder and changes its size
-throw = [transform.smoothscale(image.load(i), (200, 200)) for i in glob("sprites\\Player\\throwing\\*.png")]
+throw = [transform.smoothscale(image.load(i), (125, 125)) for i in glob("sprites\\Player\\throwing\\*.png")]
+fire = [transform.smoothscale(image.load(i), (100, 100)) for i in glob("sprites\\Attacks\\fire\\*.png")]
+heart = [transform.smoothscale(image.load(i), (100, 100)) for i in glob("sprites\\Attacks\\heart\\*.png")]
 
 t1 = transform.smoothscale(image.load("sprites/t1/down/1down1.png"), (23, 27))
 t2 = transform.smoothscale(image.load("sprites/t2/down/2down1.png"), (23, 27))
@@ -813,6 +815,8 @@ while running:
         turn=1
         battlenum=2
 
+    build = 5
+    background = 1
     if build==5 and background==1:
         if not tw:
             throwani = 0
@@ -834,13 +838,13 @@ while running:
         screen.blit(atk3,(424,525))
         screen.blit(atk4,(629,525))
         screen.blit(abra,(503,283))
-        screen.blit(char,(271,294))
+        screen.blit(char,(220,325))
 
         if throwani != -1:
             print(True)
-            screen.blit(throw[throwani], (300, 250))
+            screen.blit(throw[throwani], (150, 330))
             ani += 1
-            if ani % 25 == 0:
+            if ani % 15 == 0:
                 throwani += 1
             if throwani == 5:
                 throwani = -1

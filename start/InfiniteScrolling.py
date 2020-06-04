@@ -16,6 +16,7 @@ BLACK = (0, 0, 0)
 a=0
 b=1
 c=2
+runtime = 0
 
 grass1 = image.load("instructions1.png")
 grass2 = image.load("instructions.png")
@@ -55,13 +56,15 @@ while running:
         if evnt.type == QUIT:
             running = False
 
-    drawScene()
+    if runtime <= 1000:
+        runtime += 1
+        drawScene()
 
-    screen.blit(mytext1, (200, y))
-    screen.blit(mytext2, (200, y + 50))
-    y -= 1
-
-    display.flip()
-    myClock.tick(60)
-
-quit()
+        screen.blit(mytext1, (200, y))
+        screen.blit(mytext2, (200, y + 50))
+        y -= 1
+        display.flip()
+        myClock.tick(60)
+        print(runtime)
+    else:
+        quit()
