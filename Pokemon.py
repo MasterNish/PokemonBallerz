@@ -208,8 +208,8 @@ walk = {d: [transform.smoothscale(image.load(i), (20, 24)) for i in glob("sprite
 run = {d: [transform.smoothscale(image.load(i), (20, 24)) for i in glob("sprites\\Player\\running\\" + d + "\\*.png")] for d in
        direction}  # accesses all the pics from each direction folder and changes its size
 throw = [transform.smoothscale(image.load(i), (125, 125)) for i in glob("sprites\\Player\\throwing\\*.png")]
-fire = [transform.smoothscale(image.load(i), (100, 100)) for i in glob("sprites\\Attacks\\fire\\*.png")]
-heart = [transform.smoothscale(image.load(i), (100, 100)) for i in glob("sprites\\Attacks\\heart\\*.png")]
+fire = [transform.smoothscale(image.load(i), (50, 50)) for i in glob("sprites\\Attacks\\fire\\*.png")]
+heart = [transform.smoothscale(image.load(i), (50, 50)) for i in glob("sprites\\Attacks\\heart\\*.png")]
 
 t1 = transform.smoothscale(image.load("sprites/t1/down/1down1.png"), (23, 27))
 t2 = transform.smoothscale(image.load("sprites/t2/down/2down1.png"), (23, 27))
@@ -250,9 +250,16 @@ battlenum=0
 throwani = -1
 ani = 0
 tw = False
+#___________________________________
+fireani = -1
+anim = 0
+fe = False
 #____________________________________
 attack=0
 turn=1
+angle = 210
+changex, changey = 410, 325
+
 #__________________________________
 di = "down"
 X=0
@@ -376,122 +383,6 @@ while running:
         attack="3"
     if mb[0]==1 and attack4.collidepoint(mx,my):
         attack="4"
-
-
-#_______________________________________________________________________________
-        
-    if health>=0 or opphealth>=0:
-        if turn==1:
-            time.wait(10)
-            
-
-            if attack == "1" and click == True:    #standard attack
-
-                opphealth-=10
-                #print(opphealth,"............opp health...........")
-
-                if not fe:
-                    fireani = 0
-                fe = True
-
-                if fireani != -1:
-                    # print(True)
-                    screen.blit(fire[fireani], (450, 263))
-                    anim += 1
-                    if anim % 10 == 0:
-                        fireani += 1
-                    if fireani == 4:
-                        fireani = -1
-                    print(fireani)
-
-                click = False
-                
-
-            if attack=="1" and click==True:    #standard attack
-
-                opphealth-=10
-                #print(opphealth,"............opp health...........")
-                click=False
-
-                if health<=0 or opphealth<=0:
-                    turn=3
-                else:
-                    turn=2
-
-                draw.rect(screen,YELLOW,healthRect)
-                draw.rect(screen,YELLOW,opphealthRect)
-   
-            elif attack=="2" and click==True:     #risky range attack
-
-                a2=randint(0,22)
-                opphealth=opphealth-a2
-                #print(opphealth,"............opp health...........")
-                click=False
-                if health<=0 or opphealth<=0:
-                    turn=3
-                else:
-                    turn=2
-                
-
-                draw.rect(screen,YELLOW,healthRect)
-                draw.rect(screen,YELLOW,opphealthRect)        
-
-            elif attack=="3" and click==True:   #extreme risk attack
-
-                a3=randint(1,2)
-                if a3==1:
-                    opphealth+=10
-                elif a3==2:
-                   opphealth-=30
-                #print(opphealth,"............opp health...........")
-                click=False
-                if health<=0 or opphealth<=0:
-                    turn=3
-                else:
-                    turn=2
-
-                draw.rect(screen,YELLOW,healthRect)
-                draw.rect(screen,YELLOW,opphealthRect)
-            elif attack=="4" and click==True:      #heal
-
-                health+=15
-                #print(health, "............player health...........")
-                click=False
-
-                draw.rect(screen,YELLOW,healthRect)
-                draw.rect(screen,YELLOW,opphealthRect)                 
-        elif turn==2:
-            time.wait(100)
-            time.wait(3)
-            oppattack=randint(0,10)
-            health=health-oppattack
-            if health<=0 or opphealth<=0:
-                turn=3
-            else:
-                turn=1
-            #print(health, "............player health...........")
- 
-            draw.rect(screen,YELLOW,healthRect)
-            draw.rect(screen,YELLOW,opphealthRect)
-
-        if turn==3:
-            time.wait(10)
-            
-            if health<=0:
-                print('l')
-            elif opphealth<=0:
-                
-                level=2
-                background=1
-                build=0
-                opphealth=400
-                if battlenum==1:
-                    pos[X]=651
-                    pos[Y]=357
-                if battlenum==2:
-                    pos[X]=612
-                    pos[Y]=128
-   
         
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -893,6 +784,120 @@ while running:
                 throwani = -1
             print(throwani)
 
+
+#___________________________________________________________________________________________________________
+
+    if health >= 0 or opphealth >= 0:
+        if turn == 1:
+            time.wait(10)
+
+            if attack == "1" and click == True:  # standard attack
+
+                opphealth -= 10
+                # print(opphealth,"............opp health...........")
+
+                changey -= 5
+                if changey == 305:
+                    changey = 325
+
+                changex += 15
+                if changex == 470:
+                    changex = 410
+
+                if not fe:
+                    fireani = 0
+                fe = True
+
+                if fireani != -1:
+                    screen.blit(transform.rotate(fire[fireani], angle), (changex, changey))
+                    # print(True)
+
+                    anim += 1
+                    if anim % 1 == 0:
+                        fireani += 1
+                    if fireani == 4:
+                        fireani = 0
+                    print(fireani)
+
+                click = False
+
+                if health <= 0 or opphealth <= 0:
+                    turn = 3
+                else:
+                    turn = 2
+
+                draw.rect(screen, YELLOW, healthRect)
+                draw.rect(screen, YELLOW, opphealthRect)
+
+            elif attack == "2" and click == True:  # risky range attack
+
+                a2 = randint(0, 22)
+                opphealth = opphealth - a2
+                # print(opphealth,"............opp health...........")
+                click = False
+                if health <= 0 or opphealth <= 0:
+                    turn = 3
+                else:
+                    turn = 2
+
+                draw.rect(screen, YELLOW, healthRect)
+                draw.rect(screen, YELLOW, opphealthRect)
+
+            elif attack == "3" and click == True:  # extreme risk attack
+
+                a3 = randint(1, 2)
+                if a3 == 1:
+                    opphealth += 10
+                elif a3 == 2:
+                    opphealth -= 30
+                # print(opphealth,"............opp health...........")
+                click = False
+                if health <= 0 or opphealth <= 0:
+                    turn = 3
+                else:
+                    turn = 2
+
+                draw.rect(screen, YELLOW, healthRect)
+                draw.rect(screen, YELLOW, opphealthRect)
+            elif attack == "4" and click == True:  # heal
+
+                health += 15
+                # print(health, "............player health...........")
+                click = False
+
+                draw.rect(screen, YELLOW, healthRect)
+                draw.rect(screen, YELLOW, opphealthRect)
+        elif turn == 2:
+            time.wait(100)
+            time.wait(3)
+            oppattack = randint(0, 10)
+            health = health - oppattack
+            if health <= 0 or opphealth <= 0:
+                turn = 3
+            else:
+                turn = 1
+            # print(health, "............player health...........")
+
+            draw.rect(screen, YELLOW, healthRect)
+            draw.rect(screen, YELLOW, opphealthRect)
+
+        if turn == 3:
+            time.wait(10)
+
+            if health <= 0:
+                print('l')
+            elif opphealth <= 0:
+
+                level = 2
+                background = 1
+                build = 0
+                opphealth = 400
+                if battlenum == 1:
+                    pos[X] = 651
+                    pos[Y] = 357
+                if battlenum == 2:
+                    pos[X] = 612
+                    pos[Y] = 128
 #_________________________________________________________________________________________________________________________________________________________________________________________        
     draw.rect(screen,col,playerRect,1)
     screen.blit((actions[action][di][count % 3]), (pos[X], pos[Y]))
