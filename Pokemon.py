@@ -251,6 +251,10 @@ battlenum=0
 throwani = -1
 ani = 0
 tw = False
+#___________________________________
+fireani = -1
+anim = 0
+fe = False
 #____________________________________
 attack=0
 turn=1
@@ -385,11 +389,23 @@ while running:
         if turn==1:
             time.wait(10)
             
-            if attack=="1" and click==True:    #standard attack
-
+            if attack == "1" and click == True:    #standard attack
+                if not fe:
+                    fireani = 0
+                fe = True
                 opphealth-=10
                 #print(opphealth,"............opp health...........")
-                click=False
+                if fireani != -1:
+                    # print(True)
+                    screen.blit(fire[fireani], (450, 263))
+                    anim += 1
+                    if anim % 10 == 0:
+                        fireani += 1
+                    if fireani == 4:
+                        fireani = -1
+                    print(fireani)
+
+                click = False
                 if health<=0 or opphealth<=0:
                     turn=3
                 else:
@@ -864,11 +880,11 @@ while running:
             # print(True)
             screen.blit(throw[throwani], (150, 330))
             ani += 1
-            if ani % 15 == 0:
+            if ani % 10 == 0:
                 throwani += 1
             if throwani == 5:
                 throwani = -1
-            print(throwani)
+            # print(throwani)
 
 #_________________________________________________________________________________________________________________________________________________________________________________________        
     draw.rect(screen,col,playerRect,1)
