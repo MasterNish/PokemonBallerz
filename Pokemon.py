@@ -158,7 +158,6 @@ t7Rect = Rect(383, 393, 35, 35)
 t8Rect = Rect(318, 268, 35, 35)
 t9Rect = Rect(318, 268, 35, 35)
 
-
 running = True
 
 clock = time.Clock()
@@ -257,6 +256,7 @@ turn=1
 #__________________________________
 di = "down"
 X=0
+
 Y=1
 pos=[360,400]
 rs = 1
