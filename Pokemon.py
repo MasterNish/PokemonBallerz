@@ -89,21 +89,21 @@ def drawScene(screen,player,walls):
 def movePlayer(player,mywalls,myledge):
     keys = key.get_pressed()
     if keys[K_DOWN] and hitwalls(pos[X],pos[Y]+5,mywalls)==-1:
-        pos[Y] += 5                                          
+        pos[Y] += ws
     elif keys[K_UP] and hitwalls(pos[X],pos[Y]-5,mywalls)==-1 and hitwalls(pos[X],pos[Y]-5,myledge)==-1:                                                             
-        pos[Y] -= 5
+        pos[Y] -= ws
     if keys[K_LEFT] and hitwalls(pos[X]-5,pos[Y],mywalls)==-1:                                                            
-        pos[X] -= 5
+        pos[X] -= ws
     elif keys[K_RIGHT] and hitwalls(pos[X]+5,pos[Y],mywalls)==-1:                                                               
-        pos[X] += 5
+        pos[X] += ws
     if keys[K_DOWN] and g[K_LSHIFT]  and  hitwalls(pos[X],pos[Y]+5,mywalls)==-1:
-        pos[Y] += 5                                          
+        pos[Y] += rs
     elif keys[K_UP] and g[K_LSHIFT]  and hitwalls(pos[X],pos[Y]-5,mywalls)==-1 and hitwalls(pos[X],pos[Y]-5,myledge)==-1:                                                             
-        pos[Y] -= 5
+        pos[Y] -= rs
     if keys[K_LEFT] and g[K_LSHIFT]  and hitwalls(pos[X]-5,pos[Y],mywalls)==-1:                                                            
-        pos[X] -= 5
+        pos[X] -= rs
     elif keys[K_RIGHT] and g[K_LSHIFT] and hitwalls(pos[X]+5,pos[Y],mywalls)==-1:                                                               
-        pos[X] += 5
+        pos[X] += rs
 
 def hitwalls(x,y,mywalls):
     playerRect = Rect(x,y,25,25)  
@@ -263,7 +263,7 @@ def drawScene():
     screen.blit(grass2, (g2[a],g2[b]))
     # background scrolling
     g1[b] = g1[b] + scrollspeed
-    if g1[b] + speed > g1[c]:
+    if g1[b] + scrollspeed > g1[c]:
         g1[b] = -g2[c]
     g2[b] = g2[b] + scrollspeed
     if g2[b] + scrollspeed > g2[c]:
@@ -624,7 +624,7 @@ while running:
         pos[Y]=406
         inside=True
     if playerRect.colliderect(martboxexit) and background==2 and build==2:
-        background==2
+        background=2
         build=0
         pos[X]=560
         pos[Y]=353
