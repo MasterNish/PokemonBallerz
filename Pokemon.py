@@ -44,6 +44,7 @@ class Character(sprite.Sprite):
 
 
 init()
+
 width, height = 800, 600
 screen = display.set_mode((width, height))
 RED=(255,0,0)
@@ -87,22 +88,24 @@ def drawScene(screen,player,walls):
     display.flip()
 
 def movePlayer(player,mywalls,myledge):
-    keys = key.get_pressed()
-    if keys[K_DOWN] and hitwalls(pos[X],pos[Y]+5,mywalls)==-1:
+    g = key.get_pressed()
+
+    if (g[K_DOWN] or g[K_s]) and hitwalls(pos[X],pos[Y]+5,mywalls)==-1:
         pos[Y] += ws
-    elif keys[K_UP] and hitwalls(pos[X],pos[Y]-5,mywalls)==-1 and hitwalls(pos[X],pos[Y]-5,myledge)==-1:                                                             
+    elif (g[K_UP] or g[K_w]) and hitwalls(pos[X],pos[Y]-5,mywalls)==-1 and hitwalls(pos[X],pos[Y]-5,myledge)==-1:
         pos[Y] -= ws
-    if keys[K_LEFT] and hitwalls(pos[X]-5,pos[Y],mywalls)==-1:                                                            
+    elif (g[K_LEFT] or g[K_a]) and hitwalls(pos[X]-5,pos[Y],mywalls) == -1:
         pos[X] -= ws
-    elif keys[K_RIGHT] and hitwalls(pos[X]+5,pos[Y],mywalls)==-1:                                                               
+    elif (g[K_RIGHT] or g[K_d]) and hitwalls(pos[X]+5,pos[Y],mywalls) == -1:
         pos[X] += ws
-    if keys[K_DOWN] and g[K_LSHIFT]  and  hitwalls(pos[X],pos[Y]+5,mywalls)==-1:
+
+    if (g[K_DOWN] or g[K_s]) and (g[K_LSHIFT] or g[K_RSHIFT]) and hitwalls(pos[X],pos[Y]+5,mywalls) == -1:
         pos[Y] += rs
-    elif keys[K_UP] and g[K_LSHIFT]  and hitwalls(pos[X],pos[Y]-5,mywalls)==-1 and hitwalls(pos[X],pos[Y]-5,myledge)==-1:                                                             
+    elif (g[K_UP] or g[K_w]) and (g[K_LSHIFT] or g[K_RSHIFT]) and hitwalls(pos[X],pos[Y]-5,mywalls) == -1 and hitwalls(pos[X],pos[Y]-5,myledge) == -1:
         pos[Y] -= rs
-    if keys[K_LEFT] and g[K_LSHIFT]  and hitwalls(pos[X]-5,pos[Y],mywalls)==-1:                                                            
+    elif (g[K_LEFT] or g[K_a]) and (g[K_LSHIFT] or g[K_RSHIFT]) and hitwalls(pos[X]-5,pos[Y],mywalls) == -1:
         pos[X] -= rs
-    elif keys[K_RIGHT] and g[K_LSHIFT] and hitwalls(pos[X]+5,pos[Y],mywalls)==-1:                                                               
+    elif (g[K_RIGHT] or g[K_d]) and (g[K_LSHIFT] or g[K_RSHIFT]) and hitwalls(pos[X]+5,pos[Y],mywalls) == -1:
         pos[X] += rs
 
 def hitwalls(x,y,mywalls):
@@ -149,11 +152,11 @@ t1Rect = Rect(593, 343, 35, 35)
 t2Rect = Rect(393, 198, 35, 85)
 t3Rect = Rect(58, 293, 35, 35)
 t4Rect = Rect(293, 415, 35, 35)
-t5Rect = Rect(233, 264, 35, 35)
+t5Rect = Rect(318, 268, 35, 35)
+t6Rect = Rect(233, 264, 35, 35)
 t7Rect = Rect(383, 393, 35, 35)
-
-
-
+t8Rect = Rect(318, 268, 35, 35)
+t9Rect = Rect(318, 268, 35, 35)
 
 
 running = True
@@ -172,13 +175,13 @@ battle1= image.load("maps/battle.png").convert()
 bedroom1= image.load("maps/bedroom.png").convert()
 
 
-attack1image= image.load("maps/attack1.png").convert()
-attack2image= image.load("maps/attack2.png").convert()
-attack3image= image.load("maps/attack3.png").convert()
-attack4image= image.load("maps/attack4.png").convert()
+attack1image= image.load("sprites/Attacks/atkbutton.png").convert()
+attack2image= image.load("sprites/Attacks/ambbutton.png").convert()
+attack3image= image.load("sprites/Attacks/chanbutton.png").convert()
+attack4image= image.load("sprites/Attacks/healbutton.png").convert()
 
-pikaimage=image.load("maps/PIKACHU0.png").convert()
-charimage= image.load("maps/CHARMANDER0.png").convert()
+abraimage=image.load("sprites/ABRA/ABRA0.png").convert()
+charimage= image.load("sprites/CHARMANDER/CHARMANDER0.png").convert()
 
 map = transform.smoothscale(mp, (800, 600))
 map1 = transform.smoothscale(mp1, (800, 600))
@@ -190,37 +193,44 @@ boss1map = transform.smoothscale(bossmap1withblack, (800, 600))
 boss2map = transform.smoothscale(bossmapwithblack, (800, 600))
 battle = transform.smoothscale(battle1, (800, 600))
 bedroom = transform.smoothscale(bedroom1, (800, 600))
-pika = transform.smoothscale(pikaimage, (80, 60))
+abra = transform.smoothscale(abraimage, (80, 60))
 char = transform.smoothscale(charimage, (120, 90))
 
-atk1 = transform.smoothscale(attack1image, (75, 75))
-atk2 = transform.smoothscale(attack2image, (75, 75))
-atk3 = transform.smoothscale(attack3image, (75, 75))
-atk4 = transform.smoothscale(attack4image, (75, 75))
+atk1 = transform.smoothscale(attack1image, (150, 75))
+atk2 = transform.smoothscale(attack2image, (150, 75))
+atk3 = transform.smoothscale(attack3image, (150, 75))
+atk4 = transform.smoothscale(attack4image, (150, 75))
 
 
 
 direction = ["left", "right", "down", "up"]
-walk = {d: [transform.smoothscale(image.load(i), (18, 21)) for i in glob("sprites\\Player\\walking\\" + d + "\\*.png")] for d in
+walk = {d: [transform.smoothscale(image.load(i), (20, 24)) for i in glob("sprites\\Player\\walking\\" + d + "\\*.png")] for d in
         direction}
-run = {d: [transform.smoothscale(image.load(i), (18, 21)) for i in glob("sprites\\Player\\running\\" + d + "\\*.png")] for d in
+run = {d: [transform.smoothscale(image.load(i), (20, 24)) for i in glob("sprites\\Player\\running\\" + d + "\\*.png")] for d in
        direction}  # accesses all the pics from each direction folder and changes its size
+throw = [transform.smoothscale(image.load(i), (200, 200)) for i in glob("sprites\\Player\\throwing\\*.png")]
 
-t1 = transform.smoothscale(image.load("sprites/t1/down/1down1.png"), (19, 22))
-t2 = transform.smoothscale(image.load("sprites/t2/down/2down1.png"), (22, 26))
-t3 = transform.smoothscale(image.load("sprites/t3/right/3right1.png"), (19, 22))
-t4 = transform.smoothscale(image.load("sprites/t4/up/4up1.png"), (19, 22))
+t1 = transform.smoothscale(image.load("sprites/t1/down/1down1.png"), (23, 27))
+t2 = transform.smoothscale(image.load("sprites/t2/down/2down1.png"), (23, 27))
+t3 = transform.smoothscale(image.load("sprites/t3/right/3right1.png"), (23, 27))
+t4 = transform.smoothscale(image.load("sprites/t4/up/4up1.png"), (23, 27))
 t5 = transform.smoothscale(image.load("sprites/t5/down/5down1.png"), (23, 27))
-t6 = transform.smoothscale(image.load("sprites/t6/left/6left1.png"), (19, 22))
-t7 = transform.smoothscale(image.load("sprites/t7/down/7down1.png"), (19, 22))
+t6 = transform.smoothscale(image.load("sprites/t6/down/6down1.png"), (23, 27))
+t7 = transform.smoothscale(image.load("sprites/t7/down/7down1.png"), (23, 27))
+t8 = transform.smoothscale(image.load("sprites/t8/down/8down2.png"), (23, 27))
+t9 = transform.smoothscale(image.load("sprites/t9/down/9down2.png"), (23, 27))
+t10 = transform.smoothscale(image.load("sprites/t10/down/10down2.png"), (23, 27))
 
-t5text = transform.smoothscale(image.load("sprites/dialog/t5/t51.png"), (300, 100))
-t51text = transform.smoothscale(image.load("sprites/dialog/t5/t52.png"), (300, 100))
+t6text = transform.smoothscale(image.load("sprites/dialog/t6/t61.png"), (300, 100))
+t61text = transform.smoothscale(image.load("sprites/dialog/t6/t62.png"), (300, 100))
 t2text = transform.smoothscale(image.load("sprites/dialog/t2/t21.png"), (300, 100))
 t7text = transform.smoothscale(image.load("sprites/dialog/t7/t71.png"), (300, 100))
 t4text = transform.smoothscale(image.load("sprites/dialog/t4/t41.png"), (300, 100))
 t1text = transform.smoothscale(image.load("sprites/dialog/t1/t11.png"), (300, 100))
 t3text = transform.smoothscale(image.load("sprites/dialog/t3/t31.png"), (300, 100))
+t5text = transform.smoothscale(image.load("sprites/dialog/t5/t51.png"), (300, 100))
+t8text = transform.smoothscale(image.load("sprites/dialog/t8/t81.png"), (300, 100))
+t9text = transform.smoothscale(image.load("sprites/dialog/t9/t91.png"), (300, 100))
 
 grass1 = image.load("start/instructions1.png")
 grass2 = image.load("start/instructions.png")
@@ -235,8 +245,11 @@ map2origin=0
 anime = 0
 charbag=0
 battlenum=0
-
-
+#___________________________________
+throwani = -1
+ani = 0
+tw = False
+#____________________________________
 attack=0
 turn=1
 #__________________________________
@@ -244,8 +257,8 @@ di = "down"
 X=0
 Y=1
 pos=[360,400]
-rs = 0.75
-ws = 0.45
+rs = 1
+ws = 0.55
 action = "walk"
 actions = {"walk": walk, "run": run}
 blitted = False
@@ -283,12 +296,14 @@ while running:
         if evt.type==MOUSEBUTTONDOWN:
             if evt.button==1:
                 click=True
+
     screen.fill(0)
     col=GREEN
     clock.tick(60)
 
+
     anime += 1
-    if anime % 10 == 0:  # speed of transition between pics
+    if anime % 7 == 0:  # speed of transition between pics
         count += 1
 
     speed = ws
@@ -365,7 +380,7 @@ while running:
             if attack=="1" and click==True:    #standard attack
 
                 opphealth-=10
-                print(opphealth,"............opp health...........")
+                #print(opphealth,"............opp health...........")
                 click=False
                 if health<=0 or opphealth<=0:
                     turn=3
@@ -379,7 +394,7 @@ while running:
 
                 a2=randint(0,22)
                 opphealth=opphealth-a2
-                print(opphealth,"............opp health...........")
+                #print(opphealth,"............opp health...........")
                 click=False
                 if health<=0 or opphealth<=0:
                     turn=3
@@ -397,7 +412,7 @@ while running:
                     opphealth+=10
                 elif a3==2:
                    opphealth-=30
-                print(opphealth,"............opp health...........")
+                #print(opphealth,"............opp health...........")
                 click=False
                 if health<=0 or opphealth<=0:
                     turn=3
@@ -409,7 +424,7 @@ while running:
             elif attack=="4" and click==True:      #heal
 
                 health+=15
-                print(health, "............player health...........")
+                #print(health, "............player health...........")
                 click=False
 
                 draw.rect(screen,YELLOW,healthRect)
@@ -423,7 +438,7 @@ while running:
                 turn=3
             else:
                 turn=1
-            print(health, "............player health...........")
+            #print(health, "............player health...........")
  
             draw.rect(screen,YELLOW,healthRect)
             draw.rect(screen,YELLOW,opphealthRect)
@@ -466,7 +481,7 @@ while running:
         count = 0
 
 
-    print(mx, "x value",my,"y value")
+    #print(mx, "x value",my,"y value")
     
     playerRect=Rect(pos[X],pos[Y],18,21)
     draw.rect(screen,col,playerRect,1)                              
@@ -486,7 +501,7 @@ while running:
 
 
     if playerRect.colliderect(mapzero) and background==0:
-        print(level)
+        #print(level)
         background=5
         level=7
         pos[X]=527
@@ -497,6 +512,10 @@ while running:
         screen.blit(down, (0, 0))
         draw.rect(screen,BEIGE,downtoup)
         draw.rect(screen,BEIGE,out_in)
+        draw.rect(screen, BEIGE, t5Rect, 1)
+        screen.blit(t5, (325,275))
+        if playerRect.colliderect(t5Rect):
+            screen.blit(t5text, (250, 450))
         
 
     if playerRect.colliderect(downtoup) and background==5:
@@ -518,7 +537,7 @@ while running:
 
 
     if playerRect.colliderect(downtoout) and background==5:
-        print(level)
+        #print(level)
         background=6
         level=1
         #pos[X]=235
@@ -555,17 +574,17 @@ while running:
         for wm in nWall:
             draw.rect(screen, RED, wm, 2)
         #print("bye")
-        screen.blit(t5, (240, 270))
-        draw.rect(screen, BEIGE, t5Rect, 1)
+        screen.blit(t6, (240, 270))
+        draw.rect(screen, BEIGE, t6Rect, 1)
         draw.rect(screen, BEIGE, neighbourexit)
         blitted = False
-        if playerRect.colliderect(t5Rect):
-            screen.blit(t5text, (250, 450))
+        if playerRect.colliderect(t6Rect):
+            screen.blit(t6text, (250, 450))
             blitted = True
             bag.append("CHARMANDER")
             charbag=1
         if blitted == False and "CHARMANDER" in bag:
-            screen.blit(t51text, (250, 450))
+            screen.blit(t61text, (250, 450))
 
     if playerRect.colliderect(neighbourexit) and background==6 and build==1:
         build=0
@@ -670,6 +689,10 @@ while running:
         #print("32")
         level=7
         screen.blit(down, (0, 0))
+        screen.blit(t8, (325, 275))
+        draw.rect(screen, BEIGE, t8Rect, 1)
+        if playerRect.colliderect(t8Rect):
+            screen.blit(t8text, (250, 450))
         for wm in downWall:
             draw.rect(screen,RED,wm,3)
         draw.rect(screen,BEIGE,downtoout)
@@ -694,6 +717,11 @@ while running:
         #print("42")
         level=7
         screen.blit(down, (0, 0))
+        screen.blit(down, (0, 0))
+        screen.blit(t9, (325, 275))
+        draw.rect(screen, BEIGE, t9Rect, 1)
+        if playerRect.colliderect(t9Rect):
+            screen.blit(t9text, (250, 450))
         for wm in downWall:
             draw.rect(screen,RED,wm,3)
         draw.rect(screen,BEIGE,downtoout)
@@ -786,8 +814,14 @@ while running:
         battlenum=2
 
     if build==5 and background==1:
+        if not tw:
+            throwani = 0
+        tw = True
         #print("52")
         screen.blit(battle, (0, 0))
+
+        #print(throwani)
+
         for wm in battleWall:
             draw.rect(screen,RED,wm,3)
         draw.rect(screen,RED,attack1)
@@ -795,15 +829,23 @@ while running:
         draw.rect(screen,GREEN,attack3)
         draw.rect(screen,YELLOW,attack4)
 
-        screen.blit(atk1,(60,525))
-        screen.blit(atk2,(260,525))
-        screen.blit(atk3,(454,525))
-        screen.blit(atk4,(659,525))
-        screen.blit(pika,(503,283))
+        screen.blit(atk1,(25,525))
+        screen.blit(atk2,(225,525))
+        screen.blit(atk3,(424,525))
+        screen.blit(atk4,(629,525))
+        screen.blit(abra,(503,283))
         screen.blit(char,(271,294))
-        
-     
-        
+
+        if throwani != -1:
+            print(True)
+            screen.blit(throw[throwani], (300, 250))
+            ani += 1
+            if ani % 25 == 0:
+                throwani += 1
+            if throwani == 5:
+                throwani = -1
+            print(throwani)
+
 #_________________________________________________________________________________________________________________________________________________________________________________________        
     draw.rect(screen,col,playerRect,1)
     screen.blit((actions[action][di][count % 3]), (pos[X], pos[Y]))
