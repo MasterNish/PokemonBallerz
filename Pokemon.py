@@ -2,8 +2,6 @@ from pygame import *
 from random import *
 from glob import *
 
-# from Camera import *
-
 class Character(sprite.Sprite):
 
     def __init__(self, animations, x, y):
@@ -40,10 +38,16 @@ class Character(sprite.Sprite):
             self.rect.x -= self.speeds[self.action]
 
 
-
-
+musics = ["Music/Music.mp3"]
+mInd = 0
+inc = 0.7
 
 init()
+
+mixer.music.load(musics[mInd])  # music plays infintely as the program runs
+mixer.music.play(-1)
+
+mixer.music.set_volume(inc)
 
 width, height = 800, 600
 screen = display.set_mode((width, height))
@@ -298,16 +302,17 @@ def drawScene():
         g2[b] = -g1[c]
     print("first y=",g1[b],"second y=",g2[b])
 
+click = False
+
 myClock=time.Clock()
 while running:
-    click=False
     g = key.get_pressed()
     for evt in event.get():
         if evt.type == QUIT:
             running = False
-        if evt.type==MOUSEBUTTONDOWN:
-            if evt.button==1:
-                click=True
+        if evt.type == MOUSEBUTTONDOWN:
+            if evt.button == 1:
+                click = True
 
     screen.fill(0)
     col=GREEN
