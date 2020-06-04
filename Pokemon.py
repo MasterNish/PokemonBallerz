@@ -119,6 +119,9 @@ martbox=Rect(544,344,40,0)
 martboxexit=Rect(373,437,55,1)
 downtoout=Rect(373,384,59,1)
 mapzero=Rect(493,270,1,44)
+downtoup=Rect(516,197,1,23)
+out_in=Rect(192,210,34,1)
+back_one=Rect(360,529,80,1)
 
 health=400
 opphealth=400
@@ -492,11 +495,25 @@ while running:
         for wm in downWall:
           draw.rect(screen,RED,wm,1)
         screen.blit(down, (0, 0))
+        draw.rect(screen,BEIGE,downtoup)
+        draw.rect(screen,BEIGE,out_in)
+        
 
+    if playerRect.colliderect(downtoup) and background==5:
+        background=0
+        pos[X]=469
+        pos[Y]=293
 
-
+    if playerRect.colliderect(out_in) and background==6:
+        background=5
+        pos[X]=402
+        pos[Y]=365
+        level=7
 
     
+
+
+
         
 
 
@@ -592,6 +609,15 @@ while running:
         draw.rect(screen,BEIGE,SecondMap)
         draw.rect(screen,GREEN,battleRect)
         draw.rect(screen,GREEN,battleRect2)
+
+    if playerRect.colliderect(SecondMap) and background == 1:
+
+        col=BLACK
+        level=3
+        background=2
+        #print("aaaaa")
+        pos[X]=543
+        pos[Y]=530
 
     if playerRect.colliderect(SecondMap) and background == 1:
 
