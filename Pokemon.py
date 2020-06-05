@@ -224,7 +224,7 @@ bedroom = transform.smoothscale(bedroom1, (800, 600))
 abra = transform.smoothscale(abraimage, (120, 100))
 char = transform.smoothscale(charimage, (170, 140))
 finalbattletitle = transform.smoothscale(finalbattletitle_og, (800, 600))
-lossoriginal = transform.smoothscale(finalbattletitle_og, (800, 600))
+lossoriginal = transform.smoothscale(loss_original, (800, 600))
 
 atk1 = transform.smoothscale(attack1image, (150, 75))
 atk2 = transform.smoothscale(attack2image, (150, 75))
@@ -303,7 +303,7 @@ X = 0
 Y = 1
 pos = [360, 400]
 
-rs = 1.25
+rs = 4
 ws = 0.75
 action = "walk"
 actions = {"walk": walk, "run": run}
@@ -321,6 +321,7 @@ g2 = [0, -600, 600]
 runtime = 0
 bosstimer_1 = 0
 bosstimer_2 = 0
+losstimer=0
 scrollspeed = 3
 
 font.init()
@@ -378,7 +379,7 @@ while running:
     if level == 6 and inside == False:
         movePlayer(walk, startWall, [])
 
-    if level == 8 and inside == False:
+    if level == 8 :
         movePlayer(walk, startWall, [])
 
     if level == 7 and inside == False:
@@ -424,6 +425,8 @@ while running:
         attack = "3"
     if mb[0] == 1 and attack4.collidepoint(mx, my):
         attack = "4"
+  #  if mb[0]==1 and restart.collidepoint(mx,my):
+   #     restart=="1"
 
     # -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -675,28 +678,28 @@ while running:
         background = 10
         build = 3
         level = 3
+        pos[X] = 459
+        pos[Y] = 295
 
-        pos[X] = 229
-        pos[Y] = 358
+
 
     if background == 10 and build == 3:  # upstairs
-        level = 6
+        level = 8
         screen.blit(bedroom, (0, 0))
-        pos[X] = 40
-        pos[Y] = 40
-        print(level, "......level", background, "......background", build, "........build")
+
+        #print(level, "......level", background, "......background", build, "........build")
         for wm in startWall:
             draw.rect(screen, RED, wm, 1)
         draw.rect(screen, AQUA, doc_to_out)
 
-    ##    if playerRect.colliderect(doc_to_out) and background==10 and build==3:    #upstairs to downstairs
-    ##        print(level)
-    ##        background=2
-    ##        build=0
-    ##        level=7
-    ##        inside=False
-    ##        pos[X]=229
-    ##        pos[Y]=458
+    if playerRect.colliderect(doc_to_out) and background==10 and build==3:    #upstairs to downstairs
+        print(level)
+        background=2
+        build=3
+        level=7
+        
+        pos[X]=554
+        pos[Y]=224
 
     # _____________________________________________________________________________________________________________
 
@@ -811,8 +814,8 @@ while running:
         turn = 1
         battlenum = 2
 
-    build = 5
-    background = 1
+    #build = 5
+    #background = 1
 
     if build == 5 and background == 1:
         if not tw:
@@ -856,7 +859,7 @@ while running:
 
             if attack == "1" and click == True:  # standard attack
 
-                opphealth -= 10
+                opphealth -= 1
                 # print(opphealth,"............opp health...........")
 
                 changey -= 5
@@ -1028,6 +1031,14 @@ while running:
             time.wait(10)
 
             if health <= 0:
+                screen.blit(lossoriginal(0,0))
+                if restart==1:
+                    
+                    background=0
+                    charbag=0
+                    level=6
+                    build=0
+                
                 print('l')
             elif opphealth <= 0:
 
