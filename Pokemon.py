@@ -89,6 +89,7 @@ wallsMapboss1 = [Rect(0, 166, 800, 0), Rect(0, 442, 800, 0), Rect(92, 140, 25, 1
 wallsMapboss2 = [Rect(145, 138, 510, 319)]
 battleWall = [Rect(0, 0, 800, 0), Rect(0, 0, 0, 600), Rect(800, 0, 0, 600), Rect(0, 600, 800, 0)]
 test101 = [Rect(1, 1, 1, 1)]
+introRect=[Rect(0,0,800,0),Rect(0,0,0,600),Rect(0,600,800,0),Rect(800,0,0,600)]
 
 ledge2 = [Rect(80, 270, 140, 20), Rect(354, 230, 147, 3), Rect(656, 454, 150, 1), Rect(154, 498, 154, 3),
           Rect(360, 498, 500, 1)]
@@ -336,7 +337,7 @@ l2 = "Coroger, the leader of Team Galactic needs to be defeated"
 l3 = "before he enslaves all Pokémon! Get advice and tips from"
 l4 = "various side characters and train and evolve your Pokémon"
 l5 = "through battle to become powerful enough to stop Coroger!"
-l6 = "You will need to locate a special key to be able to enter"
+l6 = "You will need to locate a special key to be able to enter"        #----------------------
 l7 = "the Research Center; so make sure to search every inch"
 l8 = "of every building! "
 l9 = "Controls and Movement"                                            #----------------------
@@ -348,7 +349,7 @@ l14 = "The objective of a battle is to get the opposing Pokémon’s"
 l15 = "health points to zero through a series of attacks."
 l16 = "You have 4 moves to use in battle:"
 l17 = "Attack: a consistent but mild attack"
-l18 = "Ambush: a surprise move that's either very or not effective"
+l18 = "Ambush: a surprise attack deals a random amount of damage"
 l19 = "Chance: does tons of damage or it heals the opponent fully"
 l20 = "Heal: increases your health"
 l21 = "After each battle won all 4 of these moves will become"
@@ -356,13 +357,13 @@ l22 = "more powerful. But if you lose in a battle you will be"
 l23 = "sent back to your house so you can try again!"
 l24 = "Buildings"                                                       #----------------------
 l25 = "1 main function in this game. It's to give you information,"
-l26 = "guide and help you through the game"
+l26 = "guide and help you through the game."
 l27 = "Coroger’s Laboratory"                                            #----------------------
 l28 = "The final destination of the game. Entering this stage will"
 l29 = "require collecting a special key hidden in a building. If"
 l30 = "your strong and smart enough, you will be able to protect"
 l31 = "the Pokémon World from Coroger’s twisted plans!"
-l32 = "Good Luck Trainer!"
+l32 = "Good Luck Trainer!"                                              #----------------------
 
 
 
@@ -491,6 +492,8 @@ while running:
 
     elif build == 5:
         movePlayer(walk, battleWall, [])
+    elif level ==15:
+        movePlayer(walk,introRect,[])
 
     # ____________________________________________________________________________________________________________________________
 
@@ -530,47 +533,44 @@ while running:
     playerRect = Rect(pos[X], pos[Y], 21, 26)
 
     if background == 7:
-        if runtime <= 2000:
+        level=15
+        if runtime <= 2175:
             runtime += 1
 
             drawScene()
 
-            screen.blit(mytext1, (35, y))
-            screen.blit(mytext2, (15, y + 70))
-            screen.blit(mytext3, (15, y + 110))
-            screen.blit(mytext4, (15, y + 150))
-            screen.blit(mytext5, (15, y + 190))
-            screen.blit(mytext6, (15, y + 230))
-            screen.blit(mytext7, (15, y + 270))
-            screen.blit(mytext8, (15, y + 310))     #----------------------
-            screen.blit(mytext9, (15, y + 390))
-            screen.blit(mytext10, (15, y + 440))
-            screen.blit(mytext11, (15, y + 480))
-            screen.blit(mytext12, (15, y + 520))
-            screen.blit(mytext9, (15, y + 390))
-            screen.blit(mytext10, (15, y + 440))
-            screen.blit(mytext11, (15, y + 480))
-            screen.blit(mytext12, (15, y + 520))
-            screen.blit(mytext13, (15, y + 390))
-            screen.blit(mytext14, (15, y + 440))
-            screen.blit(mytext15, (15, y + 480))
-            screen.blit(mytext16, (15, y + 520))
-            screen.blit(mytext17, (15, y + 390))
-            screen.blit(mytext18, (15, y + 440))
-            screen.blit(mytext19, (15, y + 480))
-            screen.blit(mytext20, (15, y + 520))
-            screen.blit(mytext21, (15, y + 390))
-            screen.blit(mytext22, (15, y + 440))
-            screen.blit(mytext23, (15, y + 480))
-            screen.blit(mytext24, (15, y + 520))
-            screen.blit(mytext25, (15, y + 390))
-            screen.blit(mytext26, (15, y + 440))
-            screen.blit(mytext27, (15, y + 480))
-            screen.blit(mytext28, (15, y + 520))
-            screen.blit(mytext29, (15, y + 390))
-            screen.blit(mytext30, (15, y + 440))
-            screen.blit(mytext31, (15, y + 480))
-            screen.blit(mytext32, (15, y + 520))
+            screen.blit(mytext1, (35, y))           #----------------------
+            screen.blit(mytext2, (15, y + 80))
+            screen.blit(mytext3, (15, y + 120))
+            screen.blit(mytext4, (15, y + 160))
+            screen.blit(mytext5, (15, y + 200))
+            screen.blit(mytext6, (15, y + 260))     #----------------------
+            screen.blit(mytext7, (15, y + 300))
+            screen.blit(mytext8, (15, y + 340))
+            screen.blit(mytext9, (15, y + 420))     #----------------------
+            screen.blit(mytext10, (15, y + 480))
+            screen.blit(mytext11, (15, y + 520))
+            screen.blit(mytext12, (15, y + 560))
+            screen.blit(mytext13, (15, y + 640))     #----------------------
+            screen.blit(mytext14, (15, y + 700))
+            screen.blit(mytext15, (15, y + 740))
+            screen.blit(mytext16, (15, y + 800))    #----------------------
+            screen.blit(mytext17, (15, y + 840))
+            screen.blit(mytext18, (15, y + 880))
+            screen.blit(mytext19, (15, y + 920))
+            screen.blit(mytext20, (15, y + 960))
+            screen.blit(mytext21, (15, y + 1020))    #----------------------
+            screen.blit(mytext22, (15, y + 1060))
+            screen.blit(mytext23, (15, y + 1100))
+            screen.blit(mytext24, (15, y + 1180))   #----------------------
+            screen.blit(mytext25, (15, y + 1240))
+            screen.blit(mytext26, (15, y + 1280))
+            screen.blit(mytext27, (15, y + 1360))   #----------------------
+            screen.blit(mytext28, (15, y + 1420))
+            screen.blit(mytext29, (15, y + 1460))
+            screen.blit(mytext30, (15, y + 1500))
+            screen.blit(mytext31, (15, y + 1540))
+            screen.blit(mytext32, (250, y + 1620))       #----------------------
 
 
             y -= 1
@@ -580,6 +580,8 @@ while running:
             print(runtime)
         else:
             background = 0
+            pos[X]=400
+            pos[Y]=300
 
     if background == 0:
         level = 6
