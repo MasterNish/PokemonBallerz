@@ -59,9 +59,9 @@ BEIGE=(250, 245, 112)
 
 startWall=[Rect(188,162,417,0),Rect(188,489,417,0),Rect(188,162,1,327),Rect(605,152,1,327)]
 wallsMap1=[Rect(0,0,358,75),Rect(0,75,50,600),Rect(0,450,340,175),Rect(315,480,600,600),Rect(750,0,90,601),Rect(450,0,1000,75),Rect(460,280,200,150),Rect(0,0,800,1)]
-wallsMap2=[Rect(400,0,500,121),Rect(680,0,300,384),Rect(0,550,1000,1000),Rect(0,0,65,1000),Rect(0,410,650,66),Rect(146,338,400,28),
-           Rect(0,0,250,100),Rect(230,265,210,30),Rect(730,300,1000,300),Rect(200,110,72,80),Rect(232,190,111,38),Rect(232,190,350,20),
-           Rect(64,302,12,14),Rect(602,349,11,17),Rect(0,396,800,0),Rect(0,157,800,0)]
+wallsMap2=[Rect(400,0,500,121),Rect(680,0,300,384),Rect(0,550,1000,1000),Rect(0,0,65,1000),Rect(0,410,511,66),Rect(146,338,400,28),
+           Rect(0,0,115,100),Rect(115,0,135,75),Rect(230,265,210,30),Rect(730,300,1000,300),Rect(200,110,72,80),Rect(232,190,111,38),Rect(232,190,350,20),
+           Rect(64,302,12,14),Rect(602,349,11,17),Rect(0,425,648,0),Rect(200,157,800,0)]
 wallsMap3=[Rect(0,0,400,200),Rect(0,0,90,1000),Rect(0,0,430,100),Rect(0,550,1000,100),Rect(0,0,1000,80),Rect(710,0,1000,1000),Rect(340,200,75,80),Rect(400,0,60,250)]
 nWall=[Rect(203,197,412,1),Rect(203,197,1,306),Rect(203,462,412,1),Rect(615,197,1,412),Rect(247,275,8,13),Rect(202,428,412,1)]
 martWall=[Rect(129,129,545,1),Rect(129,450,545,1),Rect(129,129,1,321),Rect(674,129,1,321),Rect(281,193,232,67)]
@@ -72,7 +72,7 @@ wallsMapboss2=[Rect(145,138,510,319)]
 battleWall=[Rect(0,0,800,0),Rect(0,0,0,600),Rect(800,0,0,600),Rect(0,600,800,0)]
 test101=[Rect(1,1,1,1)]
 
-ledge2=[Rect(80,270,140,20)]
+ledge2=[Rect(80,270,140,20),Rect(354,230,147,3),Rect(656,454,150,1),Rect(154,498,154,3),Rect(360,498,500,1)]
 
 inside=False
 
@@ -115,7 +115,8 @@ def hitwalls(x,y,mywalls):
 
 
 FirstMap=Rect(360,15,90,0)
-SecondMap=Rect(280,75,90,0)
+FirstMapReverse=Rect(358,532,80,1) 
+SecondMap=Rect(280,66,90,0)
 neighbour=Rect(500,220,60,0)
 neighbourexit=Rect(345,417,55,1)
 martbox=Rect(544,344,40,0)
@@ -136,13 +137,13 @@ downbox2=Rect(290,450,40,0)
 downbox3=Rect(500,278,1,6)
 
 boss1=Rect(500,100,100,0)
-tele1=Rect(57,187,1,8)    #short form for teleport
+tele1=Rect(57,187,1,8)    #short form for teleport1
 tele2=Rect(279,323,1,5)
 tele3=Rect(396,186,1,6)
 tele4=Rect(768,184,1,4)
 
-battleRect=Rect(0,400,800,0)
-battleRect2=Rect(0,171,800,0)
+battleRect=Rect(0,429,649,0)
+battleRect2=Rect(270,171,800,0)
 attack1=Rect(0,475,250,200)
 attack2=Rect(200,475,250,200)
 attack3=Rect(400,475,250,200)
@@ -274,7 +275,7 @@ X=0
 Y=1
 pos=[360,400]
 
-rs = 1.15
+rs = 4
 ws = 0.75
 action = "walk"
 actions = {"walk": walk, "run": run}
@@ -546,7 +547,7 @@ while running:
 
         
         
-
+   
     if playerRect.colliderect(FirstMap) and charbag==1:
         background=1
         level=2
@@ -575,8 +576,15 @@ while running:
 
         #print(background, " issss background",build, "isssss build",level,"isss level")
         draw.rect(screen,BEIGE,SecondMap)
+        draw.rect(screen,BEIGE,FirstMapReverse)
         draw.rect(screen,GREEN,battleRect)
         draw.rect(screen,GREEN,battleRect2)
+
+    if playerRect.colliderect(FirstMapReverse) and background==1:
+        background=6
+        level=1
+        pos[X]=395
+        pos[Y]=40
 
     if playerRect.colliderect(SecondMap) and background == 1:
 
