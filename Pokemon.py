@@ -274,8 +274,8 @@ X=0
 Y=1
 pos=[360,400]
 
-rs = 4
-ws = 0.55
+rs = 1.15
+ws = 0.75
 action = "walk"
 actions = {"walk": walk, "run": run}
 blitted = False
