@@ -63,9 +63,9 @@ wallsMap2=[Rect(400,0,500,121),Rect(680,0,300,384),Rect(0,550,1000,1000),Rect(0,
            Rect(0,0,250,100),Rect(230,265,210,30),Rect(730,300,1000,300),Rect(200,110,72,80),Rect(232,190,111,38),Rect(232,190,350,20),
            Rect(64,302,12,14),Rect(602,349,11,17),Rect(0,396,800,0),Rect(0,157,800,0)]
 wallsMap3=[Rect(0,0,400,200),Rect(0,0,90,1000),Rect(0,0,430,100),Rect(0,550,1000,100),Rect(0,0,1000,80),Rect(710,0,1000,1000),Rect(340,200,75,80),Rect(400,0,60,250)]
-nWall=[Rect(203,156,412,1),Rect(203,156,1,306),Rect(203,462,412,1),Rect(615,156,1,412)]
-martWall=[Rect(129,129,545,1),Rect(129,450,545,1),Rect(129,129,1,321),Rect(674,129,1,321)]
-downWall=[Rect(213,144,377,1),Rect(213,392,377,1),Rect(213,144,1,248),Rect(591,144,1,248)]
+nWall=[Rect(203,197,412,1),Rect(203,197,1,306),Rect(203,462,412,1),Rect(615,197,1,412),Rect(247,275,8,13),Rect(202,428,412,1)]
+martWall=[Rect(129,129,545,1),Rect(129,450,545,1),Rect(129,129,1,321),Rect(674,129,1,321),Rect(281,193,232,67)]
+downWall=[Rect(213,144,377,1),Rect(213,392,377,1),Rect(213,144,1,248),Rect(591,144,1,248),Rect(330,280,9,15)]
 wallsMapboss1=[Rect(0,166,800,0),Rect(0,442,800,0),Rect(92,140,25,129),Rect(0,272,800,45),Rect(333,246,27,30),Rect(334,150,30,61),Rect(438,149,30,120),Rect(544,151,30,300),Rect(620,150,30,93),
                Rect(620,207,102,36),Rect(757,207,100,38),Rect(378,321,25,60),Rect(351,347,57,30),Rect(184,321,60,31),Rect(213,347,98,33)]
 wallsMapboss2=[Rect(145,138,510,319)]
@@ -122,6 +122,8 @@ martbox=Rect(544,344,40,0)
 martboxexit=Rect(373,437,55,1)
 downtoout=Rect(373,384,59,1)
 mapzero=Rect(493,270,1,44)
+doc_to_out=Rect(493,270,1,44)
+house_up=Rect(517,198,1,28)
 downtoup=Rect(516,197,1,23)
 out_in=Rect(192,210,34,1)
 back_one=Rect(360,529,80,1)
@@ -272,7 +274,7 @@ X=0
 Y=1
 pos=[360,400]
 
-rs = 1
+rs = 4
 ws = 0.55
 action = "walk"
 actions = {"walk": walk, "run": run}
@@ -344,6 +346,9 @@ while running:
 
 #____________________________________________________________________________________________________________________________________________________________________________________________________________
     if level==6 and inside==False:
+        movePlayer(walk,startWall,[])
+
+    if level==8 and inside==False:
         movePlayer(walk,startWall,[])
 
     if level==7 and inside==False:
@@ -470,7 +475,7 @@ while running:
     if playerRect.colliderect(out_in) and background==6:
         background=5
         pos[X]=402
-        pos[Y]=365
+        pos[Y]=345
         level=7
 
     
@@ -508,8 +513,8 @@ while running:
 
     if playerRect.colliderect(neighbour) and background==6 and build==0:
         build=1
-        pos[X]=300
-        pos[Y]=200
+        pos[X]=309
+        pos[Y]=396
         inside=True
         
 
@@ -628,9 +633,13 @@ while running:
             screen.blit(t2text, (250, 450))
         for wm in martWall:
             draw.rect(screen,RED,wm,3)
+#_______________________________________________________________________________________________________________________________________
+
+    
 
     if build==3 and background==2:
         #print("32")
+
         level=7
         screen.blit(down, (0, 0))
         screen.blit(t8, (325, 275))
@@ -639,23 +648,62 @@ while running:
             screen.blit(t8text, (250, 450))
         for wm in downWall:
             draw.rect(screen,RED,wm,3)
-        draw.rect(screen,BEIGE,downtoout)
+        draw.rect(screen,GREEN,downtoout)
+        #draw.rect(screen,AQUA,house_out)
+        inside=True
+       
 
-    if playerRect.colliderect(downbox) and background==2 and build==0:
+
+    if playerRect.colliderect(downbox) and background==2 and build==0:    #Go inside
         build=3
 
-        
-        pos[X]=353
-        pos[Y]=338
 
-    if playerRect.colliderect(downtoout) and background==2 and build==3:
+        pos[X]=353
+        pos[Y]=358
+
+
+    if playerRect.colliderect(downtoout) and background==2 and build==3:    #Downstairs to out
+       print(level)
+       background=2
+       build=0
+       level=3
+      
+       pos[X]=229
+       pos[Y]=458
+
+    if playerRect.colliderect(house_up) and background==2 and build==3:   #downstairs to upstairs
         print(level)
-        background=2
-        build=0
+        background=10
+        build=3
         level=3
-        inside=False
+  
         pos[X]=229
-        pos[Y]=458
+        pos[Y]=358
+
+    if background==10 and build==3:      #upstairs
+        level=6
+        screen.blit(bedroom, (0, 0))
+        pos[X]=40
+        pos[Y]=40
+        print(level,"......level",background,"......background",build,"........build")
+        for wm in startWall:
+           draw.rect(screen,RED,wm,1)
+        draw.rect(screen,AQUA,doc_to_out)
+
+##    if playerRect.colliderect(doc_to_out) and background==10 and build==3:    #upstairs to downstairs
+##        print(level)
+##        background=2
+##        build=0
+##        level=7
+##        inside=False
+##        pos[X]=229
+##        pos[Y]=458
+
+
+
+
+
+#_____________________________________________________________________________________________________________
 
     if build==4 and background==2:
         #print("42")
@@ -677,13 +725,15 @@ while running:
         pos[Y]=338
 
     if playerRect.colliderect(downtoout) and background==2 and build==4:
-        print(level)
+        print("HELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLO")
         background=2
         build=0
         level=3
         inside=False
         pos[X]=306
         pos[Y]=455
+
+    
 
     if background==3:
         #print("52")
@@ -783,10 +833,11 @@ while running:
         if not tw:
             throwani = 0
         tw = True
-        #print("52")
+        
         screen.blit(battle, (0, 0))
 
-        #print(throwani)
+        pos[X]=850
+        pos[Y]=650
 
         for wm in battleWall:
             draw.rect(screen,RED,wm,3)
