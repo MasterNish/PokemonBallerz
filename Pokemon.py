@@ -746,7 +746,7 @@ while running:
         pos[X] = 306
         pos[Y] = 455
 
-    if background == 3 and key == 1:
+    if background == 3 and key1 == 1:
         # print("52")
         screen.blit(boss1map, (0, 0))
         screen.blit(t4, (300, 422))
