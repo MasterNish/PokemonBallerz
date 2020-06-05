@@ -955,11 +955,10 @@ while running:
         turn = 1
         battlenum = 2
 
-    #build = 5
-    #background = 1
-##    build=5
-##    background=1
-##    battlenum=1
+    # build=5
+    # background=1
+    # battlenum=3
+
     if build == 5 and background == 1:
         if not tw:
             throwani = 0
@@ -987,14 +986,14 @@ while running:
         elif battlenum==2 and background!=3:
             screen.blit(oppcharacter[1],(483,263))
         elif battlenum==3:
-            screen.blit(oppcharacter[2],(283,263))
+            screen.blit(oppcharacter[2],(490,245))
             print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
         screen.blit(char, (220, 325))
 
-        scoreText=mytext.render('health: ' + str(health), 1, (GREEN))
+        scoreText=mytext.render('Health: ' + str(health), 1, (GREEN))
         screen.blit(scoreText,(15,15))
 
-        scoreText1=mytext.render('Enemy health: ' + str(opphealth), 1, (GREEN))
+        scoreText1=mytext.render('Enemy Health: ' + str(opphealth), 1, (GREEN))
         screen.blit(scoreText1,(450,15))
 
 
