@@ -68,7 +68,7 @@ startWall = [Rect(188, 162, 417, 0), Rect(188, 489, 417, 0), Rect(188, 162, 1, 3
 wallsMap1 = [Rect(0, 0, 358, 75), Rect(0, 75, 50, 600), Rect(0, 450, 340, 175), Rect(315, 480, 600, 600),
              Rect(750, 0, 90, 601), Rect(450, 0, 1000, 75), Rect(460, 280, 200, 150), Rect(0, 0, 800, 1)]
 wallsMap2 = [Rect(400, 0, 500, 121), Rect(680, 0, 300, 384), Rect(0, 550, 1000, 1000), Rect(0, 0, 65, 1000),
-             Rect(0, 410, 511, 66), Rect(146, 338, 400, 28),
+             Rect(0, 410, 511, 48), Rect(146, 338, 400, 28),
              Rect(0, 0, 115, 100), Rect(115, 0, 135, 75), Rect(230, 265, 279, 30), Rect(730, 300, 1000, 300),
              Rect(200, 110, 72, 80), Rect(232, 190, 111, 38), Rect(232, 190, 350, 20),
              Rect(64, 302, 12, 14), Rect(602, 349, 11, 17), Rect(0, 442, 648, 0), Rect(200, 157, 800, 0),
@@ -168,7 +168,7 @@ tele2 = Rect(279, 323, 1, 5)
 tele3 = Rect(396, 186, 1, 6)
 tele4 = Rect(768, 184, 1, 4)
 
-battleRect = Rect(0, 443, 649, 0)
+battleRect = Rect(0, 453, 649, 0)
 battleRect2 = Rect(270, 171, 800, 0)
 attack1 = Rect(0, 475, 250, 200)
 attack2 = Rect(200, 475, 250, 200)
@@ -187,6 +187,9 @@ t7Rect = Rect(383, 393, 35, 35)
 t8Rect = Rect(318, 268, 35, 35)
 t9Rect = Rect(318, 268, 35, 35)
 
+postbattleRect1=(612,128,4,4)
+postbattleRect2=(651,351,4,4)
+
 restartRect=Rect(73,444,647,89)
 
 keyRect = Rect(270, 440, 25, 25)
@@ -194,7 +197,7 @@ keyRect = Rect(270, 440, 25, 25)
 running = True
 
 clock = time.Clock()
-level = 6
+level = 15
 mp = image.load("maps/map.png").convert()
 mp1 = image.load("maps/map1.png").convert()
 mp2 = image.load("maps/map6.png").convert()
@@ -238,7 +241,7 @@ finalbattletitle = transform.smoothscale(finalbattletitle_og, (800, 600))
 lossoriginal = transform.smoothscale(loss_original, (800, 600))
 mewtwo = transform.smoothscale(mewtwoimage, (120, 100))
 pidgey = transform.smoothscale(pidgeyimage, (120, 100))
-win1 = transform.smoothscale(winoriginal, (800, 600))
+#win1 = transform.smoothscale(winoriginal, (800, 600))
 
 atk1 = transform.smoothscale(attack1image, (150, 75))
 atk2 = transform.smoothscale(attack2image, (150, 75))
@@ -286,7 +289,7 @@ pokemon = ["CHARMANDER"]
 # _________________________________--
 bag = []
 count = 0
-background = 0
+background = 7
 build = 0
 map2origin = 0
 anime = 0
@@ -342,6 +345,7 @@ losstimer=0
 scrollspeed = 3
 
 ak1=20
+x=0
 
 
 l1 = "Pokémon Ballerz brought to you by Nishanth and Rishi"             #---------------------
@@ -382,7 +386,7 @@ l32 = "Good Luck Trainer!"                                              #-------
 
 
 font.init()
-mytext = font.SysFont("Arial", 30)
+mytext = font.SysFont("comic sans", 30)
 mytext1 = mytext.render(l1, True, BLACK)
 mytext2 = mytext.render(l2, True, BLACK)
 mytext3 = mytext.render(l3, True, BLACK)
@@ -536,7 +540,7 @@ while running:
     else:
         count = 0
 
-    # print(mx, "x value", my, "y value")
+    print(mx, "x value", my, "y value")
 
     playerRect = Rect(pos[X], pos[Y], 18, 21)
     draw.rect(screen, col, playerRect, 1)
@@ -685,8 +689,8 @@ while running:
         # print("level 22222")
         # pos[X]=378
         # pos[Y]=522
-        pos[X] = 400
-        pos[Y] = 300
+        pos[X] = 399
+        pos[Y] = 509
 
     if background == 1:
         screen.blit(map1, (0, 0))
@@ -724,13 +728,6 @@ while running:
         pos[X] = 543
         pos[Y] = 530
 
-    if playerRect.colliderect(SecondMap) and background == 1:
-        col = BLACK
-        level = 3
-        background = 2
-        # print("aaaaa")
-        pos[X] = 543
-        pos[Y] = 530
 
     if background == 2 and build == 0:
         # print(background, " issss background",build, "isssss build",level,"isss level")
@@ -901,6 +898,7 @@ while running:
         screen.blit(boss2map, (0, 0))
         screen.blit(t7, (390, 400))
         draw.rect(screen, BEIGE, t7Rect, 1)
+        opphealth=1000
         for wm in wallsMapboss2:
             draw.rect(screen, RED, wm, 3)
         if playerRect.colliderect(t7Rect):
@@ -924,6 +922,16 @@ while running:
     if background==11:
         screen.blit(lossoriginal,(0,0))
 
+    if x==1:
+        pos[X]=651
+        pos[Y]=351
+        x=3
+    if x==2:
+        x=3
+        pos[X]=612
+        pos[Y]=128
+        
+
     # _______________________________________________________________________________________
 
     if playerRect.colliderect(tele1) and background == 3:
@@ -942,23 +950,28 @@ while running:
     if playerRect.colliderect(battleRect) and background == 1:
         pos[X] = 590
         pos[Y] = 244
-        opphealth = 400
+        opphealth = 600
+
+        build=5
+        turn=1
+        battlenum=1
 
  
     if playerRect.colliderect(battleRect2) and background == 1:
         pos[X] = 590
         pos[Y] = 244
         health = 600
-        opphealth = 600
+        opphealth = 800
 
         build = 5
         turn = 1
         battlenum = 2
 
-    # build=5
-    # background=1
-    # battlenum=3
-
+    #build = 5
+    #background = 1
+##    build=5
+##    background=1
+##    battlenum=1
     if build == 5 and background == 1:
         if not tw:
             throwani = 0
@@ -982,18 +995,22 @@ while running:
         screen.blit(atk4, (629, 500))
         if battlenum==1 and background!=3:
             screen.blit(oppcharacter[0],(485,263))
+            pos[X]=651
+            pos[Y]=351
             print("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK")
         elif battlenum==2 and background!=3:
             screen.blit(oppcharacter[1],(483,263))
+            pos[X]=612
+            pos[Y]=128
         elif battlenum==3:
-            screen.blit(oppcharacter[2],(490,245))
+            screen.blit(oppcharacter[2],(283,263))
             print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
         screen.blit(char, (220, 325))
 
-        scoreText=mytext.render('Health: ' + str(health), 1, (GREEN))
+        scoreText=mytext.render('health: ' + str(health), 1, (GREEN))
         screen.blit(scoreText,(15,15))
 
-        scoreText1=mytext.render('Enemy Health: ' + str(opphealth), 1, (GREEN))
+        scoreText1=mytext.render('Enemy health: ' + str(opphealth), 1, (GREEN))
         screen.blit(scoreText1,(450,15))
 
 
@@ -1021,7 +1038,7 @@ while running:
 
             if attack == "1" and click == True:  # standard attack
 
-                opphealth -= 20
+                opphealth -= ak1
                 # print(opphealth,"............opp health...........")
 
                 changey -= 5
@@ -1058,7 +1075,7 @@ while running:
 
             elif attack == "2" and click == True:  # risky range attack
 
-                a2 = randint(0, 22)
+                a2 = randint(0, 40)
                 opphealth = opphealth - a2
 
                 changey -= 5
@@ -1097,7 +1114,7 @@ while running:
 
                 a3 = randint(1, 2)
                 if a3 == 1:
-                    opphealth += 10
+                    opphealth += 250
 
                     if not ht:
                         heartani = 0
@@ -1115,7 +1132,7 @@ while running:
                         # print(heartani)
 
                 elif a3 == 2:
-                    opphealth -= 30
+                    opphealth -= 250
 
                     changey -= 5
                     if changey == 305:
@@ -1174,7 +1191,7 @@ while running:
         elif turn == 2:
             time.wait(100)
             time.wait(3)
-            oppattack = randint(10,11)
+            oppattack = randint(0,40)
             health = health - oppattack
             if health <= 0 or opphealth <= 0:
                 turn = 3
@@ -1204,21 +1221,10 @@ while running:
                 
                 
             elif opphealth <= 0:
+                level=2
+                background=1
+                build=0
 
-                level = 2
-                background = 1
-                build = 0
-                
-##                if battlenum == 1:
-##                    pos[X] = 651
-##                    pos[Y] = 357
-##                    
-##                if battlenum == 2:
-##                   pos[X] = 612
-##                   pos[Y] = 128
-
-                if battlenum ==3:
-                    screen.blit(win1,(0,0))
                     
     # _________________________________________________________________________________________________________________________________________________________________________________________
     draw.rect(screen, col, playerRect, 1)
