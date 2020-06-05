@@ -180,7 +180,7 @@ attack3image= image.load("sprites/Attacks/chanbutton.png").convert()
 attack4image= image.load("sprites/Attacks/healbutton.png").convert()
 
 abraimage=image.load("sprites/ABRA/ABRA0.png").convert()
-charimage= image.load("sprites/CHARMANDER/CHARMANDER2.png").convert()
+charimage= image.load("sprites/CHARMANDER/CHARMANDER00.png").convert()
 
 finalbattletitle_og= image.load("maps/pokefinal.png").convert()
 
@@ -607,8 +607,6 @@ while running:
     if playerRect.colliderect(martbox) and background==2 and build==0:
         build=2
         
-        
-        
         pos[X]=394
         pos[Y]=406
         inside=True
@@ -737,12 +735,6 @@ while running:
                     build=5
                     background=1
                     battlenum=3
-
-                
-                
-            
-
-
 
 
 #_______________________________________________________________________________________
