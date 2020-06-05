@@ -213,6 +213,8 @@ attack4image = image.load("sprites/Attacks/healbutton.png").convert()
 
 abraimage = image.load("sprites/ABRA/ABRA0.png").convert()
 charimage = image.load("sprites/CHARMANDER/CHARMANDER00.png").convert()
+mewtwoimage = image.load("sprites/MEWTWO/MEWTWO.png").convert()
+pidgeyimage = image.load("sprites/PIDGEY/PIDGEY0.png").convert()
 
 finalbattletitle_og = image.load("sprites/GameOver/pokefinal.png").convert()
 
@@ -232,6 +234,8 @@ abra = transform.smoothscale(abraimage, (120, 100))
 char = transform.smoothscale(charimage, (170, 140))
 finalbattletitle = transform.smoothscale(finalbattletitle_og, (800, 600))
 lossoriginal = transform.smoothscale(loss_original, (800, 600))
+mewtwo = transform.smoothscale(mewtwoimage, (120, 100))
+pidgey = transform.smoothscale(pidgeyimage, (120, 100))
 
 atk1 = transform.smoothscale(attack1image, (150, 75))
 atk2 = transform.smoothscale(attack2image, (150, 75))
@@ -279,7 +283,7 @@ pokemon = ["CHARMANDER"]
 # _________________________________--
 bag = []
 count = 0
-background = 7
+background = 0
 build = 0
 map2origin = 0
 anime = 0
@@ -455,8 +459,7 @@ while running:
     mx, my = mouse.get_pos()
     mb = mouse.get_pressed()
 
-    # if action == "run":
-    #     speed = rs
+    oppcharacter=[abra, pidgey, mewtwo]
 
     # ____________________________________________________________________________________________________________________________________________________________________________________________________________
     if level == 6 and inside == False:
@@ -539,7 +542,7 @@ while running:
 
     if background == 7:
         level=15
-        if runtime <= 2175:    #2175
+        if runtime <= 75:    #2175
             runtime += 1
 
             drawScene()
@@ -905,12 +908,13 @@ while running:
                 screen.blit(finalbattletitle, (0, 0))
                 # pos[X]=800
                 # pos[Y]=600
+                battlenum = 3
                 if bosstimer_2 < 125:
                     bosstimer_2 += 1
                 else:
                     build = 5
                     background = 1
-                    battlenum = 3
+
 
     if background==11:
         screen.blit(lossoriginal,(0,0))
@@ -933,9 +937,9 @@ while running:
     if playerRect.colliderect(battleRect) and background == 1:
         pos[X] = 590
         pos[Y] = 244
+        opphealth = 400
 
-        build = 5
-        battlenum = 1
+ 
     if playerRect.colliderect(battleRect2) and background == 1:
         pos[X] = 590
         pos[Y] = 244
@@ -948,7 +952,9 @@ while running:
 
     #build = 5
     #background = 1
-
+##    build=5
+##    background=1
+##    battlenum=1
     if build == 5 and background == 1:
         if not tw:
             throwani = 0
@@ -970,7 +976,14 @@ while running:
         screen.blit(atk2, (225, 500))
         screen.blit(atk3, (424, 500))
         screen.blit(atk4, (629, 500))
-        screen.blit(abra, (485, 263))
+        if battlenum==1 and background!=3:
+            screen.blit(oppcharacter[0],(485,263))
+            print("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK")
+        elif battlenum==2 and background!=3:
+            screen.blit(oppcharacter[1],(483,263))
+        elif battlenum==3:
+            screen.blit(oppcharacter[2],(283,263))
+            print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
         screen.blit(char, (220, 325))
 
         scoreText=mytext.render('health: ' + str(health), 1, (GREEN))
@@ -991,6 +1004,9 @@ while running:
             if throwani == 5:
                 throwani = -1
             # print(throwani)
+#______________________________________________________________________________________________________________________________
+
+            
 
     # ___________________________________________________________________________________________________________
 
@@ -1001,7 +1017,7 @@ while running:
 
             if attack == "1" and click == True:  # standard attack
 
-                opphealth -= ak1
+                opphealth -= 20
                 # print(opphealth,"............opp health...........")
 
                 changey -= 5
@@ -1169,6 +1185,7 @@ while running:
 
             if health <= 0:
                 screen.blit(lossoriginal,(0,0))
+                time.delay(40)
                 background=11
                 if restart == "1":
                     # print("Ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo")
@@ -1176,6 +1193,9 @@ while running:
                     charbag=0
                     level=6
                     build=0
+                    health=500
+                    pos[X]=400
+                    pos[Y]=300
                     # print(background,level,build)
                 
                 
@@ -1184,13 +1204,15 @@ while running:
                 level = 2
                 background = 1
                 build = 0
-                opphealth = 400
+                
                 if battlenum == 1:
                     pos[X] = 651
                     pos[Y] = 357
+                    
                 if battlenum == 2:
                     pos[X] = 612
                     pos[Y] = 128
+                    
     # _________________________________________________________________________________________________________________________________________________________________________________________
     draw.rect(screen, col, playerRect, 1)
     screen.blit((actions[action][di][count % 3]), (pos[X], pos[Y]))
