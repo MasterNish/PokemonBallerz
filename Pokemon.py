@@ -219,6 +219,8 @@ pidgeyimage = image.load("sprites/PIDGEY/PIDGEY0.png").convert()
 finalbattletitle_og = image.load("sprites/GameOver/pokefinal.png").convert()
 
 loss_original = image.load("sprites/GameOver/endofgame.png").convert()
+winoriginal=image.load("maps/win.png").convert
+
 
 map = transform.smoothscale(mp, (800, 600))
 map1 = transform.smoothscale(mp1, (800, 600))
@@ -236,6 +238,7 @@ finalbattletitle = transform.smoothscale(finalbattletitle_og, (800, 600))
 lossoriginal = transform.smoothscale(loss_original, (800, 600))
 mewtwo = transform.smoothscale(mewtwoimage, (120, 100))
 pidgey = transform.smoothscale(pidgeyimage, (120, 100))
+win1 = transform.smoothscale(winoriginal, (800, 600))
 
 atk1 = transform.smoothscale(attack1image, (150, 75))
 atk2 = transform.smoothscale(attack2image, (150, 75))
@@ -833,6 +836,8 @@ while running:
         pos[X]=554
         pos[Y]=224
 
+
+
     # _____________________________________________________________________________________________________________
 
     if build == 4 and background == 2:
@@ -1205,13 +1210,16 @@ while running:
                 background = 1
                 build = 0
                 
-                if battlenum == 1:
-                    pos[X] = 651
-                    pos[Y] = 357
-                    
-                if battlenum == 2:
-                    pos[X] = 612
-                    pos[Y] = 128
+##                if battlenum == 1:
+##                    pos[X] = 651
+##                    pos[Y] = 357
+##                    
+##                if battlenum == 2:
+##                   pos[X] = 612
+##                   pos[Y] = 128
+
+                if battlenum ==3:
+                    screen.blit(win1,(0,0))
                     
     # _________________________________________________________________________________________________________________________________________________________________________________________
     draw.rect(screen, col, playerRect, 1)
