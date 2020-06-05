@@ -152,7 +152,7 @@ downtoup = Rect(516, 197, 1, 23)
 out_in = Rect(192, 210, 34, 1)
 back_one = Rect(360, 529, 80, 1)
 
-health = 400
+health = 20
 opphealth = 400
 
 downbox = Rect(215, 450, 40, 0)
@@ -184,6 +184,8 @@ t7Rect = Rect(383, 393, 35, 35)
 t8Rect = Rect(318, 268, 35, 35)
 t9Rect = Rect(318, 268, 35, 35)
 
+restartRect=Rect(73,444,647,89)
+
 running = True
 
 clock = time.Clock()
@@ -207,9 +209,9 @@ attack4image = image.load("sprites/Attacks/healbutton.png").convert()
 abraimage = image.load("sprites/ABRA/ABRA0.png").convert()
 charimage = image.load("sprites/CHARMANDER/CHARMANDER00.png").convert()
 
-finalbattletitle_og = image.load("maps/pokefinal.png").convert()
+finalbattletitle_og = image.load("sprites/GameOver/pokefinal.png").convert()
 
-loss_original = image.load("maps/endofgame.png").convert()
+loss_original = image.load("sprites/GameOver/endofgame.png").convert()
 
 map = transform.smoothscale(mp, (800, 600))
 map1 = transform.smoothscale(mp1, (800, 600))
@@ -296,7 +298,7 @@ changeXx, changeYy = 290, 300
 attack = 0
 turn = 1
 angle = 210
-
+restart=0
 # __________________________________
 di = "down"
 X = 0
@@ -425,8 +427,8 @@ while running:
         attack = "3"
     if mb[0] == 1 and attack4.collidepoint(mx, my):
         attack = "4"
-  #  if mb[0]==1 and restart.collidepoint(mx,my):
-   #     restart=="1"
+    if mb[0]==1 and restartRect.collidepoint(mx,my):
+       restart="1"
 
     # -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -783,6 +785,9 @@ while running:
                     background = 1
                     battlenum = 3
 
+    if background==11:
+        screen.blit(lossoriginal,(0,0))
+
     # _______________________________________________________________________________________
 
     if playerRect.colliderect(tele1) and background == 3:
@@ -1016,7 +1021,7 @@ while running:
         elif turn == 2:
             time.wait(100)
             time.wait(3)
-            oppattack = randint(0, 10)
+            oppattack = randint(10,11)
             health = health - oppattack
             if health <= 0 or opphealth <= 0:
                 turn = 3
@@ -1031,15 +1036,17 @@ while running:
             time.wait(10)
 
             if health <= 0:
-                screen.blit(lossoriginal(0,0))
-                if restart==1:
-                    
+                screen.blit(lossoriginal,(0,0))
+                background=11
+                if restart=="1":
+                    print("Ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo")
                     background=0
                     charbag=0
                     level=6
                     build=0
+                    print(background,level,build)
                 
-                print('l')
+                
             elif opphealth <= 0:
 
                 level = 2
