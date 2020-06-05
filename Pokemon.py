@@ -276,7 +276,7 @@ pokemon = ["CHARMANDER"]
 # _________________________________--
 bag = []
 count = 0
-background = 0
+background = 7
 build = 0
 map2origin = 0
 anime = 0
@@ -331,10 +331,39 @@ bosstimer_2 = 0
 losstimer=0
 scrollspeed = 3
 
+l1 = "Pokémon Ballerz brought to you by Nishanth and Rishi"
+l2 = "Coroger, the leader of Team Galactic needs to be defeated"
+l3 = "before he enslaves all Pokémon! Get advice and tips from"
+l4 = "various side characters and train and evolve your Pokémon"
+l5 = "before he enslaves all Pokémon! Get advice and tips from"
+l6 = "before he enslaves all Pokémon! Get advice and tips from"
+l7 = "before he enslaves all Pokémon! Get advice and tips from"
+l8 = "before he enslaves all Pokémon! Get advice and tips from"
+l9 = "before he enslaves all Pokémon! Get advice and tips from"
+l10 = "before he enslaves all Pokémon! Get advice and tips from"
+l11 = "before he enslaves all Pokémon! Get advice and tips from"
+l12 = "before he enslaves all Pokémon! Get advice and tips from"
+
+
+
+
 font.init()
 mytext = font.SysFont("Arial", 30)
-mytext1 = mytext.render("HEY", True, BLACK)
-mytext2 = mytext.render("Rishi", True, BLACK)
+mytext1 = mytext.render(l1, True, BLACK)
+mytext2 = mytext.render(l2, True, BLACK)
+mytext3 = mytext.render(l3, True, BLACK)
+mytext4 = mytext.render(l4, True, BLACK)
+mytext5 = mytext.render(l5, True, BLACK)
+mytext6 = mytext.render(l6, True, BLACK)
+mytext7 = mytext.render(l7, True, BLACK)
+mytext8 = mytext.render(l8, True, BLACK)
+mytext9 = mytext.render(l9, True, BLACK)
+mytext10 = mytext.render(l10, True, BLACK)
+mytext11 = mytext.render(l11, True, BLACK)
+mytext12 = mytext.render(l12, True, BLACK)
+
+
+
 
 
 def drawScene():
@@ -364,6 +393,8 @@ while running:
     screen.fill(0)
     col = GREEN
     clock.tick(60)
+
+    introIn += 1
 
     anime += 1
     if anime % 7 == 0:  # speed of transition between pics
@@ -465,8 +496,8 @@ while running:
 
             drawScene()
 
-            screen.blit(mytext1, (200, y))
-            screen.blit(mytext2, (200, y + 50))
+            screen.blit(mytext1, (50, y))
+            screen.blit(mytext2, (25, y + 50))
             y -= 1
             screen.blit((actions[action][di][count % 3]), (pos[X], pos[Y]))
             display.flip()
