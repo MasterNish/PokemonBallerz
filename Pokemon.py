@@ -133,7 +133,7 @@ def movePlayer(player, mywalls, myledge):
 
 def hitwalls(x, y, mywalls):
     playerRect = Rect(x, y, 25, 25)
-    print(playerRect.collidelist(mywalls))
+    # print(playerRect.collidelist(mywalls))
     return playerRect.collidelist(mywalls)
 
 
@@ -185,6 +185,8 @@ t8Rect = Rect(318, 268, 35, 35)
 t9Rect = Rect(318, 268, 35, 35)
 
 restartRect=Rect(73,444,647,89)
+
+keyRect = Rect(270, 440, 25, 25)
 
 running = True
 
@@ -265,6 +267,7 @@ t3text = transform.smoothscale(image.load("sprites/dialog/t3/t31.png"), (350, 15
 t5text = transform.smoothscale(image.load("sprites/dialog/t5/t51.png"), (350, 150))
 t8text = transform.smoothscale(image.load("sprites/dialog/t8/t81.png"), (350, 150))
 t9text = transform.smoothscale(image.load("sprites/dialog/t9/t91.png"), (350, 150))
+keytext = transform.smoothscale(image.load("sprites/dialog/key.png"), (300, 100))
 
 grass1 = image.load("start/instructions1.png")
 grass2 = image.load("start/instructions.png")
@@ -300,12 +303,14 @@ turn = 1
 angle = 210
 restart=0
 # __________________________________
+key1 = 0
+# ________________________________
 di = "down"
 X = 0
 Y = 1
 pos = [360, 400]
-
-rs = 4
+# ___________________________________
+rs = 1.25
 ws = 0.75
 action = "walk"
 actions = {"walk": walk, "run": run}
@@ -342,7 +347,7 @@ def drawScene():
     g2[b] = g2[b] + scrollspeed
     if g2[b] + scrollspeed > g2[c]:
         g2[b] = -g1[c]
-    print("first y=", g1[b], "second y=", g2[b])
+    # print("first y=", g1[b], "second y=", g2[b])
 
 
 myClock = time.Clock()
@@ -381,7 +386,7 @@ while running:
     if level == 6 and inside == False:
         movePlayer(walk, startWall, [])
 
-    if level == 8 :
+    if build == 8 :
         movePlayer(walk, startWall, [])
 
     if level == 7 and inside == False:
@@ -447,7 +452,7 @@ while running:
     else:
         count = 0
 
-    print(mx, "x value", my, "y value")
+    # print(mx, "x value", my, "y value")
 
     playerRect = Rect(pos[X], pos[Y], 18, 21)
     draw.rect(screen, col, playerRect, 1)
@@ -667,35 +672,44 @@ while running:
         pos[Y] = 358
 
     if playerRect.colliderect(downtoout) and background == 2 and build == 3:  # Downstairs to out
-        print(level)
+        # print(level)
         background = 2
         build = 0
         level = 3
+        inside=False
 
-        pos[X] = 229
-        pos[Y] = 458
+      #  pos[X] = 229
+    #    pos[Y] = 458
 
     if playerRect.colliderect(house_up) and background == 2 and build == 3:  # downstairs to upstairs
-        print(level)
-        background = 10
-        build = 3
-        level = 3
+        # print(level)
+
+        build = 8
+        level = 8
         pos[X] = 459
         pos[Y] = 295
+        inside=True
 
 
 
-    if background == 10 and build == 3:  # upstairs
-        level = 8
+    if background == 2 and build == 8:  # upstairs
+        #level = 8
         screen.blit(bedroom, (0, 0))
+        draw.rect(screen, BEIGE, keyRect, 1)
+        if playerRect.colliderect(keyRect):
+            blitted = True
+            screen.blit(keytext, (250, 493))
+        if blitted == True:
+            key1 = 1
+        # print(key1)
 
         #print(level, "......level", background, "......background", build, "........build")
         for wm in startWall:
             draw.rect(screen, RED, wm, 1)
         draw.rect(screen, AQUA, doc_to_out)
 
-    if playerRect.colliderect(doc_to_out) and background==10 and build==3:    #upstairs to downstairs
-        print(level)
+    if playerRect.colliderect(doc_to_out) and background==2 and build==8:    #upstairs to downstairs
+        # print(level)
         background=2
         build=3
         level=7
@@ -724,7 +738,7 @@ while running:
         pos[Y] = 338
 
     if playerRect.colliderect(downtoout) and background == 2 and build == 4:
-        print("HELLLLLLLLLLLLO")
+        # print("HELLLLLLLLLLLLO")
         background = 2
         build = 0
         level = 3
@@ -732,7 +746,7 @@ while running:
         pos[X] = 306
         pos[Y] = 455
 
-    if background == 3:
+    if background == 3 and key == 1:
         # print("52")
         screen.blit(boss1map, (0, 0))
         screen.blit(t4, (300, 422))
@@ -772,7 +786,7 @@ while running:
             screen.blit(t7text, (225, 425))
             if bosstimer_1 < 125:
                 bosstimer_1 += 1
-                print(bosstimer_1)
+                # print(bosstimer_1)
 
             else:
                 screen.blit(finalbattletitle, (0, 0))
@@ -854,7 +868,7 @@ while running:
                 throwani += 1
             if throwani == 5:
                 throwani = -1
-            print(throwani)
+            # print(throwani)
 
     # ___________________________________________________________________________________________________________
 
@@ -888,7 +902,7 @@ while running:
                         fireani += 1
                     if fireani == 4:
                         fireani = 0
-                    print(fireani)
+                    # print(fireani)
 
                 click = False
 
@@ -926,7 +940,7 @@ while running:
                         fireani += 1
                     if fireani == 4:
                         fireani = 0
-                    print(fireani)
+                    # print(fireani)
 
                 # print(opphealth,"............opp health...........")
                 click = False
@@ -957,7 +971,7 @@ while running:
                             heartani += 1
                         if heartani == 4:
                             heartani = 0
-                        print(heartani)
+                        # print(heartani)
 
                 elif a3 == 2:
                     opphealth -= 30
@@ -983,7 +997,7 @@ while running:
                             fireani += 1
                         if fireani == 4:
                             fireani = 0
-                        print(fireani)
+                        # print(fireani)
 
                 # print(opphealth,"............opp health...........")
                 click = False
@@ -1012,7 +1026,7 @@ while running:
                         heartani += 1
                     if heartani == 4:
                         heartani = 0
-                    print(heartani)
+                    # print(heartani)
 
                 click = False
 
@@ -1038,13 +1052,13 @@ while running:
             if health <= 0:
                 screen.blit(lossoriginal,(0,0))
                 background=11
-                if restart=="1":
-                    print("Ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo")
+                if restart == "1":
+                    # print("Ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo")
                     background=0
                     charbag=0
                     level=6
                     build=0
-                    print(background,level,build)
+                    # print(background,level,build)
                 
                 
             elif opphealth <= 0:
