@@ -153,8 +153,10 @@ downtoup = Rect(516, 197, 1, 23)
 out_in = Rect(192, 210, 34, 1)
 back_one = Rect(360, 529, 80, 1)
 
-health = 20
+health = 1000
 opphealth = 400
+totaldamge=0
+opptotaldamage=0
 
 downbox = Rect(215, 450, 40, 0)
 downbox2 = Rect(290, 450, 40, 0)
@@ -331,6 +333,9 @@ bosstimer_1 = 0
 bosstimer_2 = 0
 losstimer=0
 scrollspeed = 3
+
+ak1=20
+
 
 l1 = "Pokémon Ballerz brought to you by Nishanth and Rishi"             #---------------------
 l2 = "Coroger, the leader of Team Galactic needs to be defeated"
@@ -534,7 +539,7 @@ while running:
 
     if background == 7:
         level=15
-        if runtime <= 2175:
+        if runtime <= 2175:    #2175
             runtime += 1
 
             drawScene()
@@ -968,10 +973,14 @@ while running:
         screen.blit(abra, (485, 263))
         screen.blit(char, (220, 325))
 
-        draw.rect(screen, YELLOW, healthRect)
-        draw.rect(screen, YELLOW, opphealthRect)
-        scoreText=mytext.render('health: ' + str(health), 1, (0,0,0))
+        scoreText=mytext.render('health: ' + str(health), 1, (GREEN))
         screen.blit(scoreText,(15,15))
+
+        scoreText1=mytext.render('Enemy health: ' + str(opphealth), 1, (GREEN))
+        screen.blit(scoreText1,(450,15))
+
+
+
 
         if throwani != -1:
             # print(True)
@@ -992,7 +1001,7 @@ while running:
 
             if attack == "1" and click == True:  # standard attack
 
-                opphealth -= 1
+                opphealth -= ak1
                 # print(opphealth,"............opp health...........")
 
                 changey -= 5
@@ -1118,8 +1127,7 @@ while running:
                 else:
                     turn = 2
 
-                draw.rect(screen, YELLOW, healthRect)
-                draw.rect(screen, YELLOW, opphealthRect)
+
             elif attack == "4" and click == True:  # heal
 
                 health += 15
@@ -1154,8 +1162,7 @@ while running:
                 turn = 1
             # print(health, "............player health...........")
 
-            draw.rect(screen, YELLOW, healthRect)
-            draw.rect(screen, YELLOW, opphealthRect)
+
 
         if turn == 3:
             time.wait(10)
