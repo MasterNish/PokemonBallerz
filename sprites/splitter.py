@@ -10,7 +10,7 @@ fname = glob.glob("skeleton_flame.png")
 
 # fname = "naruto.png"
 
-pic = image.load("heart.png")
+pic = image.load("trainers.png")
 
 wid, hi = pic.get_size()
 

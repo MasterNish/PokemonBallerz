@@ -43,7 +43,7 @@ class Character(sprite.Sprite):
 
 musics = ["Music/Music.mp3"]
 mInd = 0
-inc = 0.0
+inc = 0.1
 
 init()
 
@@ -243,8 +243,8 @@ walk = {d: [transform.smoothscale(image.load(i), (20, 24)) for i in glob("sprite
         for d in
         direction}
 run = {d: [transform.smoothscale(image.load(i), (20, 24)) for i in glob("sprites\\Player\\running\\" + d + "\\*.png")]
-       for d in
-       direction}  # accesses all the pics from each direction folder and changes its size
+       for d in direction}  # accesses all the pics from each direction folder and changes its size
+
 throw = [transform.smoothscale(image.load(i), (125, 125)) for i in glob("sprites\\Player\\throwing\\*.png")]
 fire = [transform.smoothscale(image.load(i), (50, 50)) for i in glob("sprites\\Attacks\\fire\\*.png")]
 heart = [transform.smoothscale(image.load(i), (50, 50)) for i in glob("sprites\\Attacks\\heart\\*.png")]
