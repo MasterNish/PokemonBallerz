@@ -331,18 +331,39 @@ bosstimer_2 = 0
 losstimer=0
 scrollspeed = 3
 
-l1 = "Pokémon Ballerz brought to you by Nishanth and Rishi"
+l1 = "Pokémon Ballerz brought to you by Nishanth and Rishi"             #---------------------
 l2 = "Coroger, the leader of Team Galactic needs to be defeated"
 l3 = "before he enslaves all Pokémon! Get advice and tips from"
 l4 = "various side characters and train and evolve your Pokémon"
-l5 = "before he enslaves all Pokémon! Get advice and tips from"
-l6 = "before he enslaves all Pokémon! Get advice and tips from"
-l7 = "before he enslaves all Pokémon! Get advice and tips from"
-l8 = "before he enslaves all Pokémon! Get advice and tips from"
-l9 = "before he enslaves all Pokémon! Get advice and tips from"
-l10 = "before he enslaves all Pokémon! Get advice and tips from"
-l11 = "before he enslaves all Pokémon! Get advice and tips from"
-l12 = "before he enslaves all Pokémon! Get advice and tips from"
+l5 = "through battle to become powerful enough to stop Coroger!"
+l6 = "You will need to locate a special key to be able to enter"
+l7 = "the Research Center; so make sure to search every inch"
+l8 = "of every building! "
+l9 = "Controls and Movement"                                            #----------------------
+l10 = "You can use the arrow keys or “w (up), a (left), s (down),"
+l11 = "d (right) to walk around. Holding the shift button while"
+l12 = "walking allows your character to sprint."
+l13 = "The Battle"                                                      #----------------------
+l14 = "The objective of a battle is to get the opposing Pokémon’s"
+l15 = "health points to zero through a series of attacks."
+l16 = "You have 4 moves to use in battle:"
+l17 = "Attack: a consistent but mild attack"
+l18 = "Ambush: a surprise move that's either very or not effective"
+l19 = "Chance: does tons of damage or it heals the opponent fully"
+l20 = "Heal: increases your health"
+l21 = "After each battle won all 4 of these moves will become"
+l22 = "more powerful. But if you lose in a battle you will be"
+l23 = "sent back to your house so you can try again!"
+l24 = "Buildings"                                                       #----------------------
+l25 = "1 main function in this game. It's to give you information,"
+l26 = "guide and help you through the game"
+l27 = "Coroger’s Laboratory"                                            #----------------------
+l28 = "The final destination of the game. Entering this stage will"
+l29 = "require collecting a special key hidden in a building. If"
+l30 = "your strong and smart enough, you will be able to protect"
+l31 = "the Pokémon World from Coroger’s twisted plans!"
+l32 = "Good Luck Trainer!"
+
 
 
 
@@ -361,8 +382,26 @@ mytext9 = mytext.render(l9, True, BLACK)
 mytext10 = mytext.render(l10, True, BLACK)
 mytext11 = mytext.render(l11, True, BLACK)
 mytext12 = mytext.render(l12, True, BLACK)
-
-
+mytext13 = mytext.render(l13, True, BLACK)
+mytext14 = mytext.render(l14, True, BLACK)
+mytext15 = mytext.render(l15, True, BLACK)
+mytext16 = mytext.render(l16, True, BLACK)
+mytext17 = mytext.render(l17, True, BLACK)
+mytext18 = mytext.render(l18, True, BLACK)
+mytext19 = mytext.render(l19, True, BLACK)
+mytext20 = mytext.render(l20, True, BLACK)
+mytext21 = mytext.render(l21, True, BLACK)
+mytext22 = mytext.render(l22, True, BLACK)
+mytext23 = mytext.render(l23, True, BLACK)
+mytext24 = mytext.render(l24, True, BLACK)
+mytext25 = mytext.render(l25, True, BLACK)
+mytext26 = mytext.render(l26, True, BLACK)
+mytext27 = mytext.render(l27, True, BLACK)
+mytext28 = mytext.render(l28, True, BLACK)
+mytext29 = mytext.render(l29, True, BLACK)
+mytext30 = mytext.render(l30, True, BLACK)
+mytext31 = mytext.render(l31, True, BLACK)
+mytext32 = mytext.render(l32, True, BLACK)
 
 
 
@@ -394,7 +433,7 @@ while running:
     col = GREEN
     clock.tick(60)
 
-    introIn += 1
+    # introIn += 1
 
     anime += 1
     if anime % 7 == 0:  # speed of transition between pics
@@ -491,13 +530,49 @@ while running:
     playerRect = Rect(pos[X], pos[Y], 21, 26)
 
     if background == 7:
-        if runtime <= 500:
+        if runtime <= 2000:
             runtime += 1
 
             drawScene()
 
-            screen.blit(mytext1, (50, y))
-            screen.blit(mytext2, (25, y + 50))
+            screen.blit(mytext1, (35, y))
+            screen.blit(mytext2, (15, y + 70))
+            screen.blit(mytext3, (15, y + 110))
+            screen.blit(mytext4, (15, y + 150))
+            screen.blit(mytext5, (15, y + 190))
+            screen.blit(mytext6, (15, y + 230))
+            screen.blit(mytext7, (15, y + 270))
+            screen.blit(mytext8, (15, y + 310))     #----------------------
+            screen.blit(mytext9, (15, y + 390))
+            screen.blit(mytext10, (15, y + 440))
+            screen.blit(mytext11, (15, y + 480))
+            screen.blit(mytext12, (15, y + 520))
+            screen.blit(mytext9, (15, y + 390))
+            screen.blit(mytext10, (15, y + 440))
+            screen.blit(mytext11, (15, y + 480))
+            screen.blit(mytext12, (15, y + 520))
+            screen.blit(mytext13, (15, y + 390))
+            screen.blit(mytext14, (15, y + 440))
+            screen.blit(mytext15, (15, y + 480))
+            screen.blit(mytext16, (15, y + 520))
+            screen.blit(mytext17, (15, y + 390))
+            screen.blit(mytext18, (15, y + 440))
+            screen.blit(mytext19, (15, y + 480))
+            screen.blit(mytext20, (15, y + 520))
+            screen.blit(mytext21, (15, y + 390))
+            screen.blit(mytext22, (15, y + 440))
+            screen.blit(mytext23, (15, y + 480))
+            screen.blit(mytext24, (15, y + 520))
+            screen.blit(mytext25, (15, y + 390))
+            screen.blit(mytext26, (15, y + 440))
+            screen.blit(mytext27, (15, y + 480))
+            screen.blit(mytext28, (15, y + 520))
+            screen.blit(mytext29, (15, y + 390))
+            screen.blit(mytext30, (15, y + 440))
+            screen.blit(mytext31, (15, y + 480))
+            screen.blit(mytext32, (15, y + 520))
+
+
             y -= 1
             screen.blit((actions[action][di][count % 3]), (pos[X], pos[Y]))
             display.flip()
