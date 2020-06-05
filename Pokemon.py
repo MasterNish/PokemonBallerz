@@ -966,6 +966,11 @@ while running:
         screen.blit(abra, (485, 263))
         screen.blit(char, (220, 325))
 
+        draw.rect(screen, YELLOW, healthRect)
+        draw.rect(screen, YELLOW, opphealthRect)
+        scoreText=mytext.render('health: ' + str(health), 1, (0,0,0))
+        screen.blit(scoreText,(15,15))
+
         if throwani != -1:
             # print(True)
             screen.blit(throw[throwani], (150, 330))
@@ -979,6 +984,7 @@ while running:
     # ___________________________________________________________________________________________________________
 
     if health >= 0 or opphealth >= 0:
+
         if turn == 1:
             time.wait(10)
 
@@ -1017,8 +1023,7 @@ while running:
                 else:
                     turn = 2
 
-                draw.rect(screen, YELLOW, healthRect)
-                draw.rect(screen, YELLOW, opphealthRect)
+
 
             elif attack == "2" and click == True:  # risky range attack
 
@@ -1055,8 +1060,7 @@ while running:
                 else:
                     turn = 2
 
-                draw.rect(screen, YELLOW, healthRect)
-                draw.rect(screen, YELLOW, opphealthRect)
+
 
             elif attack == "3" and click == True:  # extreme risk attack
 
@@ -1136,8 +1140,7 @@ while running:
 
                 click = False
 
-                draw.rect(screen, YELLOW, healthRect)
-                draw.rect(screen, YELLOW, opphealthRect)
+
         elif turn == 2:
             time.wait(100)
             time.wait(3)
