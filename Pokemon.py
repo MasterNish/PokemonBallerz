@@ -573,7 +573,7 @@ while running:
         attack = "4"
     if mb[0]==1 and restartRect.collidepoint(mx,my):
         restart="1"
-    if mb[0]==1 and quitRect.collidepoint(mx,my):
+    if mb[0]==1 and quitRect.collidepoint(mx,my):       #quit synonym
         exit(0)
 
     # -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -602,7 +602,7 @@ while running:
 
     if background == 7:     #intro infinite scroll screen
         level=15
-        if runtime <= 2:    #2175
+        if runtime <= 2175:    #2175
             runtime += 1
 
             drawScene()
