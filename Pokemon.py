@@ -366,7 +366,7 @@ X = 0
 Y = 1
 pos = [320,108] #starting position           #[360, 400]
 # ___________________________________
-rs = 1.25   #running speed
+rs = 5   #running speed
 ws = 0.75  # walking speed
 action = "walk"
 actions = {"walk": walk, "run": run}    #storing in the dictionary
@@ -601,7 +601,7 @@ while running:
 
     if background == 7:     #intro infinite scroll screen
         level=15
-        if runtime <= 2175:    #2175
+        if runtime <= 1:    #2175
             runtime += 1
 
             drawScene()
@@ -974,10 +974,10 @@ while running:
 
                 if bosstimer_2 < 125:
                     bosstimer_2 += 1
-                else:
-                    build = 5
-                    background = 1
-                    battlenum = 3
+##                else:
+##                    build = 5
+##                    background = 1
+##                    battlenum = 3
 
 
 
@@ -1008,7 +1008,7 @@ while running:
         battlenum=1 #first battle
    
 
- 
+
     if playerRect.colliderect(battleRect2) and background == 1:
         pos[X] = 590        #change characters positions
         pos[Y] = 244
@@ -1018,6 +1018,16 @@ while running:
         build = 5
         turn = 1
         battlenum = 2   #second battle
+
+    if playerRect.colliderect(tele4) and background == 4:
+        pos[X] = 590        #change characters positions
+        pos[Y] = 244
+        # health = 600
+        opphealth = 800     #opponents health set to 600
+
+        build = 5
+        turn = 1
+        battlenum = 3   #third battle
        
 
 
