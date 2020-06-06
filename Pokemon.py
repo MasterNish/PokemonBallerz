@@ -366,7 +366,7 @@ X = 0
 Y = 1
 pos = [320,108] #starting position           #[360, 400]
 # ___________________________________
-rs = 5   #running speed
+rs = 1.25   #running speed
 ws = 0.75  # walking speed
 action = "walk"
 actions = {"walk": walk, "run": run}    #storing in the dictionary
