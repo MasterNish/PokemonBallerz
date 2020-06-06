@@ -216,7 +216,7 @@ pidgeyimage = image.load("sprites/PIDGEY/PIDGEY0.png").convert()
 finalbattletitle_og = image.load("sprites/GameOver/pokefinal.png").convert()
 
 loss_original = image.load("sprites/GameOver/endofgame.png").convert()
-winoriginal=image.load("maps/win.png").convert
+winoriginal=image.load("sprites/GameOver/endgame.png").convert
 
 #the following are the same images cropped
 map = transform.smoothscale(mp, (800, 600))
