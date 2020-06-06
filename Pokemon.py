@@ -1,9 +1,48 @@
+'''
+Nishanth & Rishi Final Project
+Pokemon Ballerz
+June 5th, 2020
+
+Pokémon Ballerz brought to you by Nishanth and Rishi
+
+Coroger, the leader of Team Galactic needs to be defeated before he enslaves all Pokémon!
+Get advice and tips from various side characters and train and evolve your Pokémon through battle
+to become powerful enough to stop Coroger! You will need to locate a special key to be able
+to enter the Research Center; so make sure to search every inch of every building!
+
+Controls and Movement
+You can use the arrow keys or “w (up), a (left), s (down), d (right) to walk around.
+Holding the shift button while walking allows your character sprint.
+
+Battle
+The objective of a battle is to get the opposing Pokémon’s health points to zero .
+
+You have 4 moves in battle that all accomplish slightly different things:
+
+Attack: a consistent mild attack
+
+Ambush: a surprise attack that could either be extremely successful or fail terribly. Take a chance!
+
+Chance: the riskiest one because it can either do a lot of damage or it can heal the opponent fully!
+
+Heal: increases your health. After every battle one all 4 of these moves will become more powerful.
+ But if you lose in a battle you will have to restart at your home once again!
+
+Buildings: 2 main priorities in this game. 1st is to give you information, guide and help you through the game,
+the 2nd is to give you Pokémon and upgrade your Pokémon.
+
+Coroger’s Laboratory:
+This is the final destination of the game. Entering this will require collecting a special key hidden in a building.
+If your strong and smart enough, you will be able to protect the Pokémon World from Coroger’s twisted plans!
+
+Good Luck Trainer!
+'''
+
+
+
 from pygame import *
 from random import *
 from glob import *
-
-
-# from Camera import *
 
 class Character(sprite.Sprite):
 
@@ -41,8 +80,8 @@ class Character(sprite.Sprite):
             self.rect.x -= self.speeds[self.action]
 
 
-musics = ["Music/Music.mp3", "Music/Battle.mp3"]   #music list
-inc = 0.1   #volume for music
+musics = ["Music/Music.mp3"]   #music list
+inc = 0.4   #volume for music
 
 init()
 
@@ -65,7 +104,8 @@ BEIGE = (250, 245, 112)
 
 startWall = [Rect(188, 162, 417, 0), Rect(188, 489, 417, 0), Rect(188, 162, 1, 327), Rect(605, 152, 1, 327)]
 wallsMap1 = [Rect(0, 0, 358, 75), Rect(0, 75, 50, 600), Rect(0, 450, 340, 175), Rect(315, 480, 600, 600),
-             Rect(750, 0, 90, 601), Rect(450, 0, 1000, 75), Rect(460, 280, 200, 150), Rect(0, 0, 800, 1)]
+             Rect(750, 0, 90, 601), Rect(450, 0, 1000, 75), Rect(460, 280, 200, 150), Rect(0, 0, 800, 1),
+             Rect(150, 67, 166, 121), Rect(468, 60, 172, 130)]
 wallsMap2 = [Rect(400, 0, 500, 121), Rect(680, 0, 300, 384), Rect(0, 550, 1000, 1000), Rect(0, 0, 65, 1000),            #These are walls used to block off locations it the game
              Rect(0, 410, 511, 48), Rect(146, 338, 400, 28),
              Rect(0, 0, 115, 100), Rect(115, 0, 135, 75), Rect(230, 265, 279, 30), Rect(730, 300, 1000, 300),
@@ -96,13 +136,13 @@ ledge2 = [Rect(80, 270, 140, 20), Rect(354, 230, 147, 3), Rect(656, 454, 150, 1)
 inside = False
 
 
-def drawScene(screen, player, walls):
-    # screen.fill(0)
-    # draw.rect(screen,GREEN,player)                        #This function draws the walls
-
-    for w in walls:   #each wall in the list
-        draw.rect(screen, RED, w)
-    display.flip()
+# def drawScene(screen, player, walls):
+#     # screen.fill(0)
+#     # draw.rect(screen,GREEN,player)                        #This function draws the walls
+#
+#     for w in walls:   #each wall in the list
+#         draw.rect(screen, RED, w)
+#     display.flip()
 
 
 def movePlayer(player, mywalls, myledge):
@@ -150,15 +190,15 @@ out_in = Rect(192, 210, 34, 1)
 back_one = Rect(360, 529, 80, 1)
 
 health = 1000   #player health
-opphealth = 400    #oponent health
+opphealth = 1500    #oponent health
 totaldamage=0    
 opptotaldamage=0
 
 downbox = Rect(215, 450, 40, 0)    
 downbox2 = Rect(290, 450, 40, 0)
-downbox3 = Rect(500, 278, 1, 6)
+downbox3 = Rect(230, 454, 1, 6)
 
-boss1 = Rect(500, 100, 100, 0)#ntering the boss map
+boss1 = Rect(500, 100, 100, 0)#entering the boss map
 tele1 = Rect(57, 187, 1, 8)  # short form for teleport1. Used for teleporation in boss lab
 tele2 = Rect(279, 323, 1, 5)
 tele3 = Rect(396, 186, 1, 6)
@@ -186,6 +226,9 @@ t9Rect = Rect(318, 268, 35, 35)
 restartRect=Rect(73,444,647,89)  #rectangle to restart game when you lose
 
 keyRect = Rect(270, 440, 25, 25) #This is the key rectangle. You have to collect the key to enter the boss lab
+
+quitRect = Rect(229, 425, 344, 112)
+
 
 running = True
 
@@ -216,7 +259,7 @@ pidgeyimage = image.load("sprites/PIDGEY/PIDGEY0.png").convert()
 finalbattletitle_og = image.load("sprites/GameOver/pokefinal.png").convert()
 
 loss_original = image.load("sprites/GameOver/endofgame.png").convert()
-winoriginal=image.load("sprites/GameOver/endgame.png").convert
+winoriginal=image.load("sprites/GameOver/endgame.png").convert()
 
 #the following are the same images cropped
 map = transform.smoothscale(mp, (800, 600))
@@ -235,7 +278,7 @@ finalbattletitle = transform.smoothscale(finalbattletitle_og, (800, 600))
 lossoriginal = transform.smoothscale(loss_original, (800, 600))
 mewtwo = transform.smoothscale(mewtwoimage, (120, 100))
 pidgey = transform.smoothscale(pidgeyimage, (120, 100))
-#win1 = transform.smoothscale(winoriginal, (800, 600))
+win1 = transform.smoothscale(winoriginal, (800, 600))
 
 atk1 = transform.smoothscale(attack1image, (150, 75))
 atk2 = transform.smoothscale(attack2image, (150, 75))     #------images for the attack buttons
@@ -243,7 +286,7 @@ atk3 = transform.smoothscale(attack3image, (150, 75))
 atk4 = transform.smoothscale(attack4image, (150, 75))
 
 direction = ["left", "right", "down", "up"]   #direction for walking and running
-walk = {d: [transform.smoothscale(image.load(i), (20, 24)) for i in glob("sprites\\Player\\walking\\" + d + "\\*.png")]
+walk = {d: [transform.smoothscale(image.load(i), (20, 24)) for i in glob("sprites\\Player\\walking\\" + d + "\\*.png")] #making a string list with all the pics in the folder
         for d in
         direction}
 run = {d: [transform.smoothscale(image.load(i), (20, 24)) for i in glob("sprites\\Player\\running\\" + d + "\\*.png")]
@@ -294,18 +337,18 @@ charbag = 0     #used to makes sure the player has a charzard before entering th
 battlenum = 0   #used to find out which of the three battles is going on 
 # __________________________________
 #this is the throwing animation at the start of the game
-throwani = -1
+throwani = -1   #throwing animations
 ani = 0
 tw = False
 # ___________________________________
 #this is the fire animation at the start of the game
-fireani = -1
+fireani = -1    #fire animations
 anim = 0
 fe = False
 changex, changey = 410, 325
 # ___________________________________
 #this is the heal animation at the start of the game
-heartani = -1
+heartani = -1   #heart animations
 an = 0
 ht = False
 changeX, changeY = 525, 225
@@ -326,19 +369,19 @@ pos = [320,108] #starting position           #[360, 400]
 rs = 1.25   #running speed
 ws = 0.75  # walking speed
 action = "walk"
-actions = {"walk": walk, "run": run}
+actions = {"walk": walk, "run": run}    #storing in the dictionary
 blitted = False
 
 # -----------------------------
-a = 0
+a = 0   #index letters
 b = 1
 c = 2
-y = 500
+y = 500 #y pos for the instructions scrolling
 # a b  c
 g1 = [0, 0, 600]   #list to access during the scrolling
 g2 = [0, -600, 600] #list to access during the scrolling
 
-runtime = 0
+runtime = 0 #counter for instruction scene
 bosstimer_1 = 0
 bosstimer_2 = 0
 losstimer=0
@@ -436,7 +479,7 @@ def drawScene():
     # print("first y=", g1[b], "second y=", g2[b])
 
 
-myClock = time.Clock()
+myClock = time.Clock()  #clock
 while running:
     click = False
     g = key.get_pressed()
@@ -461,7 +504,7 @@ while running:
         count += 1
 
     speed = ws
-    if g[K_LSHIFT] or g[K_RSHIFT]:
+    if g[K_LSHIFT] or g[K_RSHIFT]:  #if ither is clicked change animation to run
         action = "run"
         speed = rs
     else:
@@ -528,11 +571,13 @@ while running:
     if mb[0] == 1 and attack4.collidepoint(mx, my):
         attack = "4"
     if mb[0]==1 and restartRect.collidepoint(mx,my):
-       restart="1"
+        restart="1"
+    if mb[0]==1 and quitRect.collidepoint(mx,my):
+        quit()
 
     # -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    if g[K_UP] or g[K_w]:
+    if g[K_UP] or g[K_w]:       #both keys do the same thing
         di = "up"
 
     elif g[K_LEFT] or g[K_a]:
@@ -549,14 +594,14 @@ while running:
 
     print(mx, "x value", my, "y value")
 
-    playerRect = Rect(pos[X], pos[Y], 18, 21)
-    draw.rect(screen, col, playerRect, 1)
+    playerRect = Rect(pos[X], pos[Y], 18, 21)   #player's rectangle for collide
+    # draw.rect(screen, col, playerRect, 1)
     # __________________________________________________________________________________________________________________________________________________________________________________________________
     playerRect = Rect(pos[X], pos[Y], 21, 26)     #draws the hitbox around the main player
 
     if background == 7:     #intro infinite scroll screen
         level=15
-        if runtime <= 2:    #2175
+        if runtime <= 2175:    #2175
             runtime += 1
 
             drawScene()
@@ -596,47 +641,47 @@ while running:
 
 
             y -= 1
-            screen.blit((actions[action][di][count % 3]), (pos[X], pos[Y]))
+            screen.blit((actions[action][di][count % 3]), (pos[X], pos[Y]))     #blit the character on the instructions for fun
             display.flip()
             myClock.tick(60)
             print(runtime)
         else:
-            background = 0
-            pos[X]=400
+            background = 0  #brings you back to the house
+            pos[X]=400      #change characters positions
             pos[Y]=300
 
     if background == 0:
         level = 6
         screen.blit(bedroom, (0, 0))
-        for wm in startWall:
-            draw.rect(screen, RED, wm, 1)
-        draw.rect(screen, AQUA, mapzero)
+        # for wm in startWall:
+        #     draw.rect(screen, RED, wm, 1)
+        # draw.rect(screen, AQUA, mapzero)
 
     if playerRect.colliderect(mapzero) and background == 0:
         # print(level)
         background = 5
         level = 7
-        pos[X] = 527
+        pos[X] = 527        #change characters positions
         pos[Y] = 222
     if background == 5:
-        for wm in downWall:
-            draw.rect(screen, RED, wm, 1)
+        # for wm in downWall:
+        #     draw.rect(screen, RED, wm, 1)
         screen.blit(down, (0, 0))
-        draw.rect(screen, BEIGE, downtoup)
-        draw.rect(screen, BEIGE, out_in)
-        draw.rect(screen, BEIGE, t5Rect, 1)
+        # draw.rect(screen, BEIGE, downtoup)
+        # draw.rect(screen, BEIGE, out_in)
+        # draw.rect(screen, BEIGE, t5Rect, 1)
         screen.blit(t5, (325, 275))
         if playerRect.colliderect(t5Rect):
             screen.blit(t5text, (225, 425))
 
     if playerRect.colliderect(downtoup) and background == 5:
         background = 0
-        pos[X] = 469
+        pos[X] = 469        #change characters positions
         pos[Y] = 293
 
     if playerRect.colliderect(out_in) and background == 6:
         background = 5
-        pos[X] = 402
+        pos[X] = 402        #change characters positions
         pos[Y] = 345
         level = 7
 
@@ -646,14 +691,14 @@ while running:
         level = 1
         # pos[X]=235
         # pos[Y]=275
-        pos[X] = 210
+        pos[X] = 210        #change characters positions
         pos[Y] = 232
     if background == 6:
         screen.blit(map, (0, 0))
-        for wm in wallsMap1:
-            draw.rect(screen, RED, wm, 1)
-        draw.rect(screen, AQUA, FirstMap)
-        draw.rect(screen, AQUA, neighbour)
+        # for wm in wallsMap1:
+        #     draw.rect(screen, RED, wm, 1)
+        # draw.rect(screen, AQUA, FirstMap)
+        # draw.rect(screen, AQUA, neighbour)
 
     # print(actions[action])
 
@@ -661,30 +706,30 @@ while running:
 
     if playerRect.colliderect(neighbour) and background == 6 and build == 0:
         build = 1
-        pos[X] = 309
+        pos[X] = 309        #change characters positions
         pos[Y] = 396
         inside = True
 
-    if background == 6 and build == 1:
+    if background == 6 and build == 1:      #in the neigbour's house
         screen.blit(neigbourInside, (0, 0))
-        for wm in nWall:
-            draw.rect(screen, RED, wm, 2)
+        # for wm in nWall:
+        #     draw.rect(screen, RED, wm, 2)
         # print("bye")
         screen.blit(t6, (240, 270))
-        draw.rect(screen, BEIGE, t6Rect, 1)
-        draw.rect(screen, BEIGE, neighbourexit)
+        # draw.rect(screen, BEIGE, t6Rect, 1)
+        # draw.rect(screen, BEIGE, neighbourexit)
         blitted = False
-        if playerRect.colliderect(t6Rect):
+        if playerRect.colliderect(t6Rect):  #blit text when in contact or nearby
             screen.blit(t6text, (225, 425))
             blitted = True
-            bag.append("CHARMANDER")
+            bag.append("CHARMANDER")    #added to bag
             charbag = 1
-        if blitted == False and "CHARMANDER" in bag:
+        if blitted == False and "CHARMANDER" in bag:    #to blit after you receive it
             screen.blit(t61text, (250, 425))
 
     if playerRect.colliderect(neighbourexit) and background == 6 and build == 1:
         build = 0
-        pos[X] = 500
+        pos[X] = 500        #change characters positions
         pos[Y] = 230
         inside = False
 
@@ -696,39 +741,39 @@ while running:
         # print("level 22222")
         # pos[X]=378
         # pos[Y]=522
-        pos[X] = 399
+        pos[X] = 399        #change characters positions
         pos[Y] = 509
 
     if background == 1:
         screen.blit(map1, (0, 0))
         screen.blit(t1, (600, 350))
-        draw.rect(screen, BEIGE, t1Rect, 1)
+        # draw.rect(screen, BEIGE, t1Rect, 1)
         if playerRect.colliderect(t1Rect):
             screen.blit(t1text, (225, 425))
         screen.blit(t3, (65, 300))
-        draw.rect(screen, BEIGE, t3Rect, 1)
+        # draw.rect(screen, BEIGE, t3Rect, 1)
         if playerRect.colliderect(t3Rect):
             screen.blit(t3text, (225, 425))
-        for wm in wallsMap2:
-            draw.rect(screen, RED, wm, 2)
-        for ledge in ledge2:
-            draw.rect(screen, BLUE, ledge, 2)
+        # for wm in wallsMap2:
+        #     draw.rect(screen, RED, wm, 2)
+        # for ledge in ledge2:
+        #     draw.rect(screen, BLUE, ledge, 2)
         # print("hi")
 
         # print(background, " issss background",build, "isssss build",level,"isss level")
-        draw.rect(screen, BEIGE, SecondMap)
-        draw.rect(screen, BEIGE, FirstMapReverse)
-        draw.rect(screen, GREEN, battleRect)
-        draw.rect(screen, GREEN, battleRect2)
+        # draw.rect(screen, BEIGE, SecondMap)
+        # draw.rect(screen, BEIGE, FirstMapReverse)
+        # draw.rect(screen, GREEN, battleRect)
+        # draw.rect(screen, GREEN, battleRect2)
 
-    if playerRect.colliderect(FirstMapReverse) and background == 1:
+    if playerRect.colliderect(FirstMapReverse) and background == 1: #to reenter house
         background = 6
         level = 1
         pos[X] = 395
         pos[Y] = 40
 
     
-    if playerRect.colliderect(SecondMap) and background == 1:
+    if playerRect.colliderect(SecondMap) and background == 1:       #to enter seconde map
         col = BLACK
         level = 3
         background = 2
@@ -736,45 +781,46 @@ while running:
         turn=0
         
         print("background......",background,"level.........",level,"Build...............",build)
-        pos[X] = 644
+        pos[X] = 644        #change characters positions
         pos[Y] = 409
 
 
     if background == 2 and build == 0:
         print(background, " issss background",build, "isssss build",level,"isss level")
-        for wm in wallsMap3:
-            draw.rect(screen, RED, wm, 3)
+        # for wm in wallsMap3:
+        #     draw.rect(screen, RED, wm, 3)
         screen.blit(map2, (0, 0))
         # playerRect=Rect(pos[X],pos[Y],16,22)
-
-        draw.rect(screen, BEIGE, martbox)
-        draw.rect(screen, BEIGE, downbox)
-        draw.rect(screen, BEIGE, downbox2)
-        draw.rect(screen, BEIGE, downbox2)
-        draw.rect(screen, BEIGE, boss1)
+        #
+        # draw.rect(screen, BEIGE, martbox)
+        # draw.rect(screen, BEIGE, downbox)
+        # draw.rect(screen, BEIGE, downbox2)
+        # draw.rect(screen, BEIGE, downbox2)
+        # draw.rect(screen, BEIGE, boss1)
 
     if playerRect.colliderect(martbox) and background == 2 and build == 0:
         build = 2
 
-        pos[X] = 394
+        pos[X] = 394        #change characters positions
         pos[Y] = 406
-        inside = True
+        inside = True   #if youre inside
     if playerRect.colliderect(martboxexit) and background == 2 and build == 2:
         background = 2
         build = 0
-        pos[X] = 560
+        pos[X] = 560        #change characters positions
         pos[Y] = 353
-        inside = False
+        inside = False  #not inside
 
     if build == 2 and background == 2:
         # print(22)
         screen.blit(mart, (0, 0))
         screen.blit(t2, (400, 205))
-        draw.rect(screen, BEIGE, t2Rect, 1)
+        # draw.rect(screen, BEIGE, t2Rect, 1)
         if playerRect.colliderect(t2Rect):
             screen.blit(t2text, (225, 425))
-        for wm in martWall:
-            draw.rect(screen, RED, wm, 3)
+            health = 1000
+        # for wm in martWall:
+        #     draw.rect(screen, RED, wm, 3)
     # _______________________________________________________________________________________________________________________________________
 
     if build == 3 and background == 2:
@@ -783,19 +829,19 @@ while running:
         level = 7
         screen.blit(down, (0, 0))
         screen.blit(t8, (325, 275))
-        draw.rect(screen, BEIGE, t8Rect, 1)
+        # draw.rect(screen, BEIGE, t8Rect, 1)
         if playerRect.colliderect(t8Rect):
-            screen.blit(t8text, (225, 425))
-        for wm in downWall:
-            draw.rect(screen, RED, wm, 3)
-        draw.rect(screen, GREEN, downtoout)
-        # draw.rect(screen,AQUA,house_out)
+            screen.blit(t9text, (225, 425))
+        # for wm in downWall:
+        #     draw.rect(screen, RED, wm, 3)
+        # draw.rect(screen, GREEN, downtoout)
+        # # draw.rect(screen,AQUA,house_out)
         inside = True
 
     if playerRect.colliderect(downbox) and background == 2 and build == 0:  # Go inside
         build = 3
 
-        pos[X] = 353
+        pos[X] = 353        #change characters positions
         pos[Y] = 358
 
     if playerRect.colliderect(downtoout) and background == 2 and build == 3:  # Downstairs to out
@@ -815,7 +861,7 @@ while running:
         build = 8
         level = 8
         pos[X] = 459
-        pos[Y] = 295
+        pos[Y] = 295        #change characters positions
         inside=True
 
 
@@ -823,7 +869,7 @@ while running:
     if background == 2 and build == 8:  # upstairs
         #level = 8
         screen.blit(bedroom, (0, 0))
-        draw.rect(screen, BEIGE, keyRect, 1)
+        # draw.rect(screen, BEIGE, keyRect, 1)
         if playerRect.colliderect(keyRect):
             blitted = True
             screen.blit(keytext, (250, 493))
@@ -832,9 +878,9 @@ while running:
         # print(key1)
 
         #print(level, "......level", background, "......background", build, "........build")
-        for wm in startWall:
-            draw.rect(screen, RED, wm, 1)
-        draw.rect(screen, AQUA, doc_to_out)
+        # for wm in startWall:
+        #     draw.rect(screen, RED, wm, 1)
+        # draw.rect(screen, AQUA, doc_to_out)
 
     if playerRect.colliderect(doc_to_out) and background==2 and build==8:    #upstairs to downstairs
         # print(level)
@@ -842,7 +888,7 @@ while running:
         build=3
         level=7
         
-        pos[X]=554
+        pos[X]=554      #change characters positions
         pos[Y]=224
 
 
@@ -855,47 +901,47 @@ while running:
         screen.blit(down, (0, 0))
         screen.blit(down, (0, 0))
         screen.blit(t9, (325, 275))
-        draw.rect(screen, BEIGE, t9Rect, 1)
+        # draw.rect(screen, BEIGE, t9Rect, 1)
         if playerRect.colliderect(t9Rect):
-            screen.blit(t9text, (225, 425))
-        for wm in downWall:
-            draw.rect(screen, RED, wm, 3)
-        draw.rect(screen, BEIGE, downtoout)
+            screen.blit(t8text, (225, 425))
+        # for wm in downWall:
+        #     draw.rect(screen, RED, wm, 3)
+        # draw.rect(screen, BEIGE, downtoout)
 
-    if playerRect.colliderect(downbox2) and background == 2 and build == 0:
+    if playerRect.colliderect(downbox2) and background == 2 and build == 0: #the house
         build = 4
-        pos[X] = 353
+        pos[X] = 353        #change characters positions
         pos[Y] = 338
 
-    if playerRect.colliderect(downtoout) and background == 2 and build == 4:
+    if playerRect.colliderect(downtoout) and background == 2 and build == 4:    #stairs
         # print("HELLLLLLLLLLLLO")
         background = 2
         build = 0
         level = 3
         inside = False
-        pos[X] = 306
+        pos[X] = 306        #change characters positions
         pos[Y] = 455
 
     if background == 3 and key1 == 1:
         # print("52")
         screen.blit(boss1map, (0, 0))
         screen.blit(t4, (300, 422))
-        draw.rect(screen, BEIGE, t4Rect, 1)
+        # draw.rect(screen, BEIGE, t4Rect, 1)
         if playerRect.colliderect(t4Rect):
             screen.blit(t4text, (225, 425))
-        for wm in wallsMapboss1:
-            draw.rect(screen, RED, wm, 3)
-
-        draw.rect(screen, BEIGE, tele1)
-        draw.rect(screen, BEIGE, tele2)
-        draw.rect(screen, BEIGE, tele3)
-        draw.rect(screen, BEIGE, tele4)
+        # for wm in wallsMapboss1:
+        #     draw.rect(screen, RED, wm, 3)
+        #
+        # draw.rect(screen, BEIGE, tele1)
+        # draw.rect(screen, BEIGE, tele2)
+        # draw.rect(screen, BEIGE, tele3)
+        # draw.rect(screen, BEIGE, tele4)
 
     if playerRect.colliderect(boss1) and background == 2:
         level = 4
         background = 3
 
-        pos[X] = 34
+        pos[X] = 34     #change characters positions
         pos[Y] = 232
 
     if playerRect.colliderect(tele4) and background == 3:
@@ -903,16 +949,17 @@ while running:
         background = 4
 
         pos[X] = 397
-        pos[Y] = 421
+        pos[Y] = 421        #change characters positions
 
     if background == 4:
 
         screen.blit(boss2map, (0, 0))
         screen.blit(t7, (390, 400))
-        draw.rect(screen, BEIGE, t7Rect, 1)
-        opphealth=1000
-        for wm in wallsMapboss2:
-            draw.rect(screen, RED, wm, 3)
+        # draw.rect(screen, BEIGE, t7Rect, 1)
+
+        opphealth = 1500
+        # for wm in wallsMapboss2:
+            # draw.rect(screen, RED, wm, 3)
         if playerRect.colliderect(t7Rect):
             screen.blit(t7text, (225, 425))
             if bosstimer_1 < 125:
@@ -924,14 +971,13 @@ while running:
                 # pos[X]=800
                 # pos[Y]=600
                 battlenum = 3
-                
-                    
 
                 if bosstimer_2 < 125:
                     bosstimer_2 += 1
                 else:
                     build = 5
                     background = 1
+                    battlenum = 3
 
 
 
@@ -940,59 +986,55 @@ while running:
     # _______________________________________________________________________________________
 
     if playerRect.colliderect(tele1) and background == 3:
-        pos[X] = 151
+        pos[X] = 151        #change characters positions
         pos[Y] = 395
 
     if playerRect.colliderect(tele2) and background == 3:
-        pos[X] = 150
+        pos[X] = 150        #change characters positions
         pos[Y] = 206
 
     if playerRect.colliderect(tele3) and background == 3:
-        pos[X] = 590
+        pos[X] = 590        #change characters positions
         pos[Y] = 244
     # _________________________________________________________________________________________
 
     if playerRect.colliderect(battleRect) and background == 1:
-        pos[X] = 590
+        pos[X] = 590        #change characters positions
         pos[Y] = 244
-        opphealth = 600
+        opphealth = 600     #opponents health set to 600
 
         build=5
         turn=1
-        battlenum=1
+        battlenum=1 #first battle
    
 
  
     if playerRect.colliderect(battleRect2) and background == 1:
-        pos[X] = 590
+        pos[X] = 590        #change characters positions
         pos[Y] = 244
         # health = 600
-        opphealth = 800
+        opphealth = 800     #opponents health set to 600
 
         build = 5
         turn = 1
-        battlenum = 2
+        battlenum = 2   #second battle
        
 
 
-    #build = 5
-    #background = 1
-##    build=5
-##    background=1
-##    battlenum=1
+
     if build == 5 and background == 1:
-        if not tw:
-            throwani = 0
+        if not tw:  #if not False
+            throwani = 0    #first frame
         tw = True
 
         screen.blit(battle, (0, 0))
 
-        pos[X] = 850
+        pos[X] = 850        #change characters positions
         pos[Y] = 650
 
-        for wm in battleWall:
-            draw.rect(screen, RED, wm, 3)
-        draw.rect(screen, RED, attack1)
+        # for wm in battleWall:
+        #     draw.rect(screen, RED, wm, 3)
+        draw.rect(screen, RED, attack1)     #MOVES
         draw.rect(screen, BLUE, attack2)
         draw.rect(screen, GREEN, attack3)
         draw.rect(screen, YELLOW, attack4)
@@ -1004,51 +1046,51 @@ while running:
 
         if battlenum==1:
 
-            screen.blit(oppcharacter[0],(485,263))
-            pos[X]=651
-            pos[Y]=351
+            screen.blit(oppcharacter[0],(485,263))      #opponent
+            pos[X]=573
+            pos[Y]=344      #change characters positions
             print("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK")
 
 
         elif battlenum==2:
-            screen.blit(oppcharacter[1],(483,263))
-            pos[X]=612
+            screen.blit(oppcharacter[1],(483,263))      #opponent
+            pos[X]=612      #change characters positions
             pos[Y]=128
 
 
         elif battlenum==3:
-            screen.blit(oppcharacter[2],(325,263))
+            screen.blit(oppcharacter[2],(478,240))      #opponent
             
             print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
 
-        screen.blit(char, (220, 325))
+        screen.blit(char, (220, 325))       #blit our pokemon
         build=5
         scoreText=mytext.render('Health: ' + str(health), 1, (GREEN))
-        screen.blit(scoreText,(15,15))
+        screen.blit(scoreText,(15,15))  #blits the health text in the corner
 
         scoreText1=mytext.render('Enemy Health: ' + str(opphealth), 1, (GREEN))
-        screen.blit(scoreText1,(450,15))
+        screen.blit(scoreText1,(450,15))    #blits the health text in the corner
 
 
 
 
-        if throwani != -1:
+        if throwani != -1:  #set to -1 at the start so when it becomes 0 it can run
             # print(True)
             screen.blit(throw[throwani], (150, 330))
-            ani += 1
+            ani += 1        # add to frame rate
             if ani % 15 == 0:
-                throwani += 1
-            if throwani == 5:
-                throwani = -1
+                throwani += 1   #add to frame
+            if throwani == 5:   #last frame
+                throwani = -1   #becomes -1 again so it doesn't repeat
             # print(throwani)
 #______________________________________________________________________________________________________________________________
 
             
 
     # ___________________________________________________________________________________________________________
-    background=1
-    battlenum=3
-    build=5
+    # background=1
+    # battlenum=3
+    # build=5
     
     if health >= 0 or opphealth >= 0:
 
@@ -1057,10 +1099,10 @@ while running:
 
             if attack == "1" and click == True:  # standard attack
 
-                opphealth -= ak1
+                opphealth -= ak1    #reducing attack damage from health
                 # print(opphealth,"............opp health...........")
 
-                changey -= 5
+                changey -= 5        #for the moving attack frames
                 if changey == 305:
                     changey = 325
 
@@ -1068,18 +1110,18 @@ while running:
                 if changex == 470:
                     changex = 410
 
-                if not fe:
-                    fireani = 0
+                if not fe:  #if not False
+                    fireani = 0 # set to 0
                 fe = True
 
                 if fireani != -1:
-                    screen.blit(transform.rotate(fire[fireani], angle), (changex, changey))
+                    screen.blit(transform.rotate(fire[fireani], angle), (changex, changey)) #blitted on an angle so it looks like it's shooting the opponent
                     # print(True)
 
                     anim += 1
-                    if anim % 1 == 0:
-                        fireani += 1
-                    if fireani == 4:
+                    if anim % 1 == 0:   #frame rate
+                        fireani += 1    #add to frame
+                    if fireani == 4:    #once it hits the max frame it becomes 0 again
                         fireani = 0
                     # print(fireani)
 
@@ -1105,7 +1147,7 @@ while running:
                 if changex == 470:
                     changex = 410
 
-                if not fe:
+                if not fe:       #if not False set to 0
                     fireani = 0
                 fe = True
 
@@ -1114,9 +1156,9 @@ while running:
                     # print(True)
 
                     anim += 1
-                    if anim % 1 == 0:
-                        fireani += 1
-                    if fireani == 4:
+                    if anim % 1 == 0:   #frame rate
+                        fireani += 1    #add to frame
+                    if fireani == 4:        #once it hits the max frame it becomes 0 again
                         fireani = 0
                     # print(fireani)
 
@@ -1133,21 +1175,21 @@ while running:
 
                 a3 = randint(1, 2)
                 if a3 == 1:
-                    if opphealth <= 1250:
+                    if opphealth <= 1250:   #caps the amount of health increased for the opponent
                         opphealth += 250
 
-                    if not ht:
+                    if not ht:  #if not false set to 0
                         heartani = 0
                     ht = True
 
                     if heartani != -1:
-                        screen.blit(heart[heartani], (changeX, changeY))
+                        screen.blit(heart[heartani], (changeX, changeY))    #moving heart frames
                         # print(True)
 
                         an += 1
-                        if an % 1 == 0:
-                            heartani += 1
-                        if heartani == 4:
+                        if an % 1 == 0: #frame rate
+                            heartani += 1   #add to frame
+                        if heartani == 4:   #brings frame back to 0
                             heartani = 0
                         # print(heartani)
 
@@ -1211,9 +1253,9 @@ while running:
 
         elif turn == 2:
             time.wait(100)
-            time.wait(3)
-            oppattack = randint(0,40)
-            health = health - oppattack
+            time.wait(3)    #wait a little
+            oppattack = randint(0,40)   #attack in ranging from 0 to 40
+            health = health - oppattack #changes payer's health based on damge done to it
             if health <= 0 or opphealth <= 0:
                 turn = 3
             else:
@@ -1223,13 +1265,13 @@ while running:
 
 
         if turn == 3:
-            time.wait(10)
+            time.wait(10)   #wait
 
             if health <= 0:
-                screen.blit(lossoriginal,(0,0))
+                screen.blit(lossoriginal,(0,0)) #if you lose
                 time.delay(40)
-                background=11
-                if restart == "1":
+                background=11   #shows the restart sign
+                if restart == "1":  #what to do once you restart
                     background=0
                     charbag=1
                     level=6
@@ -1253,15 +1295,15 @@ while running:
                 build=0
 
             else:
-                screen.blit(winoriginal,(0,0))
-
+                screen.blit(win1,(0,0))     #once you win the game
+                # draw.rect(screen, RED, quitRect, 1)
                     
     # _________________________________________________________________________________________________________________________________________________________________________________________
-    draw.rect(screen, col, playerRect, 1)
-    screen.blit((actions[action][di][count % 3]), (pos[X], pos[Y]))
+    # draw.rect(screen, col, playerRect, 1)
+    screen.blit((actions[action][di][count % 3]), (pos[X], pos[Y]))     #player moving and what sprite to use and whether its walk or run
     # print (pos[X],"x value",pos[Y],"y value")
 
-    display.flip()
-    myClock.tick(60)
+    display.flip()      #everything shows up on the display
+    myClock.tick(60)    #clock
 
-quit()
+quit()  #not needed because the player will never want to quit
