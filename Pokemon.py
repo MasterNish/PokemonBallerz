@@ -91,7 +91,7 @@ test101 = [Rect(1, 1, 1, 1)]
 introRect=[Rect(0,0,800,0),Rect(0,0,0,600),Rect(0,600,800,0),Rect(800,0,0,600)]
 
 ledge2 = [Rect(80, 270, 140, 20), Rect(354, 230, 147, 3), Rect(656, 454, 150, 1), Rect(154, 498, 154, 3),
-          Rect(360, 498, 500, 1)]
+          Rect(360, 498, 500, 1),Rect(10,194,240,0)]
 
 inside = False
 
@@ -320,7 +320,7 @@ key1 = 0
 di = "down"
 X = 0
 Y = 1
-pos = [360, 400]
+pos = [320,108]            #[360, 400]
 # ___________________________________
 rs = 1.25
 ws = 0.75
@@ -724,17 +724,21 @@ while running:
         pos[X] = 395
         pos[Y] = 40
 
+    
     if playerRect.colliderect(SecondMap) and background == 1:
         col = BLACK
         level = 3
         background = 2
-        # print("aaaaa")
-        pos[X] = 543
-        pos[Y] = 530
+        build=0
+        turn=0
+        
+        print("background......",background,"level.........",level,"Build...............",build)
+        pos[X] = 644
+        pos[Y] = 409
 
 
     if background == 2 and build == 0:
-        # print(background, " issss background",build, "isssss build",level,"isss level")
+        print(background, " issss background",build, "isssss build",level,"isss level")
         for wm in wallsMap3:
             draw.rect(screen, RED, wm, 3)
         screen.blit(map2, (0, 0))
@@ -796,6 +800,7 @@ while running:
         background = 2
         build = 0
         level = 3
+        battlenum=0
         inside=False
 
       #  pos[X] = 229
@@ -927,17 +932,7 @@ while running:
                     background = 1
 
 
-    if background==11:
-        screen.blit(lossoriginal,(0,0))
 
-    if x==1:
-        pos[X]=651
-        pos[Y]=351
-        x=3
-    if x==2:
-        x=3
-        pos[X]=612
-        pos[Y]=128
         
 
     # _______________________________________________________________________________________
