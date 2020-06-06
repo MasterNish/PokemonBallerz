@@ -41,8 +41,8 @@ class Character(sprite.Sprite):
             self.rect.x -= self.speeds[self.action]
 
 
-musics = ["Music/Music.mp3", "Music/Battle.mp3"]
-inc = 0.1
+musics = ["Music/Music.mp3", "Music/Battle.mp3"]   #music list
+inc = 0.1   #volume for music
 
 init()
 
@@ -57,7 +57,7 @@ RED = (255, 0, 0)
 GREY = (127, 127, 127)
 BLACK = (0, 0, 0)
 BLUE = (0, 0, 255)
-GREEN = (0, 255, 0)
+GREEN = (0, 255, 0)             #colours
 YELLOW = (255, 255, 0)
 WHITE = (255, 255, 255)
 AQUA = (3, 252, 182)
@@ -66,14 +66,14 @@ BEIGE = (250, 245, 112)
 startWall = [Rect(188, 162, 417, 0), Rect(188, 489, 417, 0), Rect(188, 162, 1, 327), Rect(605, 152, 1, 327)]
 wallsMap1 = [Rect(0, 0, 358, 75), Rect(0, 75, 50, 600), Rect(0, 450, 340, 175), Rect(315, 480, 600, 600),
              Rect(750, 0, 90, 601), Rect(450, 0, 1000, 75), Rect(460, 280, 200, 150), Rect(0, 0, 800, 1)]
-wallsMap2 = [Rect(400, 0, 500, 121), Rect(680, 0, 300, 384), Rect(0, 550, 1000, 1000), Rect(0, 0, 65, 1000),
+wallsMap2 = [Rect(400, 0, 500, 121), Rect(680, 0, 300, 384), Rect(0, 550, 1000, 1000), Rect(0, 0, 65, 1000),            #These are walls used to block off locations it the game
              Rect(0, 410, 511, 48), Rect(146, 338, 400, 28),
              Rect(0, 0, 115, 100), Rect(115, 0, 135, 75), Rect(230, 265, 279, 30), Rect(730, 300, 1000, 300),
              Rect(200, 110, 72, 80), Rect(232, 190, 111, 38), Rect(232, 190, 350, 20),
              Rect(64, 302, 12, 14), Rect(602, 349, 11, 17), Rect(0, 442, 648, 0), Rect(200, 157, 800, 0),
              Rect(656, 415, 1, 50)]
 wallsMap3 = [Rect(0, 0, 400, 200), Rect(0, 0, 90, 1000), Rect(0, 0, 430, 100), Rect(0, 550, 1000, 100),
-             Rect(0, 0, 1000, 80), Rect(710, 0, 1000, 1000), Rect(340, 200, 75, 80), Rect(400, 0, 60, 250)]
+             Rect(0, 0, 1000, 80), Rect(710, 0, 1000, 1000), Rect(340, 200, 75, 80), Rect(400, 0, 60, 250)]                 #These are walls used to block off locations it the game
 nWall = [Rect(203, 197, 412, 1), Rect(203, 197, 1, 306), Rect(203, 462, 412, 1), Rect(615, 197, 1, 412),
          Rect(247, 275, 8, 13), Rect(202, 428, 412, 1)]
 martWall = [Rect(129, 129, 545, 1), Rect(129, 450, 545, 1), Rect(129, 129, 1, 321), Rect(674, 129, 1, 321),
@@ -81,7 +81,7 @@ martWall = [Rect(129, 129, 545, 1), Rect(129, 450, 545, 1), Rect(129, 129, 1, 32
 downWall = [Rect(213, 144, 377, 1), Rect(213, 392, 377, 1), Rect(213, 144, 1, 248), Rect(591, 144, 1, 248),
             Rect(330, 280, 9, 15)]
 wallsMapboss1 = [Rect(0, 166, 800, 0), Rect(0, 442, 800, 0), Rect(92, 140, 25, 129), Rect(0, 272, 800, 45),
-                 Rect(333, 246, 27, 30), Rect(334, 150, 30, 61), Rect(438, 149, 30, 120), Rect(544, 151, 30, 300),
+                 Rect(333, 246, 27, 30), Rect(334, 150, 30, 61), Rect(438, 149, 30, 120), Rect(544, 151, 30, 300),              #These are walls used to block off locations it the game
                  Rect(620, 150, 30, 93),
                  Rect(620, 207, 102, 36), Rect(757, 207, 100, 38), Rect(378, 321, 25, 60), Rect(351, 347, 57, 30),
                  Rect(184, 321, 60, 31), Rect(213, 347, 98, 33)]
@@ -91,91 +91,87 @@ test101 = [Rect(1, 1, 1, 1)]
 introRect=[Rect(0,0,800,0),Rect(0,0,0,600),Rect(0,600,800,0),Rect(800,0,0,600)]
 
 ledge2 = [Rect(80, 270, 140, 20), Rect(354, 230, 147, 3), Rect(656, 454, 150, 1), Rect(154, 498, 154, 3),
-          Rect(360, 498, 500, 1),Rect(10,194,240,0)]
+          Rect(360, 498, 500, 1),Rect(10,194,240,0)]                                                                            #These are ledges which a player can only walk one direction on. The other way is blocked
 
 inside = False
 
 
 def drawScene(screen, player, walls):
     # screen.fill(0)
-    # draw.rect(screen,GREEN,player)
+    # draw.rect(screen,GREEN,player)                        #This function draws the walls
 
-    for w in walls:
+    for w in walls:   #each wall in the list
         draw.rect(screen, RED, w)
     display.flip()
 
 
 def movePlayer(player, mywalls, myledge):
+    #This function checks to see if the player is hitting a wall or a ledge (via the function "hitwalls") if not it will move the player
     g = key.get_pressed()
 
-    if (g[K_DOWN] or g[K_s]) and hitwalls(pos[X], pos[Y] + 5, mywalls) == -1:
+    if (g[K_DOWN] or g[K_s]) and hitwalls(pos[X], pos[Y] + 5, mywalls) == -1:  #upwards walk
         pos[Y] += ws
-    elif (g[K_UP] or g[K_w]) and hitwalls(pos[X], pos[Y] - 5, mywalls) == -1 and hitwalls(pos[X], pos[Y] - 5,
-                                                                                          myledge) == -1:
+    elif (g[K_UP] or g[K_w]) and hitwalls(pos[X], pos[Y] - 5, mywalls) == -1 and hitwalls(pos[X], pos[Y] - 5,myledge) == -1:   #downwards walk
         pos[Y] -= ws
-    elif (g[K_LEFT] or g[K_a]) and hitwalls(pos[X] - 5, pos[Y], mywalls) == -1:
+    elif (g[K_LEFT] or g[K_a]) and hitwalls(pos[X] - 5, pos[Y], mywalls) == -1:     #walking in the left direction
         pos[X] -= ws
-    elif (g[K_RIGHT] or g[K_d]) and hitwalls(pos[X] + 5, pos[Y], mywalls) == -1:
+    elif (g[K_RIGHT] or g[K_d]) and hitwalls(pos[X] + 5, pos[Y], mywalls) == -1:    #walking in the right direction
         pos[X] += ws
 
-    if (g[K_DOWN] or g[K_s]) and (g[K_LSHIFT] or g[K_RSHIFT]) and hitwalls(pos[X], pos[Y] + 5, mywalls) == -1:
+    if (g[K_DOWN] or g[K_s]) and (g[K_LSHIFT] or g[K_RSHIFT]) and hitwalls(pos[X], pos[Y] + 5, mywalls) == -1:    #running upwards
         pos[Y] += rs
-    elif (g[K_UP] or g[K_w]) and (g[K_LSHIFT] or g[K_RSHIFT]) and hitwalls(pos[X], pos[Y] - 5,
-                                                                           mywalls) == -1 and hitwalls(pos[X],
-                                                                                                       pos[Y] - 5,
-                                                                                                       myledge) == -1:
+    elif (g[K_UP] or g[K_w]) and (g[K_LSHIFT] or g[K_RSHIFT]) and hitwalls(pos[X], pos[Y] - 5,mywalls) == -1 and hitwalls(pos[X],pos[Y] - 5,myledge) == -1:    #running downwards
         pos[Y] -= rs
-    elif (g[K_LEFT] or g[K_a]) and (g[K_LSHIFT] or g[K_RSHIFT]) and hitwalls(pos[X] - 5, pos[Y], mywalls) == -1:
+    elif (g[K_LEFT] or g[K_a]) and (g[K_LSHIFT] or g[K_RSHIFT]) and hitwalls(pos[X] - 5, pos[Y], mywalls) == -1:   #running to the left
         pos[X] -= rs
-    elif (g[K_RIGHT] or g[K_d]) and (g[K_LSHIFT] or g[K_RSHIFT]) and hitwalls(pos[X] + 5, pos[Y], mywalls) == -1:
+    elif (g[K_RIGHT] or g[K_d]) and (g[K_LSHIFT] or g[K_RSHIFT]) and hitwalls(pos[X] + 5, pos[Y], mywalls) == -1:  #running to the right
         pos[X] += rs
 
 
 def hitwalls(x, y, mywalls):
+    'Checks if the player makes contact with the walls'
     playerRect = Rect(x, y, 25, 25)
-    # print(playerRect.collidelist(mywalls))
     return playerRect.collidelist(mywalls)
 
-
-FirstMap = Rect(360, 15, 90, 0)
-FirstMapReverse = Rect(358, 545, 80, 1)
-SecondMap = Rect(280, 66, 90, 0)
-neighbour = Rect(500, 220, 60, 0)
-neighbourexit = Rect(345, 417, 55, 1)
-martbox = Rect(544, 344, 40, 0)
-martboxexit = Rect(373, 437, 55, 1)
-downtoout = Rect(373, 384, 59, 1)
-mapzero = Rect(493, 270, 1, 44)
-doc_to_out = Rect(493, 270, 1, 44)
-house_up = Rect(517, 198, 1, 28)
+#te following are rectangles used to enter new places
+FirstMap = Rect(360, 15, 90, 0)   #1st to 2nd map
+FirstMapReverse = Rect(358, 545, 80, 1)  #2nd to first map
+SecondMap = Rect(280, 66, 90, 0)   #2nd to third map
+neighbour = Rect(500, 220, 60, 0)   #go inside neigbour's house
+neighbourexit = Rect(345, 417, 55, 1)   #exiting neighbours house
+martbox = Rect(544, 344, 40, 0)    #entering mart
+martboxexit = Rect(373, 437, 55, 1)    #exiting mart
+downtoout = Rect(373, 384, 59, 1)    #down stairs of home to out
+mapzero = Rect(493, 270, 1, 44)     
+doc_to_out = Rect(493, 270, 1, 44)      #doctor house to out
+house_up = Rect(517, 198, 1, 28) 
 downtoup = Rect(516, 197, 1, 23)
 out_in = Rect(192, 210, 34, 1)
 back_one = Rect(360, 529, 80, 1)
 
-health = 1000
-opphealth = 400
-totaldamge=0
+health = 1000   #player health
+opphealth = 400    #oponent health
+totaldamage=0    
 opptotaldamage=0
 
-downbox = Rect(215, 450, 40, 0)
+downbox = Rect(215, 450, 40, 0)    
 downbox2 = Rect(290, 450, 40, 0)
 downbox3 = Rect(500, 278, 1, 6)
 
-boss1 = Rect(500, 100, 100, 0)
-tele1 = Rect(57, 187, 1, 8)  # short form for teleport1
+boss1 = Rect(500, 100, 100, 0)#ntering the boss map
+tele1 = Rect(57, 187, 1, 8)  # short form for teleport1. Used for teleporation in boss lab
 tele2 = Rect(279, 323, 1, 5)
 tele3 = Rect(396, 186, 1, 6)
 tele4 = Rect(768, 184, 1, 4)
 
-battleRect = Rect(0, 453, 649, 0)
-battleRect2 = Rect(270, 171, 800, 0)
-attack1 = Rect(0, 475, 250, 200)
-attack2 = Rect(200, 475, 250, 200)
-attack3 = Rect(400, 475, 250, 200)
-attack4 = Rect(600, 475, 250, 200)
-healthRect = (149, 100, health, 10)
-opphealthRect = (149, 70, opphealth, 10)
+battleRect = Rect(0, 453, 649, 0)    #first fight
+battleRect2 = Rect(270, 171, 800, 0)   #second fight
+attack1 = Rect(0, 475, 250, 200)   #attack/move 1
+attack2 = Rect(200, 475, 250, 200) #attack/move 2
+attack3 = Rect(400, 475, 250, 200) #attack/move 3
+attack4 = Rect(600, 475, 250, 200) #attack/move 4
 
+#the following are rects for character to player communication
 t1Rect = Rect(593, 343, 35, 35)
 t2Rect = Rect(393, 198, 35, 85)
 t3Rect = Rect(58, 293, 35, 35)
@@ -186,17 +182,16 @@ t7Rect = Rect(383, 393, 35, 35)
 t8Rect = Rect(318, 268, 35, 35)
 t9Rect = Rect(318, 268, 35, 35)
 
-postbattleRect1=(612,128,4,4)
-postbattleRect2=(651,351,4,4)
 
-restartRect=Rect(73,444,647,89)
+restartRect=Rect(73,444,647,89)  #rectangle to restart game when you lose
 
-keyRect = Rect(270, 440, 25, 25)
+keyRect = Rect(270, 440, 25, 25) #This is the key rectangle. You have to collect the key to enter the boss lab
 
 running = True
 
 clock = time.Clock()
-level = 15
+level = 15   #this is the level for the intro
+#the following are images for the game
 mp = image.load("maps/map.png").convert()
 mp1 = image.load("maps/map1.png").convert()
 mp2 = image.load("maps/map6.png").convert()
@@ -223,7 +218,7 @@ finalbattletitle_og = image.load("sprites/GameOver/pokefinal.png").convert()
 loss_original = image.load("sprites/GameOver/endofgame.png").convert()
 winoriginal=image.load("maps/win.png").convert
 
-
+#the following are the same images cropped
 map = transform.smoothscale(mp, (800, 600))
 map1 = transform.smoothscale(mp1, (800, 600))
 map2 = transform.smoothscale(mp2, (800, 600))
@@ -243,21 +238,22 @@ pidgey = transform.smoothscale(pidgeyimage, (120, 100))
 #win1 = transform.smoothscale(winoriginal, (800, 600))
 
 atk1 = transform.smoothscale(attack1image, (150, 75))
-atk2 = transform.smoothscale(attack2image, (150, 75))
+atk2 = transform.smoothscale(attack2image, (150, 75))     #------images for the attack buttons
 atk3 = transform.smoothscale(attack3image, (150, 75))
 atk4 = transform.smoothscale(attack4image, (150, 75))
 
-direction = ["left", "right", "down", "up"]
+direction = ["left", "right", "down", "up"]   #direction for walking and running
 walk = {d: [transform.smoothscale(image.load(i), (20, 24)) for i in glob("sprites\\Player\\walking\\" + d + "\\*.png")]
         for d in
         direction}
 run = {d: [transform.smoothscale(image.load(i), (20, 24)) for i in glob("sprites\\Player\\running\\" + d + "\\*.png")]
        for d in direction}  # accesses all the pics from each direction folder and changes its size
 
-throw = [transform.smoothscale(image.load(i), (125, 125)) for i in glob("sprites\\Player\\throwing\\*.png")]
-fire = [transform.smoothscale(image.load(i), (50, 50)) for i in glob("sprites\\Attacks\\fire\\*.png")]
-heart = [transform.smoothscale(image.load(i), (50, 50)) for i in glob("sprites\\Attacks\\heart\\*.png")]
+throw = [transform.smoothscale(image.load(i), (125, 125)) for i in glob("sprites\\Player\\throwing\\*.png")]   #throwing animation
+fire = [transform.smoothscale(image.load(i), (50, 50)) for i in glob("sprites\\Attacks\\fire\\*.png")]   #fire animation for battle
+heart = [transform.smoothscale(image.load(i), (50, 50)) for i in glob("sprites\\Attacks\\heart\\*.png")]    #heal animation for battle
 
+#these are the images for the side characters
 t1 = transform.smoothscale(image.load("sprites/t1/down/1down1.png"), (23, 27))
 t2 = transform.smoothscale(image.load("sprites/t2/down/2down1.png"), (23, 27))
 t3 = transform.smoothscale(image.load("sprites/t3/right/3right1.png"), (23, 27))
@@ -269,6 +265,7 @@ t8 = transform.smoothscale(image.load("sprites/t8/down/8down2.png"), (23, 27))
 t9 = transform.smoothscale(image.load("sprites/t9/down/9down2.png"), (23, 27))
 t10 = transform.smoothscale(image.load("sprites/t10/down/10down2.png"), (23, 27))
 
+#this is the text for the side characters
 t6text = transform.smoothscale(image.load("sprites/dialog/t6/t61.png"), (350, 150))
 t61text = transform.smoothscale(image.load("sprites/dialog/t6/t62.png"), (350, 150))
 t2text = transform.smoothscale(image.load("sprites/dialog/t2/t21.png"), (350, 150))
@@ -281,49 +278,53 @@ t8text = transform.smoothscale(image.load("sprites/dialog/t8/t81.png"), (350, 15
 t9text = transform.smoothscale(image.load("sprites/dialog/t9/t91.png"), (350, 150))
 keytext = transform.smoothscale(image.load("sprites/dialog/key.png"), (300, 100))
 
-grass1 = image.load("start/instructions1.png")
+grass1 = image.load("start/instructions1.png")  
 grass2 = image.load("start/instructions.png")
 
-pokemon = ["CHARMANDER"]
-# _________________________________--
+pokemon = ["CHARMANDER"]    #This is the players pokemon
+# _________________________________-
+#these are different variables used throughout the game
 bag = []
 count = 0
-background = 7
-build = 0
-map2origin = 0
-anime = 0
-charbag = 0
-battlenum = 0
-# ___________________________________
+background = 7   #used to identify which background a.k.a map it is
+build = 0           #used to identify which building it is
+anime=0  #frame rate between pictures
+count=0
+charbag = 0     #used to makes sure the player has a charzard before entering the next map
+battlenum = 0   #used to find out which of the three battles is going on 
+# __________________________________
+#this is the throwing animation at the start of the game
 throwani = -1
 ani = 0
 tw = False
 # ___________________________________
+#this is the fire animation at the start of the game
 fireani = -1
 anim = 0
 fe = False
 changex, changey = 410, 325
 # ___________________________________
+#this is the heal animation at the start of the game
 heartani = -1
 an = 0
 ht = False
 changeX, changeY = 525, 225
 changeXx, changeYy = 290, 300
 # ____________________________________
-attack = 0
-turn = 1
-angle = 210
-restart=0
+attack = 0   #variable for which attack it is
+turn = 1    #variable for whos turn it is
+angle = 210     #variable for which attack it is
+restart=0   #variable for restarting the game if it equals 1
 # __________________________________
-key1 = 0
+key1 = 0   #variable for the key to the lab
 # ________________________________
-di = "down"
+di = "down"   #direction starts as down
 X = 0
 Y = 1
-pos = [320,108]            #[360, 400]
+pos = [320,108] #starting position           #[360, 400]
 # ___________________________________
-rs = 1.25
-ws = 0.75
+rs = 1.25   #running speed
+ws = 0.75  # walking speed
 action = "walk"
 actions = {"walk": walk, "run": run}
 blitted = False
@@ -334,19 +335,19 @@ b = 1
 c = 2
 y = 500
 # a b  c
-g1 = [0, 0, 600]
-g2 = [0, -600, 600]
+g1 = [0, 0, 600]   #list to access during the scrolling
+g2 = [0, -600, 600] #list to access during the scrolling
 
 runtime = 0
 bosstimer_1 = 0
 bosstimer_2 = 0
 losstimer=0
-scrollspeed = 3
+scrollspeed = 3  #speed for scroll (intro)
 
 ak1=20
 x=0
 
-
+#The following is the words at the intro. (instruction storyline etc.)
 l1 = "Pokémon Ballerz brought to you by Nishanth and Rishi"             #---------------------
 l2 = "Coroger, the leader of Team Galactic needs to be defeated"
 l3 = "before he enslaves all Pokémon! Get advice and tips from"
@@ -383,7 +384,7 @@ l32 = "Good Luck Trainer!"                                              #-------
 
 
 
-
+#The following is blitting the intor words
 font.init()
 mytext = font.SysFont("Arial", 30)
 mytext1 = mytext.render(l1, True, BLACK)
@@ -422,6 +423,7 @@ mytext32 = mytext.render(l32, True, BLACK)
 
 
 def drawScene():
+    'draws the intro/ infinite scroll feature'
     screen.blit(grass1, (g1[a], g1[b]))
     screen.blit(grass2, (g2[a], g2[b]))
     # background scrolling
@@ -468,54 +470,55 @@ while running:
     mx, my = mouse.get_pos()
     mb = mouse.get_pressed()
 
-    oppcharacter=[abra, pidgey, mewtwo]
+    oppcharacter=[abra, pidgey, mewtwo]   #enemy pokemons
 
 
 
     # ____________________________________________________________________________________________________________________________________________________________________________________________________________
-    if level == 6 and inside == False:
+#the following check to see if certain variables match up which leads to specific map walls beings drawn.
+    if level == 6 and inside == False:   #upstairs home
+        movePlayer(walk, startWall, [])    
+
+    if build == 8 :                         #upstairs for other houses
         movePlayer(walk, startWall, [])
 
-    if build == 8 :
-        movePlayer(walk, startWall, [])
-
-    if level == 7 and inside == False:
+    if level == 7 and inside == False:    #downstairs home
         movePlayer(walk, downWall, [])
 
     if build == 1:
-        movePlayer(walk, nWall, [])
+        movePlayer(walk, nWall, [])     #neighbour map
 
-    if level == 1 and inside == False:
+    if level == 1 and inside == False:      #first map (player and neighbour house)
         movePlayer(walk, wallsMap1, [])
 
-    elif level == 2 and inside == False:
+    elif level == 2 and inside == False:    #second map (forest)
         movePlayer(walk, wallsMap2, ledge2)
 
-    elif level == 3 and inside == False:
+    elif level == 3 and inside == False:      #third map (city)
         movePlayer(walk, wallsMap3, [])
 
-    elif build == 2:
+    elif build == 2:    #pokemart
         movePlayer(walk, martWall, [])
 
-    elif build == 3:
+    elif build == 3:        #downstairs for other houses (1st on last map)
         movePlayer(walk, downWall, [])
 
-    elif build == 4:
+    elif build == 4:     #downstairs for other houses (2nd on last map)
         movePlayer(walk, downWall, [])
 
-    elif level == 4 and inside == False:
+    elif level == 4 and inside == False:     #boss map lobby
         movePlayer(walk, wallsMapboss1, [])
 
-    elif level == 5 and inside == False:
+    elif level == 5 and inside == False:     #boss map final
         movePlayer(walk, wallsMapboss2, [])
 
-    elif build == 5:
+    elif build == 5:     #during battle
         movePlayer(walk, battleWall, [])
-    elif level ==15:
+    elif level ==15:          #during intro to let the player roam around and get used to the character
         movePlayer(walk,introRect,[])
 
     # ____________________________________________________________________________________________________________________________
-
+#The following check which attacks or power gets selected during combat
     if mb[0] == 1 and attack1.collidepoint(mx, my):
         attack = "1"
     if mb[0] == 1 and attack2.collidepoint(mx, my):
@@ -531,16 +534,16 @@ while running:
 
     if g[K_UP] or g[K_w]:
         di = "up"
-        # pos[Y] -= speed
+
     elif g[K_LEFT] or g[K_a]:
         di = "left"
-        # pos[X] -= speed
+                                                #this is what direction the player faces
     elif g[K_DOWN] or g[K_s]:
         di = "down"
-        # pos[Y] += speed
+
     elif g[K_RIGHT] or g[K_d]:
         di = "right"
-        # pos[X] += speed
+
     else:
         count = 0
 
@@ -549,15 +552,15 @@ while running:
     playerRect = Rect(pos[X], pos[Y], 18, 21)
     draw.rect(screen, col, playerRect, 1)
     # __________________________________________________________________________________________________________________________________________________________________________________________________
-    playerRect = Rect(pos[X], pos[Y], 21, 26)
+    playerRect = Rect(pos[X], pos[Y], 21, 26)     #draws the hitbox around the main player
 
-    if background == 7:
+    if background == 7:     #intro infinite scroll screen
         level=15
         if runtime <= 2:    #2175
             runtime += 1
 
             drawScene()
-
+            #The following is the words that is visible 
             screen.blit(mytext1, (35, y))           #----------------------
             screen.blit(mytext2, (15, y + 80))
             screen.blit(mytext3, (15, y + 120))
@@ -1228,7 +1231,6 @@ while running:
                 time.delay(40)
                 background=11
                 if restart == "1":
-                    # print("Ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo")
                     background=0
                     charbag=1
                     level=6
