@@ -924,9 +924,8 @@ while running:
                 # pos[X]=800
                 # pos[Y]=600
                 battlenum = 3
-                if battlenum == 3:
-                    mixer.music.load(musics[1])  # music plays infintely as the program runs
-                    mixer.music.play(-1)
+                
+                    
 
                 if bosstimer_2 < 125:
                     bosstimer_2 += 1
@@ -961,9 +960,7 @@ while running:
         build=5
         turn=1
         battlenum=1
-        if battlenum == 1:
-            mixer.music.load(musics[1])  # music plays infintely as the program runs
-            mixer.music.play(-1)
+   
 
  
     if playerRect.colliderect(battleRect2) and background == 1:
@@ -975,9 +972,7 @@ while running:
         build = 5
         turn = 1
         battlenum = 2
-        if battlenum == 2:
-            mixer.music.load(musics[1])  # music plays infintely as the program runs
-            mixer.music.play(-1)
+       
 
 
     #build = 5
@@ -1022,11 +1017,12 @@ while running:
 
 
         elif battlenum==3:
-            screen.blit(oppcharacter[2],(283,263))
+            screen.blit(oppcharacter[2],(325,263))
+            
             print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
 
         screen.blit(char, (220, 325))
-
+        build=5
         scoreText=mytext.render('Health: ' + str(health), 1, (GREEN))
         screen.blit(scoreText,(15,15))
 
@@ -1050,7 +1046,10 @@ while running:
             
 
     # ___________________________________________________________________________________________________________
-
+    background=1
+    battlenum=3
+    build=5
+    
     if health >= 0 or opphealth >= 0:
 
         if turn == 1:
@@ -1243,10 +1242,18 @@ while running:
                     # print(background,level,build)
                 
                 
-            elif opphealth <= 0 and :
+            elif opphealth <= 0 and battlenum==1:
                 level=2
                 background=1
                 build=0
+
+            elif opphealth <= 0 and battlenum==2:
+                level=2
+                background=1
+                build=0
+
+            else:
+                screen.blit(winoriginal,(0,0))
 
                     
     # _________________________________________________________________________________________________________________________________________________________________________________________
