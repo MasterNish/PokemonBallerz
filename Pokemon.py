@@ -43,6 +43,7 @@ Good Luck Trainer!
 from pygame import *
 from random import *
 from glob import *
+from sys import exit
 
 class Character(sprite.Sprite):
 
@@ -81,7 +82,7 @@ class Character(sprite.Sprite):
 
 
 musics = ["Music/Music.mp3"]   #music list
-inc = 0.4   #volume for music
+inc = 0.1   #volume for music
 
 init()
 
@@ -367,7 +368,7 @@ X = 0
 Y = 1
 pos = [320,108] #starting position           #[360, 400]
 # ___________________________________
-rs = 5   #running speed
+rs = 1.25   #running speed
 ws = 0.75  # walking speed
 action = "walk"
 actions = {"walk": walk, "run": run}    #storing in the dictionary
@@ -495,9 +496,6 @@ while running:
     col = GREEN
     clock.tick(60)
 
-    if turn == 3:
-        mixer.music.load(musics[0])  # music plays infintely as the program runs
-        mixer.music.play(-1)
     # introIn += 1
 
     anime += 1
@@ -573,8 +571,6 @@ while running:
         attack = "4"
     if mb[0]==1 and restartRect.collidepoint(mx,my):
         restart="1"
-    if mb[0]==1 and quitRect.collidepoint(mx,my):
-        quit()
 
     # -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1150,9 +1146,12 @@ while running:
 
             elif attack == "2" and click == True:  # risky range attack
 
-                a2 = randint(0, 40)
-                opphealth = opphealth - a2
+                # a2 = randint(0, 40)
+                # opphealth = opphealth - a2
 
+                opphealth -= ak1    #reducing attack damage from health
+                # print(opphealth,"............opp health...........")
+                #
                 changey -= 5
                 if changey == 305:
                     changey = 325
@@ -1321,5 +1320,8 @@ while running:
 
     display.flip()      #everything shows up on the display
     myClock.tick(60)    #clock
+
+    if mb[0]==1 and quitRect.collidepoint(mx,my):
+        exit(0)
 
 quit()  #not needed because the player will never want to quit
