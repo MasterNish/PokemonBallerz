@@ -202,8 +202,8 @@ downbox3 = Rect(230, 454, 1, 6)
 boss1 = Rect(500, 100, 100, 0)#entering the boss map
 tele1 = Rect(57, 187, 1, 8)  # short form for teleport1. Used for teleporation in boss lab
 tele2 = Rect(279, 323, 1, 5)
-tele3 = Rect(396, 186, 1, 6)
-tele4 = Rect(768, 184, 1, 4)
+tele3 = Rect(396, 189, 1, 6)
+tele4 = Rect(589, 189, 30, 1)
 
 battleRect = Rect(0, 453, 649, 0)    #first fight
 battleRect2 = Rect(270, 171, 800, 0)   #second fight
@@ -228,7 +228,7 @@ restartRect=Rect(73,444,647,89)  #rectangle to restart game when you lose
 
 keyRect = Rect(270, 440, 25, 25) #This is the key rectangle. You have to collect the key to enter the boss lab
 
-quitRect = Rect(229, 425, 344, 112)
+quitRect = Rect(663, 0, 167, 45)
 
 
 running = True
@@ -261,6 +261,7 @@ finalbattletitle_og = image.load("sprites/GameOver/pokefinal.png").convert()
 
 loss_original = image.load("sprites/GameOver/endofgame.png").convert()
 winoriginal=image.load("sprites/GameOver/endgame.png").convert()
+quitbutton = image.load("sprites/GameOver/quitbutton.png").convert()
 
 #the following are the same images cropped
 map = transform.smoothscale(mp, (800, 600))
@@ -280,6 +281,7 @@ lossoriginal = transform.smoothscale(loss_original, (800, 600))
 mewtwo = transform.smoothscale(mewtwoimage, (120, 100))
 pidgey = transform.smoothscale(pidgeyimage, (120, 100))
 win1 = transform.smoothscale(winoriginal, (800, 600))
+quitbutt = transform.smoothscale(quitbutton, (167, 45))
 
 atk1 = transform.smoothscale(attack1image, (150, 75))
 atk2 = transform.smoothscale(attack2image, (150, 75))     #------images for the attack buttons
@@ -561,16 +563,18 @@ while running:
 
     # ____________________________________________________________________________________________________________________________
 #The following check which attacks or power gets selected during combat
-    if mb[0] == 1 and attack1.collidepoint(mx, my):
+    if mb[0] == 1 and attack1.collidepoint(mx, my) and battlenum > 0:
         attack = "1"
-    if mb[0] == 1 and attack2.collidepoint(mx, my):
+    if mb[0] == 1 and attack2.collidepoint(mx, my) and battlenum > 0:
         attack = "2"
-    if mb[0] == 1 and attack3.collidepoint(mx, my):
+    if mb[0] == 1 and attack3.collidepoint(mx, my) and battlenum > 0:
         attack = "3"
-    if mb[0] == 1 and attack4.collidepoint(mx, my):
+    if mb[0] == 1 and attack4.collidepoint(mx, my) and battlenum > 0:
         attack = "4"
     if mb[0]==1 and restartRect.collidepoint(mx,my):
         restart="1"
+    if mb[0]==1 and quitRect.collidepoint(mx,my):
+        exit(0)
 
     # -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -598,7 +602,7 @@ while running:
 
     if background == 7:     #intro infinite scroll screen
         level=15
-        if runtime <= 1:    #2175
+        if runtime <= 2:    #2175
             runtime += 1
 
             drawScene()
@@ -969,7 +973,7 @@ while running:
                 # pos[Y]=600
                 battlenum = 3
 
-                if bosstimer_2 < 125:
+                if bosstimer_2 < 250:
                     bosstimer_2 += 1
                 else:
                     build = 5
@@ -994,8 +998,8 @@ while running:
         pos[Y] = 206
 
     if playerRect.colliderect(tele3) and background == 3:
-        pos[X] = 590        #change characters positions
-        pos[Y] = 244
+        pos[X] = 675       #change characters positions
+        pos[Y] = 185
     # _________________________________________________________________________________________
 
     if playerRect.colliderect(battleRect) and background == 1:
@@ -1078,7 +1082,7 @@ while running:
         screen.blit(scoreText,(15,15))  #blits the health text in the corner
 
         scoreText1=mytext.render('Enemy Health: ' + str(opphealth), 1, (GREEN))
-        screen.blit(scoreText1,(450,15))    #blits the health text in the corner
+        screen.blit(scoreText1,(350,15))    #blits the health text in the corner
 
 
 
@@ -1318,10 +1322,9 @@ while running:
     screen.blit((actions[action][di][count % 3]), (pos[X], pos[Y]))     #player moving and what sprite to use and whether its walk or run
     # print (pos[X],"x value",pos[Y],"y value")
 
+    screen.blit(quitbutt, (663, 0))
+
     display.flip()      #everything shows up on the display
     myClock.tick(60)    #clock
-
-    if mb[0]==1 and quitRect.collidepoint(mx,my):
-        exit(0)
 
 quit()  #not needed because the player will never want to quit
