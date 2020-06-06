@@ -235,8 +235,7 @@ finalbattletitle = transform.smoothscale(finalbattletitle_og, (800, 600))
 lossoriginal = transform.smoothscale(loss_original, (800, 600))
 mewtwo = transform.smoothscale(mewtwoimage, (120, 100))
 pidgey = transform.smoothscale(pidgeyimage, (120, 100))
-winoriginal = image.load("sprites/GameOver/endgame.png").convert
-
+#win1 = transform.smoothscale(winoriginal, (800, 600))
 
 atk1 = transform.smoothscale(attack1image, (150, 75))
 atk2 = transform.smoothscale(attack2image, (150, 75))     #------images for the attack buttons
@@ -557,7 +556,7 @@ while running:
 
     if background == 7:     #intro infinite scroll screen
         level=15
-        if runtime <= 2175:    #2175
+        if runtime <= 2:    #2175
             runtime += 1
 
             drawScene()
@@ -597,7 +596,7 @@ while running:
 
 
             y -= 1
-            screen.blit((actions[action][di][count % 3]), (pos[X], pos[Y]))     #blits the character on the instructions page for fun
+            screen.blit((actions[action][di][count % 3]), (pos[X], pos[Y]))
             display.flip()
             myClock.tick(60)
             print(runtime)
@@ -1244,7 +1243,7 @@ while running:
                     # print(background,level,build)
                 
                 
-            elif opphealth <= 0:
+            elif opphealth <= 0 and :
                 level=2
                 background=1
                 build=0
