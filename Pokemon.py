@@ -333,6 +333,7 @@ background = 7   #used to identify which background a.k.a map it is
 build = 0           #used to identify which building it is
 anime=0  #frame rate between pictures
 count=0
+gameover=0 #when the game finishes
 charbag = 0     #used to makes sure the player has a charzard before entering the next map
 battlenum = 0   #used to find out which of the three battles is going on 
 # __________________________________
@@ -974,10 +975,13 @@ while running:
 
                 if bosstimer_2 < 125:
                     bosstimer_2 += 1
-##                else:
-##                    build = 5
-##                    background = 1
-##                    battlenum = 3
+                else:
+                    build = 5
+                    background = 1
+                    battlenum = 3
+                    turn=1
+                    print(build,"...........build",background,"...............background",battlenum,"............battlenum")
+                                            
 
 
 
@@ -1019,20 +1023,12 @@ while running:
         turn = 1
         battlenum = 2   #second battle
 
-    if playerRect.colliderect(tele4) and background == 4:
-        pos[X] = 590        #change characters positions
-        pos[Y] = 244
-        # health = 600
-        opphealth = 800     #opponents health set to 600
 
-        build = 5
-        turn = 1
-        battlenum = 3   #third battle
        
 
 
 
-    if build == 5 and background == 1:
+    if build == 5 and background == 1 and gameover==0:
         if not tw:  #if not False
             throwani = 0    #first frame
         tw = True
@@ -1070,6 +1066,13 @@ while running:
 
         elif battlenum==3:
             screen.blit(oppcharacter[2],(478,240))      #opponent
+            build = 5
+            background = 1
+            battlenum = 3
+            
+            print(build,"...........build",background,"...............background",battlenum,"............battlenum")
+
+            
             
             print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
 
@@ -1098,11 +1101,12 @@ while running:
             
 
     # ___________________________________________________________________________________________________________
-    # background=1
-    # battlenum=3
-    # build=5
-    
+
+
+
+
     if health >= 0 or opphealth >= 0:
+       
 
         if turn == 1:
             time.wait(10)
@@ -1289,6 +1293,7 @@ while running:
                     health=1000
                     pos[X]=350
                     pos[Y]=350
+                    gameover=0
                     mixer.music.load(musics[0])  # music plays infintely as the program runs
                     mixer.music.play(-1)
                     # print(background,level,build)
@@ -1304,8 +1309,9 @@ while running:
                 background=1
                 build=0
 
-            else:
-                screen.blit(win1,(0,0))     #once you win the game
+            elif opphealth<=0 and battlenum==3:
+                screen.blit(win1,(0,0))#once you win the game
+                gameover=1
                 # draw.rect(screen, RED, quitRect, 1)
                     
     # _________________________________________________________________________________________________________________________________________________________________________________________
