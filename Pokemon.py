@@ -41,16 +41,15 @@ class Character(sprite.Sprite):
             self.rect.x -= self.speeds[self.action]
 
 
-musics = ["Music/Music.mp3"]
-mInd = 0
+musics = ["Music/Music.mp3", "Music/Battle.mp3"]
 inc = 0.1
 
 init()
 
-mixer.music.load(musics[mInd])  # music plays infintely as the program runs
+mixer.music.load(musics[0])  # music plays infintely as the program runs
 mixer.music.play(-1)
-
 mixer.music.set_volume(inc)
+
 
 width, height = 800, 600
 screen = display.set_mode((width, height))
@@ -139,7 +138,7 @@ def hitwalls(x, y, mywalls):
 
 
 FirstMap = Rect(360, 15, 90, 0)
-FirstMapReverse = Rect(358, 550, 80, 1)
+FirstMapReverse = Rect(358, 545, 80, 1)
 SecondMap = Rect(280, 66, 90, 0)
 neighbour = Rect(500, 220, 60, 0)
 neighbourexit = Rect(345, 417, 55, 1)
@@ -386,7 +385,7 @@ l32 = "Good Luck Trainer!"                                              #-------
 
 
 font.init()
-mytext = font.SysFont("comic sans", 30)
+mytext = font.SysFont("Arial", 30)
 mytext1 = mytext.render(l1, True, BLACK)
 mytext2 = mytext.render(l2, True, BLACK)
 mytext3 = mytext.render(l3, True, BLACK)
@@ -450,6 +449,9 @@ while running:
     col = GREEN
     clock.tick(60)
 
+    if turn == 3:
+        mixer.music.load(musics[0])  # music plays infintely as the program runs
+        mixer.music.play(-1)
     # introIn += 1
 
     anime += 1
@@ -467,6 +469,8 @@ while running:
     mb = mouse.get_pressed()
 
     oppcharacter=[abra, pidgey, mewtwo]
+
+
 
     # ____________________________________________________________________________________________________________________________________________________________________________________________________________
     if level == 6 and inside == False:
@@ -549,7 +553,7 @@ while running:
 
     if background == 7:
         level=15
-        if runtime <= 75:    #2175
+        if runtime <= 2:    #2175
             runtime += 1
 
             drawScene()
@@ -912,6 +916,10 @@ while running:
                 # pos[X]=800
                 # pos[Y]=600
                 battlenum = 3
+                if battlenum == 3:
+                    mixer.music.load(musics[1])  # music plays infintely as the program runs
+                    mixer.music.play(-1)
+
                 if bosstimer_2 < 125:
                     bosstimer_2 += 1
                 else:
@@ -955,17 +963,24 @@ while running:
         build=5
         turn=1
         battlenum=1
+        if battlenum == 1:
+            mixer.music.load(musics[1])  # music plays infintely as the program runs
+            mixer.music.play(-1)
 
  
     if playerRect.colliderect(battleRect2) and background == 1:
         pos[X] = 590
         pos[Y] = 244
-        health = 600
+        # health = 600
         opphealth = 800
 
         build = 5
         turn = 1
         battlenum = 2
+        if battlenum == 2:
+            mixer.music.load(musics[1])  # music plays infintely as the program runs
+            mixer.music.play(-1)
+
 
     #build = 5
     #background = 1
@@ -993,24 +1008,31 @@ while running:
         screen.blit(atk2, (225, 500))
         screen.blit(atk3, (424, 500))
         screen.blit(atk4, (629, 500))
-        if battlenum==1 and background!=3:
+
+        if battlenum==1:
+
             screen.blit(oppcharacter[0],(485,263))
             pos[X]=651
             pos[Y]=351
             print("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK")
-        elif battlenum==2 and background!=3:
+
+
+        elif battlenum==2:
             screen.blit(oppcharacter[1],(483,263))
             pos[X]=612
             pos[Y]=128
+
+
         elif battlenum==3:
             screen.blit(oppcharacter[2],(283,263))
             print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
+
         screen.blit(char, (220, 325))
 
-        scoreText=mytext.render('health: ' + str(health), 1, (GREEN))
+        scoreText=mytext.render('Health: ' + str(health), 1, (GREEN))
         screen.blit(scoreText,(15,15))
 
-        scoreText1=mytext.render('Enemy health: ' + str(opphealth), 1, (GREEN))
+        scoreText1=mytext.render('Enemy Health: ' + str(opphealth), 1, (GREEN))
         screen.blit(scoreText1,(450,15))
 
 
@@ -1114,7 +1136,8 @@ while running:
 
                 a3 = randint(1, 2)
                 if a3 == 1:
-                    opphealth += 250
+                    if opphealth <= 1250:
+                        opphealth += 250
 
                     if not ht:
                         heartani = 0
@@ -1132,7 +1155,7 @@ while running:
                         # print(heartani)
 
                 elif a3 == 2:
-                    opphealth -= 250
+                    opphealth -= 100
 
                     changey -= 5
                     if changey == 305:
@@ -1167,7 +1190,8 @@ while running:
 
             elif attack == "4" and click == True:  # heal
 
-                health += 15
+                if health <= 1585:
+                    health += 15
                 # print(health, "............player health...........")
 
                 if not ht:
@@ -1211,12 +1235,14 @@ while running:
                 if restart == "1":
                     # print("Ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo")
                     background=0
-                    charbag=0
+                    charbag=1
                     level=6
                     build=0
-                    health=500
-                    pos[X]=400
-                    pos[Y]=300
+                    health=1000
+                    pos[X]=350
+                    pos[Y]=350
+                    mixer.music.load(musics[0])  # music plays infintely as the program runs
+                    mixer.music.play(-1)
                     # print(background,level,build)
                 
                 
